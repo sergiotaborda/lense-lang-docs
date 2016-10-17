@@ -25,7 +25,7 @@ conceptually there is a difference.
 
 In C# the same concept is used to initialize both arrays and lists 
 
-~~~~brush: c#
+~~~~brush: csharp
 int[] array = new int[]{1, 2, 3};
 List<int> list = new List(){1, 2, 3};
 ~~~~
@@ -33,10 +33,11 @@ List<int> list = new List(){1, 2, 3};
 In Lense the type of the container is fixed by the syntax and a [conversion constructor](constructors.html#conversion) is used to copy the values to another type if need be. So no constructor is called. A runtime object is created that depends on the underlying platform. The type inside the container is inferred from the declared value types.
 
 Lense uses common brackets to represent ``Sequence`` literals. Keep in mind arrays are not fundamental types in Lense, sequences are.An array is a special (mutable) sub type of sequence.
+(as always types are shown for clarity, they are optional)
 
 ~~~~brush: lense
-var Sequence<Natural> sequence = [1, 2, 3];
-var Array<Natural> array = [1, 2, 3];
+val sequence : Sequence<Natural>   = [1, 2, 3];
+var array : Array<Natural>  = [1, 2, 3];
 ~~~~
 
 The first line creates a sequence of elements 1, 2 and 3. The second line creates an array of the elements 1, 2 and 3 by first creating a sequence and them promoting it to an Array by calling its [conversion constructor](constructors.html#conversion). In practice the compiler is free to optimize these literal constructions and not really call the conversion constructor on ``Array<T>``.
@@ -46,13 +47,13 @@ The first line creates a sequence of elements 1, 2 and 3. The second line create
 Currently there is no special syntax for sets. A set can be created by using a literal sequence and a constructor.
 
 ~~~~brush: lense
-var Set<Natural> sequence = new HashSet([1, 2, 2, 3, 4, 3]);
+val sequence : Set<Natural> = new HashSet([1, 2, 2, 3, 4, 3]);
 ~~~~
 
-Or, you can use the ``toSet`` method in ``Iterable`` (super type of ``Sequence``):
+Or, you can use the ``toSet`` method in ``Sequence``:
 
 ~~~~brush: lense
-var Set<Natural> sequence = [1, 2, 2, 3, 4, 3].toSet();
+val sequence : Set<Natural> = [1, 2, 2, 3, 4, 3].toSet();
 ~~~~
 
 The set will only contain the elements 1, 2, 3 and 4 once.
@@ -63,8 +64,8 @@ The set will only contain the elements 1, 2, 3 and 4 once.
 Associations are used to maintain pairs of values related to each other. Normally in a *key to value* relationship. 
 
 ~~~~brush: lense
-var Association<Natural,String> association = { 1:"First", 2:"Second", 3:"Third" };
-var Map<Natural, String> map =  { 1:"First", 2:"Second", 3:"Third" };
+val  association : Association<Natural,String> = { 1:"First", 2:"Second", 3:"Third" };
+var  map : Map<Natural, String> =  { 1:"First", 2:"Second", 3:"Third" };
 ~~~~
 
 Like ``Sequence``, ``Association`` is a fundamental type in Lense, so it has its own literal type.  
@@ -78,8 +79,8 @@ Structurally a Tuple is a node in a linked-list kind of structure. But Tuples ar
 The syntax is similar to Sequences.
 
 ~~~~brush: lense
-var Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> tuple = ( 1 , "2" , true );
-var (Natural , String , Boolean) association = ( 1 : "2" : true );
+var tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = ( 1 , "2" , true );
+var association : (Natural , String , Boolean) = ( 1 : "2" : true );
 ~~~~
 
 The first line creates a tuple of elements. The second line creates the same tuple but uses the tuple short type syntax for representing tuple types. The default form used in the first line can be very long and odd to write and read eventhought is the exact correct type of that tuple. 
@@ -90,11 +91,11 @@ The first line creates a tuple of elements. The second line creates the same tup
 It could be possible to define a specific syntax for a two dimensional``Matrix``. This is not currently implemented.
 
 ~~~~brush: lense
-var Matrix<Natural> matrix = [ 1 ,2 ,3 ; 4, 5, 6 ; 5 6 7];
+var matrix :  Matrix<Natural>  = [ 1 ,2 ,3 ; 4, 5, 6 ; 5 6 7];
 
 // also can be written as
 
-var Matrix<Natural> matrix = [ 
+var  matrix : Matrix<Natural> = [ 
 	1 ,2 ,3 ;
  	4, 5, 6 ; 
  	5, 6, 7
@@ -105,11 +106,11 @@ This would  make a lot of sense in order to facilitate using Lense in more math 
 An alternative is to write sequence of sequences literals an use conversion constructors :
 
 ~~~~brush: lense
-var Matrix<Natural> matrix = [ [1 ,2 ,3 ], [4, 5, 6 ], [ 5 6 7]];
+var  matrix :  Matrix<Natural> = [ [1 ,2 ,3 ], [4, 5, 6 ], [ 5 6 7]];
 
 // also can be written as
 
-var Matrix<Natural> matrix = [ 
+var  matrix : Matrix<Natural> = [ 
 	[1 ,2 ,3],
  	[4, 5, 6],
  	[5, 6, 7]
@@ -125,7 +126,7 @@ A possible syntax would be similar to an association, but using = instead of ":"
 in a record only the right side can be a variable. The left side is interpreted as the name of a property. 
 
 ~~~~brush: lense
-var Record address = {
+var  address : Record = {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "Lodon",
@@ -137,7 +138,7 @@ var Record address = {
 This syntax takes us full circle to the initializer concept discussed at the beginning. We can now use records to initialize other types like so:
 
 ~~~~brush: lense
-var Address address = new Address {
+var  address : Address = new Address {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "London",
@@ -149,14 +150,16 @@ var Address address = new Address {
 This a combination of a call to the [primary constructor](constructors.html) and a initialization of each property referred in the record literal. This is not a conversion but syntax sugar for:
 
 ~~~~brush: lense
-var Record tempRecord = {
+// define a record
+var  tempRecord : Record = {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "London",
 	Country = "England"
 }
 
-var Address address = new Address();
+// copy properties with the same name
+var address : Address = new Address();
 
 address.Street = tempRecord.Street;
 address.Number = tempRecord.Number;
@@ -167,7 +170,7 @@ address.Country = tempRecord.Country;
 That is optimized to:
 
 ~~~~brush: lense
-var Address address = new Address();
+var  address : Address = new Address();
 
 address.Street = "Baker Street";
 address.Number = "221B";
