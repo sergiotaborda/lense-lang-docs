@@ -18,10 +18,10 @@ A ``Promise`` is a monad that can hold functions to be executed once a value is 
 ~~~~brush: lense
 public interface Promise<T> {
 
-	Promise<T> then (Action<T> onSuccess);
-	Promise<Nothing> catch (Action<Exception> onError)
+	public then ( onSuccess: Action<T>) : Promise<T> ;
+	public catch ( onError: Action<Exception>) : Promise<Nothing>
 	
-	Promise<R> map (Function<R,T> transformation);
+	public map <R>( transformation: Function<R,T>): Promise<R> ;
 }   
 ~~~~
 
@@ -35,12 +35,12 @@ public object Calculator{
     // calculates the n-th element in the fibonacci sequence
     // 0	1	2	3	4	5	6	7 ...
     // 0	1	1	2	3	5	8	13 ...
-	public Promise<Natural> fibonacci(Natural n) {
-	         Deferred<Natural> deferred = new Deferred.empty();
+	public fibonacci( n: Natural)  {
+	        val deferred  = new Deferred.empty();
 	         
 	         try {
 	         
-	         		Natural fibonacci = calculateRecursively (n);
+	         		val fibonacci = calculateRecursively (n);
 	         		deferred.sucess(fibonacci);
 	         	} catch (Exception e){
 	         		deferred.error(e);
@@ -49,7 +49,7 @@ public object Calculator{
 	         return deferred.promisse(); 
 	}
 	
-	private Natural calculateRecursively (Natural n){
+	private  calculateRecursively ( n:  Natural){
 		if (n <= 1){
 			return n;
 		} else if (n > 1000){
@@ -76,14 +76,14 @@ There are two principal executors in the standard API: the ``TimedExecutor`` and
 ~~~~brush: lense 
 public object TimedExecutor {
 
-	Promise<T> runAfter<T>(Duration duration, Function<T> calculation);
-	Promise<T> runAt<T>(TimePoint timePoint, Function<T> calculation);
-	Void runEvery(Duration duration, Runnable runnable); 
+	public runAfter<T>( duration : Duration, calculation : Function<T> ) : Promise<T> ;
+	public runAt<T>( timePoint : TimePoint, calculation : Function<T> ): Promise<T> ;
+	public runEvery( duration : Duration, Runnable runnable) : Void; 
 }
 
 public object DeferredExecutor {
 
-	Promise<T> run<T>(Function<T> calculation);
+	public run<T>(calculation : Function<T> ) : Promise<T>;
 }
 ~~~~ 
 
@@ -97,7 +97,7 @@ The ``TimedExecutor`` and ``DeferredExecutor`` are implemented in java using the
 ``Actor``s enable a message based communication between different threads that can be, even, distributed in one or more machines. The Actor model is similar to Java Messaging Service in Java or Web Workers in javascript, in the sense messages are exchanged back and forward but is different as to the endpoints envolved. However the technology that enables the actor to send and receive the messages depends on the ``ActorEnvironment`` used.  The environment determines how the messages are handled and several different implementations are possible. The actors exist in the scope of a specific environment. For example, in a javascript an environment based on *websockets* would be a natural choice. But is as not be a raw websocket implementation an other APIs like *Stomp* can be used. A possible code would be:
 
 ~~~~brush: lense 
-ActorEnvironment env = new StompActorEnvironment("http://server.side.address.com");
+val env : ActorEnvironment = new StompActorEnvironment("http://server.side.address.com");
 
 // register the actor with a name
 
@@ -159,5 +159,5 @@ If objects are imuable there is no risk in sharing them as the original creator 
 So the ``sendTo`` method takes a ``Serializable`` as its message payload:
 
 ~~~~brush: lense 
-public Void sendTo(String actorId, Serializable message)
+public  sendTo( actorId : String,  message: Serializable) : Void
 ~~~~

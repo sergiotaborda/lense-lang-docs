@@ -132,14 +132,14 @@ Lense supports the following overridable operators:
 		<td> -a </td>
 		<td> a.symetric() </td>
 		<td> Symmetric<T> </td>
-		<td> Returns the symmetric value. The Symmetric value of *x* is the same that can be calculated by *0 - x*</td>
+		<td> Returns the symmetric value. The Symmetric value of *x* is equivalent to that calculated by *0 - x*</td>
 	</tr>
 	<tr>
 		<td> ~ (infix) </td>
 		<td> ~a </td>
-		<td> a.negate() </td>
+		<td> a.flipAll() </td>
 		<td> Binary<T> </td>
-		<td> Returns a values equivalent to the original with bits reversed</td>
+		<td> Returns a values equivalent to the original with bits reversed (fliped)</td>
 	</tr>
 	<tr>
 		<td> ++ (infix) </td>

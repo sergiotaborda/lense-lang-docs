@@ -16,14 +16,14 @@ This means you create arrays as you would any other class (i.e invoking the cons
 Because Lense does not have the concept of ``null`` all arrays must be inicialized correctly to a specified value. There are no default values. If you cannot determine the initialization values you will be better using a ``List``( or any other ``ResizableSequence`` like ``LinkedList``) that allows you to start with zero elements in que collection and add the elements as you go.  When you use ``Array`` you need to supply the elements at creation time. The easiest way to do this is with a literal:
 
 ~~~~brush: lense
-    var Array<Natural> numbers = [1, 2, 3 , 4 , 5];
+    val numbers : Array<Natural> = [1, 2, 3 , 4 , 5];
 ~~~~
 
-Remember ``Array`` is not a fundamental type in Lense. That literal above really creates a ``Sequence`` object that is read-only by definition. The compiler then uses a [conversion constructor](constructors.html#conversion) to create the ``Array```from the ``Sequence``. If you wish to initilize all position in the array to the same value you can use a special [named constructor](constructors.html#named):
+Remember ``Array`` is not a fundamental type in Lense. That literal above really creates a ``Sequence`` object that is read-only by definition. The compiler then uses a [conversion constructor](constructors.html#conversion) to create the ``Array`` from the ``Sequence``. If you wish to initilize all position in the array to the same value you can use a special [named constructor](constructors.html#named):
 
 ~~~~brush: lense
     // this code creates an array with 5 elements all equal to zero.
-    var Array<Natural> numbers = new Array.filled<Natural>(5, 0);
+    val numbers : Array<Natural>  = new Array.filled<Natural>(5, 0);
 ~~~~
 
 Here we will be writing the examples with no generic type inference, but normally you would write with less ceremony:
@@ -34,11 +34,11 @@ Here we will be writing the examples with no generic type inference, but normall
 
 Its all the same.
 
-If a constant is not a good option in your case you can, alternativly, use the overloaded vertion that receives a function.
+If a constant is not a good option in your case, you can, alternativly, use the overloaded version that receives a initialization function.
 
 ~~~~brush: lense
     // this code creates an array with 5 elements corresponding to the first 5 even numbers.
-    var Array<Natural> numbers = new Array.filled<Natural>(5, i -> 2 * i);
+    val numbers = new Array.filled<Natural>(5, i -> 2 * i);
 ~~~~
 
 This constructor receives a lambda expression to inicialize each elements. The ``i`` parameter (can be any variable name) is the position in the array from 0 to the size array exclusivly. In the example we inicialize the arrays with the first 5 even numbers.
@@ -48,14 +48,14 @@ Alternativly you can create an array with an optional type. This means each posi
 
 ~~~~brush: lense
     // this code creates an array with 5 elements all equal to none.
-    var Array<Natural?> numbers = new Array.filled<Natural?>(5, none);
+    val numbers : Array<Natural?> = new Array.filled<Natural?>(5, none);
 ~~~~
 
 Remember ``none`` is the single value of type ``None`` that is equivalent to ``Maybe<Nothing>``. You can also use the shorter constructor:
 
 ~~~~brush: lense
     // this code creates an array with 5 elements all equal to none.
-    var Array<Natural?> numbers = new Array.ofAbsent<Natural?>(5);
+    val numbers : Array<Natural?> = new Array.ofAbsent<Natural?>(5);
 ~~~~
 
 # Empty Arrays
@@ -64,13 +64,13 @@ In practice is useful to be able to create an empty array. The empty constructor
 
 ~~~~brush: lense
     // creates an array of non-optional elements with no elements in it
-    var Array<Natural> numbers = new Array.empty<Natural>(); 
+    val numbers :  Array<Natural> = new Array.empty<Natural>(); 
 
     // creates an array of optional elements with no elements in it
-    var Array<Natural?> numbers = new Array.empty<Natural?>(); 
+    val numbers : Array<Natural?> = new Array.empty<Natural?>(); 
 ~~~~
 
-In this case there is no diference if you use optional types as the arrays has no elements (its size is zero).
+In this case there is no diference if you use optional types because the arrays have no elements (its size is zero).
 
 # Indexing
 
@@ -92,7 +92,7 @@ In Lense all ``Sequence``s have an indexed property for reading values at a give
 This means you can still use the ``array[i]`` sintax to read from and write to array positions.
 
 ~~~~brush: lense
-public Void updateArray(Array<Natural> numbers) {
+public updateArray( numbers : Array<Natural> ) {
     numbers[0] = 1;
     numbers[1] = 2;
     numbers[2] = 3;
@@ -105,7 +105,7 @@ Addicionally indexes for all ``Sequences`` are ``Natural``s. Natural ranges from
 
 # Interoperability
 
-Even though arrays are not fundamental types in Lense, they probably are in the native platform where Lense is running. When calling native code the compiler will need to convert from and to native arrays. Plataform native arrays noramlly accept ``null`` as valid value, because we cannot accept this in Lense all interoperability is constructed with arrays of optional types.  Arrays them selfs can be objects in the native plaftform so then selfs can be ``null``even thought this is not a good practice, there is valid form to handle this automaticly.  In Java 8 and above types can be annotated with ``@NotNull`` and in this case would be possible to determine the type is really not optional.  This will better exploded and detailed when we discuss using types of the native platform inside Lense it self, a feature not yet designed ate [this stage](status.html).
+<code>Array</code>s and other <code>Sequence</code> types have some [issues in interop](nullability.html) mode because they can be null and contains nulls. 
 
-On the other hand, when creating instances of arrays, the Lense will leverage native arrays to minimize space consumptidon and optimize speed. This is done by leveraging Lense's [factory like constructors](constructors.html#factory) and reified generics to provide the more specific/eficient implementation possible. Obviously this is only possible in some platforms.
+On the other hand, when creating instances of arrays, Lense will leverage native arrays to minimize space consumptidon and optimize speed. This is done by leveraging Lense's [factory like constructors](constructors.html#factory) and reified generics to provide the more specific/eficient implementation possible. Obviously this is only possible in some platforms.
 

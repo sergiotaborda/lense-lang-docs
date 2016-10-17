@@ -26,9 +26,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Details<b class="caret"></b></a>
 				<ul class="dropdown-menu">
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>nullability.html">Nullability</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>numbers.html">Numbers</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>strings.html">Strings</a></li>
-					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>strings.html">Arrays</a></li>
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>arrays.html">Arrays</a></li>
 					
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>containerLiterals.html">Container Literals</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>objects.html">Classes and Objects</a></li>
@@ -36,6 +37,7 @@
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>operators.html">Operators</a></li>		
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>monads.html">Monads</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>concurrency.html">Concurrency</a></li>
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>erasure.html">Type Erasure</a></li>
 					
 					<li class="disabled"><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>enhancements.html">External Enhancements</a></li>
 					
