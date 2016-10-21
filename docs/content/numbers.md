@@ -14,7 +14,7 @@ Lense supports Complex and Imaginary numbers. Even thought we are aware the perf
 * Whole - numbers with no decimal part.
 	- Natural - Represents elements from the mathematical **&#8469;** set, i.e. positive only whole values that include zero and range from zero up to maximum value limited only by available memory
 	- Integer - Represents elements from the mathematical **&#8484;** set, i.e. negative and positive whole values.
-		*  Int16 - negative and positive whole values with range from -2<sup>15</sup> to  2<sup>15</sup>-1. 
+		*  Int16 - negative and positive whole values with range from -2<sup>15</sup> to  2<sup>15</sup>-1.
 		*  Int32 - negative and positive whole values with range from -2<sup>31</sup> to  2<sup>31</sup>-1. 
 		*  Int64 - negative and positive whole values with range from -2<sup>63</sup> to  2<sup>63</sup>-1. 
 		*  BigInt - negative and positive whole values with arbitrary range limited only by available memory
@@ -31,7 +31,7 @@ Lense supports Complex and Imaginary numbers. Even thought we are aware the perf
 * Complex - Represents elements from the mathematical **&#8450;** set. Complex numbers are of the form ``a + bi`` where ``i`` it the square root of -1.
 	- ComplexOverReals<T extends Real>; - Use a Real to type to store a numeric value for the real part and a ImaginaryOverReals<T> for the imaginary part.
 
-Type ``Natural`` is used as an indexer for ``Sequence``s. Limits to collections like arrays, lists and maps are only bound by limit of Natural which in turn is limited only by available memory.
+Type ``Natural`` is used as an indexer for ``Sequence``s. Limits to collections like arrays, lists and maps are only bound by the limit of Natural which in turn is limited only by available memory.
 Using a Natural to index sequences removes the necessity to check for negative indexes and because ``Arrays`` always have a upper limit and always are constructed by [factory like constructors](constructors.html#factory) the implementation for each platform can accommodate different implementations according to maximum length demand.
 
 For more information on how Natural relates to index of sequences, see how [Arrays](arrays.html) work in Lense.
@@ -40,8 +40,9 @@ For more information on arithmetic operations  more on Lense [operators](operato
 
 ## Number Literals 
 
-For ``Whole`` number literals are always assumed ``Natural`` and in base ten representation. The natural values are transformed to other types as needed. 
-This conversion may rise an ``OverflowException`` as a ``Natural`` can exceed the maximum values of other types. For ``Decimal`` values, literals are always assumed to be instance of ``BigDecimal``. ``BigDecimal`` constructor only accepts a string representation of the value as the BigDecimal literal representation must be exact.
+Literals with no decimal part are always assumed ``Natural`` and in base ten representation. The natural values are transformed to other types as needed. 
+This conversion may rise an ``OverflowException`` becasue a ``Natural`` can exceed the maximum values of other types. For example, atribuiting a natural to a Int32.
+For literals with a decimal part , they are always assumed ``Rational``. This is because irrational numbers cannot , in general, be represented literally.
 
 If you need to define the type of the literal explicitly you can use specific sufixes, upper case letters for whole numbers and lowercase letters to decimal numbers.
 
@@ -49,49 +50,50 @@ If you need to define the type of the literal explicitly you can use specific su
 	var Natural n = 1; // equivalent to Natural.valueOf("1")
 	
 	// literals are always assumed to be Natural and promoted when necessary
-	var  i : Int32 = 1;  // equivalent to Int32.valueOf(Natural.valueOf("1"));
-	var  s : Int16 = 1;  // equivalent to Int16.valueOf(Natural.valueOf("1"));
-	var  k : Int64 = 1;  // equivalent to Int64.valueOf(Natural.valueOf("1"));
-	var  g : BigInt = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	var i : Int32 = 1;  // equivalent to Int32.valueOf(Natural.valueOf("1"));
+	var s : Int16 = 1;  // equivalent to Int16.valueOf(Natural.valueOf("1"));
+	var k : Int64 = 1;  // equivalent to Int64.valueOf(Natural.valueOf("1"));
+	var g : BigInt = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
 	
 	// If the target type is Whole or Integer, the literal it's equivalent to having BigInt as target 
-	var  w : Whole = 1; // equivalent to BigInt.valueOf(Natural.valueOf("1"));
-	var  u : Integer = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	var w : Whole = 1; // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	var u : Integer = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
 	
 	// sufixes can be used to inform the compiler the correct type of the literal
 	// for whole numbers only uppercase prefixes are allowed 
-	var  ii : Int32 = 1Z;  // equivalent to Int32.valueOf("1");
-	var  ss : Int16 = 1S;  // equivalent to Int16.valueOf("1");
-	var  kk : Int64 = 1L;  // equivalent to Int64.valueOf("1");
-	var  gg : BigInt = 1G;  // equivalent to BigInt.valueOf("1");
+	var ii : Int32 = 1Z;  // equivalent to Int32.valueOf("1");
+	var ss : Int16 = 1S;  // equivalent to Int16.valueOf("1");
+	var kk : Int64 = 1L;  // equivalent to Int64.valueOf("1");
+	var gg : BigInt = 1G;  // equivalent to BigInt.valueOf("1");
 	
 	// Rationals are defined by the division of two whole positive values. 
-	var  r : Rational = 2/3; // equivalent to Natural.valueOf("2").divide(Natural.valueOf("3"))
-	var  q : Rational = -5/8; // equivalent to Natural.valueOf("5").negate().divide(Natural.valueOf("8"));
-	var  q : Rational = -x/y; // equivalent to Natural.valueOf(x).negate().divide(Natural.valueOf(y));
+	var r : Rational = 2/3; // equivalent to Natural.valueOf("2").divide(Natural.valueOf("3"))
+	var q : Rational = -5/8; // equivalent to Natural.valueOf("5").negate().divide(Natural.valueOf("8"));
+	var q : Rational = -x/y; // equivalent to Natural.valueOf(x).negate().divide(Natural.valueOf(y));
 	
-	// In this case 1 is a Natural being promoted to a Decimal32.
-	var  f : Decimal32 = 1; // equivalent to Decimal32.valueOf(Natural.valueOf("1"));
+	// In this case the value is a Natural being promoted to a Decimal32.
+	var f : Decimal32 = 1; // equivalent to Decimal32.valueOf(Natural.valueOf("1"));
 	
-	// decimal values are always assumed to be BigDecimals
-	var  ff : Decimal32 = 1.6; // equivalent to Decimal32.valueOf(BigDecimal.valueOf("1.6"));
-	var  d  : Decimal64 = 2.0; // equivalent to Decimal64.valueOf(BigDecimal.valueOf("2.0"));
-	var  m  : BigDecimal = 1.234567890E100; // equivalent to BigDecimal.valueOf("1.234567890E100");
+	// decimal values are always assumed to be Rational
+	var rr : Rational = 1.4 //  equivalent to Rational.valueOf("1.4");
+	var ff : Decimal32 = 1.6; // equivalent to Decimal32.valueOf(Rational.valueOf("1.6"));
+	var d  : Decimal64 = 2.0; // equivalent to Decimal64.valueOf(Rational.valueOf("2.0"));
+	var m  : BigDecimal = 1.234567890E100; // equivalent to BigDecimal.valueOf(Rational.valueOf("2.0"));
 
 	// prefixes can also be used to inform the compiler the correct type of the literal
 	// for non whole numbers only lower-case prefixes are allowed 
-	var  fff : Decimal32 = 1.6f; // equivalent to Decimal32.valueOf("1.6");
-	var  dd : Decimal64 = 2.0d; // equivalent to Decimal64.valueOf("2.0");
-	var  mm : BigDecimal = 1m; // equivalent to BigDecimal.valueOf("1");
+	var fff : Decimal32 = 1.6f; // equivalent to Decimal32.valueOf("1.6");
+	var dd : Decimal64 = 2.0d; // equivalent to Decimal64.valueOf("2.0");
+	var mm : BigDecimal = 1m; // equivalent to BigDecimal.valueOf("1");
 	
 	
-	var  a : Imaginary = 2i; // equivalent to Imaginary.valueOf(Natural.valueOf("2"));
-	var  b : Imaginary = 2.5i; // equivalent to Imaginary.valueOf(BigDecimal.valueOf("2.5"));
+	var a : Imaginary = 2i; // equivalent to Imaginary.valueOf(Natural.valueOf("2"));
+	var b : Imaginary = 2.5i; // equivalent to Imaginary.valueOf(Rational.valueOf("2.5"));
 	
-	var  error : Imaginary = 2; // does not compile because a Natural can not be converted to an Imaginary number
+	var error : Imaginary = 2; // does not compile because a Natural can not be converted to an Imaginary number
 
 	var c: Complex = 5 + 2i; // equivalent to Natural.valueOf("5").plus(Imaginary.valueOf(Natural.valueOf("2")))
-	var d: Complex = 3.9 + 0.2i; // equivalent to BigDecimal.valueOf("3.9").plus(Imaginary.valueOf(BigDecimal.valueOf("0.2"))
+	var d: Complex = 3.9 + 0.2i; // equivalent to Rational.valueOf("3.9").plus(Imaginary.valueOf(Rational.valueOf("0.2"))
 ~~~~
 
 In any representation you can use _ to logically separate digits in the value to help readability.
@@ -109,14 +111,16 @@ Numeral literals are assumed to be represented in decimal form (base 10) for all
 The hexadecimal form begins with a ``#`` symbol followed by a valid hexadecimal digit: 1, 2, 3, 4, 5, 6, 7, 8, A , B, C, D , E , F. You can also use _ to separate digits like in base ten representation.
 
 ~~~~brush: lense
-	var  color : Natural = #A3_C1; // hexadecimal
+	var  color : Natural = #FF_EE_00; // hexadecimal
 ~~~~
 
 ## Binary and Bytes
 
-Lense supports the ``Binary`` immutable interface to represent any value that can be understood as a sequence of bits. ``Binary`` does not,necessarily, represent a number. ``BitArray`` is the default, mutable, implementation of ``Binary`` present in the SDK API. ``BitArray`` supports a variable size of bits.
+Lense supports the ``Binary`` immutable interface to represent any value that can be understood as a sequence of bits. ``Binary`` does not,necessarily, represent a number. 
+Two default implementations of Binary exist :  ``BitArray``is a size imutable implementation , while is ``BitList`` a size mutable implementation.
+``BitList`` supports a variable size of bits. ``BitArray`` supports a fixed length of bits.
 
-``Byte`` is a special class that implements ``Binary`` corresponding to a fixed length sequence of 8 bits. It's primarily used for I/O operations. ``Byte`` is not a number, does not have an assigned numeric value and there is no automatic promotion from ``Byte`` to any type of ``Number``. Also it has no arithmetic operations. However, a ``Byte`` can be transformed explicitly to a ``Natural`` between 0 and 255 or to a ``Int32`` between -128 and 127 by means of the ``toNatural()`` and ``toInteger()`` functions.
+``Byte`` is a special class that also implements ``Binary`` corresponding to a fixed length sequence of 8 bits. It's primarily intented for use in I/O operations. ``Byte`` is not a number, does not have an assigned numeric value and there is no automatic promotion from ``Byte`` to any type of ``Number``. Also it has no arithmetic operations. However, a ``Byte`` can be transformed explicitly to a ``Natural`` between 0 and 255 or to a ``Int32`` between -128 and 127 by means of the ``toNatural()`` and ``toInteger()`` functions.
 
 ~~~~brush: lense
 	var  byte : Byte = $1111_0000; 
@@ -128,16 +132,16 @@ Lense supports the ``Binary`` immutable interface to represent any value that ca
 
 ``Int16`` , ``Int32`` and ``Int64`` also implement ``Binary`` corresponding to a fixed length sequence of 16, 32 and 64 bits respectively. Because this values have a signed numeric value, one of the bits is reserved to determine the sign. The rest of the bits represent the value if the value is positive, else represent the Two Complement representation of the (then negative) value.
 
-### Literal Representation
+### Binary Literal Representation
 
-The literal begins with a ``$`` sign flowed by a sequence of ones (to represent ``true``) and zeros (to represent ``false``). The ``_`` symbol can be used, as in number literals, to separate digit logically.
+The literal of binary begins with a ``$`` sign flowed by a sequence of ones (to represent ``true``) and zeros (to represent ``false``). The ``_`` symbol can be used, as in number literals, to separate digits logically.
 
-All binary literals are assumed to be instances of ``BitArray``s of the given number of bits. It is not possible to have a zero bits sequence. 
+All binary literals are assumed to be instances of ``BitArray`` with the given number of bits. It is not possible to have literal for a zero bits sequence. 
 
 ~~~~brush: lense
 	var  byte : Byte= $1111_0000; // equivalent to Byte.valueOf(BitArray.valueOf(true,true,true,true,false,false,false,false));
 	var  short : Int16 = $1111_0000_1111_0000; // equivalent to Int16.valueOf(BitArray.valueOf(true,true,true,true,false,false,false,false,true,true,true,true,false,false,false,false));
-	var  flags : BitArray = $1111_0000_0101_0110_0010_0001_0101_1001; // equivalent to BitArray.valueOf(true,true,true,true,false,false,false,false,true,false,tru,false,true,true,false,false,false,false,false,false,false,false,true,false,true,false,true,true,false,false,true);
+	var  flags : BitArray = $1111_0000_0101_0110_0010_0001_0101_1001; // equivalent to BitArray.valueOf(true,true,true,true,false,false,false,false,true,false,true,false,true,true,false,false,false,false,false,false,false,false,true,false,true,false,true,true,false,false,true);
 ~~~~	
 
 *Note the equivalent expressions are conceptual, in practice the compiler uses more suitable constructors for each case.*

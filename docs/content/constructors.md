@@ -21,6 +21,7 @@ This special function invoked by the machinery is called *Constructor*. Thus, th
 As an example, in Java, we would write something like:
 
 ~~~~brush: java
+// java
 public class Fraction {
 
 	private int numerator;
@@ -50,6 +51,7 @@ Constructors are usefully to guarantee the object state is correctly initialized
 
 
 ~~~~brush: java
+// java
 public class Fraction {
 
 	private int numerator;
@@ -94,7 +96,8 @@ This is special kind of constructors that only initializes properties in the obj
 In Scala, Ceylon and Kotlin, for instance, the primary constructor parameters are declared immediately after the class name and extra code can be added in the class body without any other special delimiters:
 
 ~~~~brush: scala
-public class Fraction (Integer numerator, Integer denominator) {
+// scala, kotlin, ceylon
+class Fraction (Integer numerator, Integer denominator) {
     // other code goes where
 }
 ~~~~  
@@ -108,6 +111,7 @@ In languages with primary constructors implemented like this trade one boilerpla
 Dart goes another way.
 
 ~~~~brush : dart
+// dart
 class Fraction  {
 	Integer numerator;
 	Integer denominator;
@@ -135,7 +139,7 @@ public class Fraction {
 
 // invoke like 
 
-val Fraction third = new Fraction(1, 3);
+val third : Fraction = new Fraction(1, 3);
 ~~~~
 
 A constructor without a body means the parameters should be copied to the fields of the same name.
@@ -153,6 +157,7 @@ All is fine when the class only needs a constructor. But more time than people w
 If we intend to have a ``Color`` type that can be created from RGB or HSL values the two algorithms are different and one or both require calculations before we can set the object private fields. On the other hand we need some practical way of distinguishing between them. Here the static method factory come in handy because it provides a name to the construction form. So in java we could write
 
 ~~~~brush: java 
+// java
 Color a = Color.fromRGB(1.0 , 1.0 , 1.0);
 Color b = Color.fromHSL(60 , 0.5 , 0.5); 
 ~~~~
@@ -160,6 +165,7 @@ Color b = Color.fromHSL(60 , 0.5 , 0.5);
 However there is no ``new`` keyword being used. Dart provides the same sintax but using ``new``:
 
 ~~~~brush: dart 
+// dart
 Color a = new Color.fromRGB(1.0 , 1.0 , 1.0);
 Color b = new Color.fromHSL(60 , 0.5 , 0.5); 
 ~~~~
@@ -167,6 +173,7 @@ Color b = new Color.fromHSL(60 , 0.5 , 0.5);
 In Dart you can provide named constructors like
 
 ~~~~brush: dart 
+// dart
  class Color {
 
     Color.fromRGB(red, greee, blue){
@@ -199,8 +206,8 @@ class Color {
 and invoke them in the same way 
 
 ~~~~brush: lense 
-Color a = new Color.fromRGB(1.0 , 1.0 , 1.0);
-Color b = new Color.fromHSL(60 , 0.5 , 0.5); 
+val a = new Color.fromRGB(1.0 , 1.0 , 1.0);
+val b = new Color.fromHSL(60 , 0.5 , 0.5); 
 ~~~~
 
 Note the similarity with the anonymous constructor invocation.
@@ -317,7 +324,7 @@ This is valid because a constructors is like a factory, however the compiler wil
 A conversion constructor is used to obtain the state of the object from another object of a different type. For instance:
 
 ~~~~brush: lense 
-Integer k = 23;
+val k : Integer = 23;
 ~~~~
 
 Because all whole literals are parser by the compiler as ``Natural``s,  23 is really a ``Natural``. On the other hand, because ``Natural``s are not an ``Integer``s the assignment would not be valid. Before a compilation error is risen, the compiler tries to find an constructor in the class Integer that is marked as ``implicit`` and has a single parameter of type ``Natural``. 
@@ -335,39 +342,44 @@ public class Integer extends Whole {
 If it exists, the compiler changes the assignment to:
 
 ~~~~brush: lense 
-Integer k = new Integer(23);
+val k : Integer = new Integer(23);
 ~~~~
 
 The ``implicit`` keyword is necessary because not every constructor with a single parameter is meant to be a conversion constructor. 
 The ``List<T>`` class (used above) has a constructor that receives a ``Natural`` to set the array size,but that, without the implicit keyword would mean that:
 
 ~~~~brush: lense 
-List<Integer> list = 3;
+val list : List<Integer> = 3;
 ~~~~
 
 was really 
 
 ~~~~brush: lense 
-List<Integer> list = new List<Integer>(3);
+val list : List<Integer> = new List<Integer>(3);
 ~~~~
 
 The instruction would be (wrongly) trying to assign the number 3 to the list but the compiler would try to promote the value.
 This would not be a very coherent form to create arrays because can be confused with:
 
 ~~~~brush: lense 
-List<Integer> list = [3];
+val list : List<Integer> = [3];
 ~~~~
  
 The programmer may have forgotten to surround the value with brackets.  
 
-Also, this other example could be made to be valid code using a conversion constructor:
+Also, this other example could be made to be valid code using an implicit conversion constructor:
 
 ~~~~brush: lense 
-Uri address = "http://www.google.com"
+val address : Uri = "http://www.google.com" 
+
+// equivalent to 
+
+val address : Uri = new Uri("http://www.google.com");
+
 ~~~~
 
-But this form is not recomemded because implicit constructors, as primary constructors, can not throw exceptions (under consideration). 
-So a parse operation, that possibly could go wrong, is not suited to a conversion constructor. It is recomemded that a constructor based on a string be a named constructor like ``parse(String)``. Named constructors can throw exceptions.
+Implicit constructors, like primary constructors, are not recomended for object creation that can throw exceptions (under consideration). 
+For a parsing operation, or other, that possibly could go wrong, is not suited to a conversion constructor. It is recomemded that a constructor based on a string be a named constructor like ``parse(String)``. Named constructors can throw exceptions.
 
 As we can see from the above examples, that the conversion constructor is a simple way to promote values of one class to another but only if it is guaranteed that conversion will never fail.
 
@@ -389,7 +401,7 @@ public enhancement AddNaturalConvertionConstrutorToString extends String { // en
 With this enchamenent in scope we can write:
 
 ~~~~brush: lense 
-String s = 8; // not supported without the enhancement
+val  s : String = 8; // not supported without the enhancement
 ~~~~
 
 This is very powerful feature of [enhancements](enhancements.html) and can easly be abused, so please design enhancements with care.   

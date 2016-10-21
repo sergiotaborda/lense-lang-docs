@@ -18,17 +18,17 @@ A class to represent fraction objects could be implemented like so:
 ~~~~brush: lense
 public val class Fraction {
     
-    val Integer numerator;
-    val Integer denominator;
+    val numerator : Integer;
+    val denominator : Integer;
 
-    private constructor (Integer numerator, Integer denominator);
+    private constructor ( numerator: Integer,  denominator: Integer);
 
-    constructor valueOf (Decimal value){
+    constructor valueOf ( value: Decimal){
         return new Fraction(value.toString());
     }
 
-    constructor valueOf (String value){
-         val Natural? pos = value.indexOf('.');
+    constructor valueOf (value : String){
+         val pos : Natural? = value.indexOf('.');
          if (pos.hasValue){
             val wholePart = new Integer.parse(value.subString(0,pos));
             val multiplier =  10 ** (value.length - pos); // 10 to the power of the number of decimal digits
@@ -43,17 +43,17 @@ public val class Fraction {
          }
     }
 
-    public Fraction multiply (Fraction other ){
+    public multiply ( other : Fraction) : Fraction{
           return new Fraction ( this.numerator * other.numerator, this.denominator * other.denominator);
     }
 
-    public Fraction invert (){
+    public invert () : Fraction{
         return new Fraction (this.denominator, this.numerator);
     }
 
-    public Integer Numerator { get { return numerator; } } 
+    public Numerator : Integer { get { return numerator; } } 
 
-    public Integer Denominator { get { return denominator; } } 
+    public Denominator : Integer { get { return denominator; } } 
 
 }
 ~~~~
@@ -66,19 +66,19 @@ Any type or member can also have generic type parameters.
 ~~~~brush: lense
 public class Matrix<T> { 
 
-    val Array<T> backingArray = new Array<T>();
+    val backingArray : Array<T> = new Array<T>();
 
-    val Natural rowsCount;
-    val Natural colsCount;
+    val rowsCount : Natural;
+    val colsCount : Natural;
 
-    constructor Matrix(Natural rowsCount, Natural colsCount){
+    constructor Matrix( rowsCount : Natural, colsCount : Natural){
         this.rowsCount = rowsCount;
         this.colsCount = colsCount;
 
         backingArray = new Array<T>(rowsCount * colsCount);
     }
 
-    public T [Natural row, Natural column] {
+    public  [row : Natural, column: Natural] : T {
         get {
             return backingArray[row * ]
         }        
@@ -98,7 +98,7 @@ create a singleton object the exists in the package space.
 ~~~~brush: lense
 public object Console {
 
-	public Void println(String text){
+	public println(String text) {
          // implementation goes here ... 
     }
 
@@ -113,7 +113,7 @@ import somepackage.Console;
 
 public class OtherClass {
 
-	public void doIt() {
+	public doIt() {
 	     Console.println("Hello, world");
 	}
 }
@@ -137,7 +137,7 @@ public class OtherClass {
 	      public Void doItInTheObject {} 
 	}
    
-	public Void doItInTheOtherClass() {
+	public doItInTheOtherClass() {
 	
 	}
 }
@@ -158,17 +158,18 @@ public abstract class Node <T> {
 }
 
 public class Brunch<T> extends Node<T>{
-	constructor (Node<T> left , Node<T> right);
+	constructor (left : Node<T>  , right: Node<T> );
 }
 	
 public class Leaf <T> extends Node<T>{
-	constructor (T value);
+	constructor (value : T );
 }
 ~~~~ 
 
 If we now need to visit a long and complex tree we need to normally do so validation of types. For example, in java would be:
 
 ~~~~brush: java
+// java
 public <T> void colectLeafs(Node<T> node, List<T> leafs){
 
 	if (node instanceof Branch){
@@ -205,7 +206,7 @@ public <T> void colectLeafs(Node<T> node, List<T> leafs){
 	switch(node) {
 		case Branch (b){
 			collectLeafs(b.left, leafs);
-	      collectLeafs(b.right, leafs);
+	        collectLeafs(b.right, leafs);
 		} 
 		case Leaf (leaf){
 			leafs.add(leaf.value);
@@ -228,7 +229,7 @@ Interfaces are constract declarations with no implementation.
  
 ~~~~brush: lense
 public interface Validator<in T> {
-     public ValidatorResult validate( T candidate);
+     public validate( T candidate) : ValidatorResult;
 }
 ~~~~
 
@@ -237,11 +238,11 @@ Interfaces can extend other interfaces an are implemented by classes or objects.
 ~~~~brush: lense
 public val class MailValidator implements Validator<String> {
 
-     public ValidatorResult validate( String candidate) {
-            var result = new ValidatorResult ();
+     public validate( String candidate) : ValidatorResult{
+            val result = new ValidatorResult ();
 
             if (!candidate.indexOf('@').isPresent){
-                   result.addReason("Invalid email");
+                result.addReason("Invalid email");
             }
 
             return result;

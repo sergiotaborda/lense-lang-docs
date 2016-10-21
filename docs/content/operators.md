@@ -239,17 +239,17 @@ Lense supports the following overridable operators:
 The infix ``--a`` and ``++b`` operators are transformed to calls into ``decrement`` and ``increment``. For example, this code:
 
 ~~~~brush:lense 
-Integer a = 3;
-Integer b = ++a;
+val a : Integer= 3;
+val b : Integer = ++a;
 ~~~~
 
 At the end of this code, both *a* and *b* are 4.
 Is equivalent to
 
 ~~~~brush:lense 
-Integer a = 3;
+var  a : Integer = 3;
 a = a.increment();
-Integer b = a;
+val b :Integer = a;
 ~~~~
 
 As you can see the value in the variable is incremented implicitly as you would expect, however a new object is created and the reference is redirected to this new object. 
@@ -257,15 +257,15 @@ As you can see the value in the variable is incremented implicitly as you would 
 The suffix operators ``a--`` and ``a++`` are also transformed to calls into ``decrement`` and ``increment`` but in another sequence. For example,
 
 ~~~~brush:lense 
-Integer a = 3;
-Integer b = a++;
+val a : Integer= 3;
+val b : Integer = a++;
 ~~~~
 
 At the end of this code, *b* is 3 and *a* is 4.
 is translated internally to
 
 ~~~~brush:lense 
-Integer a = 3;
-Integer b = a;
+var a : Integer = 3;
+val b : Integer = a;
 a = a.increment();
 ~~~~

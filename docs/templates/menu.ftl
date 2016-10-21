@@ -17,9 +17,10 @@
             <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Fundamentals<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tour.html">Language Tour</a></li>
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tour/tour.html">Language Tour</a></li>
 					<li class="disabled"><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>guide.html">Programmer's Guide</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>platforms.html">Target Platforms's Guide</a></li>
+						<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>glossary.html">Glossary</a></li>
 				</ul>
             </li>
 			
@@ -34,12 +35,15 @@
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>containerLiterals.html">Container Literals</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>objects.html">Classes and Objects</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>constructors.html">Constructors</a></li>
-					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>operators.html">Operators</a></li>		
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>properties.html">Properties</a></li>
+				
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>operators.html">Operators</a></li>	
+				
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>monads.html">Monads</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>concurrency.html">Concurrency</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>erasure.html">Type Erasure</a></li>
 					
-					<li class="disabled"><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>enhancements.html">External Enhancements</a></li>
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>enhancements.html">External Enhancements</a></li>
 					
 				</ul>
             </li>

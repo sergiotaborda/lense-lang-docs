@@ -19,24 +19,60 @@ in a special way so they can be called as normal methods (after a dot). Being st
 called normally using the static method calling syntax. 
 
 ~~~~brush:csharp
-var domain = 'some@e.mail.com".GetDomain(); // GetDomain is not a standard method of type String
-Assert.AreEquals("e.mail.com", domain);
+String greating = 'ho".Repeat(4); // Repeat is not a standard method of type String
+assert("hohohoho" == greating);
 ~~~~
 
-Lense does not have static elements, so an extention method must be declared on an object and we apply the methods of that
+Lense does not have static elements, so extention method must be declared on an object and we apply the methods of that
 object to the original instance of the class we want to enhance. 
 
-When enhancing a given type we are in fact enhancing all subtypes aswell so polimorfism is at work. More generaly we
+~~~~brush:lense
+public enhancement RepeatableString extends String {
+
+	public Repeat(count : Natural): String {
+		var result = "";
+		for ( val i in 1..count){
+			result+= this; // this referes to the enhanced object
+		}
+		return result;
+	}
+}
+
+~~~~
+
+When enhancing a given type we are in fact enhancing all subtypes as well so polimorfism is at work. More generaly we
 can enhance types that conform to some generic rules and thus generics support is needed for enhancement.
 
-The difference between enhancements and extention methods is that we can add more that just normal methods. We can also
-add constructors. 
+~~~~brush:lense
+public enhancement MeasureableInterval extends Interval<Natural> {
 
-The difference between enhancements and traits it that traits are a inheritance base mechanism where when doing the mixin a new type is created
-while enhacements do not create a new type. They operate like static calls.
+	public Length : Natural? {
+		get {
+		   return this.start.zip ( this.end , (start, end) ->  end - start);
+		}
+	}
+}
+
+// normally intervals have no length because they are not iterable
+
+val stringInterval = |[ 'a' , 'z' ]|;
+val length = stringInterval.length; // will fail at compile time
+
+// but we can have a lenght if we have a closed interval of Naturals
+
+val naturalInterval = |[ 4 , 10 ]|;
+val length = naturalInterval.length; // ok, because we have an enhancement.
+
+assert( 6 == length);
+~~~~
+
+The difference between enhancements and extention methods is that we can add more that just normal methods. We can also
+add constructors and calculated properties. The only restriction is that no state can be added.
+
+The difference between enhancements and traits it that traits are an inheritance base mechanism where we mix the code of the original type with that of the trait
 
 When compiling to he underlying platform the lense compiler does not really create an object so the methods can be called, the compiler is
-free to optmize the calls using static semantics if they are possible in he platform. 
+free to optmize the calls using static semantics if they are possible in the platform. 
 
 Enhancement implementations can only access public members of the enhanced type.
 
