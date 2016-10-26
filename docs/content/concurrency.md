@@ -33,15 +33,13 @@ A simple example that do not uses concurrency could be something like this:
 public object Calculator{
 
     // calculates the n-th element in the fibonacci sequence
-    // 0	1	2	3	4	5	6	7 ...
-    // 0	1	1	2	3	5	8	13 ...
+    // n: 0	1	2	3	4	5	6	7 ...
+    // f: 0	1	1	2	3	5	8	13 ...
 	public fibonacci( n: Natural)  {
 	        val deferred  = new Deferred.empty();
 	         
-	         try {
-	         
-	         		val fibonacci = calculateRecursively (n);
-	         		deferred.sucess(fibonacci);
+	         try {      
+	         		deferred.sucess(calculateRecursively (n));
 	         	} catch (Exception e){
 	         		deferred.error(e);
 	         	}
@@ -64,7 +62,7 @@ public object Calculator{
 
 ~~~~
 
-This implementation does not use concurrency but the client code calling the ``fibonacci`` function has no way of knowing this, so it has to assume the code is calculated concurrently. Later, the implementation can evolve to a concurrent of even distributed version without consequences to the calling code.
+This implementation does not use concurrency but the client code calling the ``fibonacci`` function has no way of knowing this, so it has to assume the code is calculated concurrently. Later, the implementation can evolve to a concurrent one, or even a distributed version without consequences to the calling code.
 
 ## Executors
 
@@ -113,16 +111,16 @@ The actor it self is a class or object that extends ``Actor``.
 ~~~~brush: lense 
 public class MyActor extends Actor {
 
-       public Void onMesssage(Message msg){
+       public onMesssage( msg: Message) {
        
              val n = msg.payload as Natural;
              
-             if (n is Some<Natural>){
-               Natural f =  calculateRecursively(n);
+             if (exists n){
+               Natural fibonacci =  calculateRecursively(n);
                
-               this.Environment.sendTo("printActor", Deferred.withValue(f).promise);
+               this.Environment.sendTo("printActor", fibonacci); 
              } else {
-               this.Environment.sendTo("printActor", Deferred.withError("No value given.").promise);
+               this.Environment.sendTo("printActor", new Exception("No value given."));
              
              }
        }
@@ -131,32 +129,33 @@ public class MyActor extends Actor {
 
 public class PrintActor extends Actor {
 
-       public Void onMesssage(Message msg){
-       
-             val n = msg.payload as Promise<Natural>;
-             
-             if (n is Some<Promise<Natural>>){
-             	 n.then( value => Console.println("The result is {{ value }}"));
-             	 n.error( e => Console.println("The result could not be calculated because {{ e.message }}"));
-             }
+       public onMesssage(msg: Message) {
+
+			if (msg.payload is Exception){
+				Console.println("The result could not be calculated because {{ msg.payload.message }}");
+			} else {
+				Console.println("The result is {{ msg.payload }}");
+			}
        }
 
 }
 ~~~~
 
-This code will create and register two actors. One calculates the fibonacci sequence; the second, prints the calculated value.
+This code will create and register two actors. The first calculates the fibonacci sequence; the second, prints the calculated value.
 Actors communicate thought messages. Each actor has access to the environment is registered with and can use it to send messages to other actors. 
+Actors names are only significant in a given environment.
 
-The communication is normally asynconous whenever the ``sendTo`` method is called. Actors allow for more complex concurrent scenarios and patterns like Producer-Consumer.  
+The communication is normally asynconous whenever the ``sendTo`` method is called. The sent message e delivered to the actor's message queue. The message is removed from the queue and 
+delivered to the ``onMessage`` method. 
 
-## Passing data between actors
+## Passing the correct data between actors
 
-All data passed between actors is not shared, we do not want a shared memory model. This means the objects passed and payload need to be serializable. If the objects are serializable, we can always serialize the object and desialize it to obtain a copy. This also is a requirement if we need to transfer the object to another machine (depending on the ActorEnvironment).
+All data passed between actors is not shared, we do not want a shared memory model. This means the objects passed as payloads need to be serializable. If the objects are serializable, we can always serialize the object and deserialize it again to obtain a safe copy. This also is a requirement if we need to transfer the object to another machine (depending on the ActorEnvironment implementation).
 
-For in memory enviroments the envoriment can opt for not serializing the object if it is imutable hence not consuming serialization resources.
-If objects are imuable there is no risk in sharing them as the original creator cannot change them. 
+For in memory envoriments the envoriment can opt for not serializing the object for performance reasons. This is only possible if the object is imutable.
+If objects are imuable there is no risk in sharing them because they cannot be changed in the first place. 
 
-So the ``sendTo`` method takes a ``Serializable`` as its message payload:
+For these reasons the ``sendTo`` method takes a ``Serializable`` as its message payload:
 
 ~~~~brush: lense 
 public  sendTo( actorId : String,  message: Serializable) : Void
