@@ -48,7 +48,6 @@ No *statics*. All things are objects or exist within an object. Lense supports s
 
 No symbolic noise : operator symbols are predefined and associated with specific interfaces so classes like numbers and strings can use operators.However defining you own operator symbol is not allowed in order to maintain the code simple to read. The use of interfaces to define operations follows an algebraic structure paradigm so the compiler can reason about the operations (example : altering the order of operations the enhance performance if the operation is commutative)
 
-
 Suport to Rational, Imaginary and Complex numbers : Its important that these numeric types are supported even if the performance is not optimal. Peformance is a problem for the runtime , not the language and expression of intention is more important that performance.
 
 ~~~~brush: lense 
@@ -107,4 +106,5 @@ Modules : ability to compile meta information in "module bundle" (think .jar or 
 
 Closures : are like lambdas but can capture and modify values in the calling scope. Very usefully we try to allow the user to implement its on control directives.
 
-Constructors are like factory methods : A class is a factory and constructors really construct the object (not only initialize it). The new keyword can only be used in the constructor and means "create an auto-initialized" object and would be equivalent to a no parameters private constructor in other languages. So all calls to create new objects are calls to factory methods present in the "Class" object enforcing the "static factory method" design patter out-of the box. Being functions the constructors could be passed as lambdas to other functions.
+Constructors are like factory methods : A class is a factory and constructors really construct the object (not only initialize it). 
+All calls to create new objects are calls to factory methods present in an object thus enforcing the *static factory method* design pattern out-of the box. 

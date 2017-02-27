@@ -212,7 +212,7 @@ The Lense language has special support for the following types:
 + String
 + Boolean
 + Progression
-+ Interval
++ [Interval](../interval.html)
 + Sequence (like Arrays and Lists)
 + Associations (like Maps)
 + Tuple

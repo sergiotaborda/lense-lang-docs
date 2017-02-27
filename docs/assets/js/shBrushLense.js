@@ -9,7 +9,7 @@
 	{
 		var keywords =	'abstract as break switch case try catch finally ' +
 						'continue default do while if else for ' +
-						'true false null none' +
+						'true false null none ' +
 						'extends implements constructor ' +
 						'import export enhancement module ' +
 						'native new is ' +
