@@ -8,7 +8,7 @@ status=published
 # Fundamental Types
 
 Some types have fundamental support from the compiler. This means these types have build-in integration with the language.
-Lense fundamental types are : [`String`](strings.html) , [`Number`](numbers.html), `Boolean`, [`Maybe`](nullability.html), `Progression`, `Interval` , `Sequence` and `Iterable`. 
+Lense fundamental types are : [`String`](strings.html) , [`Number`](numbers.html), `Boolean`, [`Maybe`](nullability.html), `Range`, [`Interval`](interval.html) , `Sequence` and `Iterable`. 
 
 | Lense type | Literal | Support
 | :----------- | :-----------: | :-------------------: |   
@@ -16,17 +16,17 @@ Lense fundamental types are : [`String`](strings.html) , [`Number`](numbers.html
 | `Number` | *1* , *3.14* or *4+5i* | Creates whole , rational and complex numbers from they literals |  
 | `Boolean`|  `true` and `false` | [Erasured](erasure.html) to the runtime plataform's boolean. Flow control conditions must evaluate to a `Boolean`  |
 | `Maybe`  | `none` , String? | Compiler translates any type X followed by a ? (like X?) to Maybe<X> |
-| `Progression` | 1..4 or 5..<7 | Generates a `Progression` from  the literal |
-| `Interval` |  `|(3, 8}|` | Generates an `Interval` from the literal |
-| `Sequence`| [1,2,3,4] | Generates a reaonly sequence from the literal |
-| `Iterable` || Allows to iterate any Iterable with the `for` directive|  
+| `Range` | 1..4 or 5..<7 | Generates a ``Range`` from  the literal. Ranges are imutable. |
+| `Interval` |  `|(3, 8]|` | Generates an ``Interval`` from the literal.Intervals are imutable. |
+| `Sequence`| [1,2,3,4] | Generates a ``Sequence`` from the literal. Sequences are imutable. |
+| `Iterable` || Allows for iteration with `for` directive, and map-reduce like operations. |  
 
 In addition specific sub-types of `Sequence` also receive [literal support](containerLiterals.html):
 
 | Lense type | Literal | Support
 | :----------- | :-----------: | :-------------------: |   
 | `Sequence`| [1,2,3,4] |  Standard representation ordered sequences like lists and arrays. |
-| `Association` | { 1 : `en`, 2 : `pt` , 3 : `es` } | Standard representation for key-value associations | 
+| `Association` | { 1 : "en", 2 : "pt" , 3 : "es" } | Standard representation for key-value associations | 
 | `Tuple` | (1, "Hello", false) | Standard representation for tuples |
 
 # Classes, interfaces and inheritance
@@ -56,7 +56,7 @@ public class Maybe<T> is Some<T>, None {
 	public abstract map <R>(Function<R,T> mapping) : Maybe<R>
 }  
 
-public case class Some<T> extends Maybe<T>{ 
+public class Some<T> extends Maybe<T>{ 
 
 	public constructor (public val value : T);	
 	public isAbsent() { return false;}
@@ -66,7 +66,7 @@ public case class Some<T> extends Maybe<T>{
 	}
 }
 
-public case class None extends Maybe<Nothing> is none{ 
+public class None extends Maybe<Nothing> is none{ 
 
 	public isAbsent() { return true;}
 	public value : Nothing { get { throw new NoValuePresentException(); }}

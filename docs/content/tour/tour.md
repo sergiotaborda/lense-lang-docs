@@ -11,7 +11,7 @@ Features that may change are marked as *Under Consideration*.
 
 # Guideline Principles
 
-Lense is base in some principles used during the language design :
+Lense is base in some principles. These principles are used as guidelines during the language's design :
 
 + 	One Language , Many runtimes: Lense aims to be a universal language in the sense it can be executed on several different target runtime platforms that behave like the same logic platform. 
 But this mean the plataform limits the possibilites. For example, a file system is not available for the JavaScript platform targeting browsers, since browser have no native access to file systems, but is available in the Javscript plataform running on servers. On the other hand only a web application targeting JavaScript on a browser can call a DOM API and receive events and such.
@@ -29,14 +29,15 @@ Modules can be organized in packages. Classes live in packages. Modules are comp
 	
 +	Easy to Read : When you look at a code you wrote 1 year before is hard to remember what the code does, less alone 10 years before. Code must be simple to read. [Identifiers](../identifiers.html) must start with a letter,  followed by any combination of characters and digits. No special symbols allowed.
 
-+ Easy to Write : Writing must be fluent an coerent a keep to the minimum information necessary. Easy to write does not mean shorter words, or the heavy use of acronyms. It means reduction of boiler plate. Each word types is meaningfull and necessary. 
++ 	Easy to Write : Writing must be fluent an coerent a keep to the minimum information necessary. Easy to write does not mean shorter words, or the heavy use of acronyms. It means reduction of boiler plate. Each word types is meaningfull and necessary. 
+
++	Expression of intension is more important that performance. Lense introduces many concepts that may not be easy to implement from a performance point of view, like Complex numbers for example. Lense conception cannot be limited by the performance restrictions because those are manly a runtime problem, and since we are trying to run the same abstractions on different environments is not possible to performatic on all of them. So abstraction and expression of intension comes first. Performance is a problem of the runtime implementation.
 
 # A basic Lense program (Under consideration)
 
-The most basic program is a console interaction program. The famous *Hello, word!* in Lense is like this
+The most basic program is a console interaction program. The famous *Hello, word!* in Lense would look like this:
 
 ~~~~brush: lense 
-
 public object MyApplication extends ConsoleApplication {
 
 	public run (){
@@ -49,12 +50,12 @@ public object MyApplication extends ConsoleApplication {
 
 The program's entry point is an ``Application`` object. In this case a ``ConsoleApplication``. Lense does not support static members like other languages because everything is an object.
 However is supports the singleton pattern out of the box. By using an ``object`` declaration you define an object of type, in this case, ``ConsoleApplication`` that has a ``run()`` method.
-The ``run`` method is the programs entry point.
+The ``run`` method is the program's entry point.
 
 A program must be package into a module to be runnable. Lense supports modules out of the box:
 
 ~~~~brush: lense 
-module myFirstModule (1.0.0) {
+module MyApplicationModule (1.0.0) {
 
 	imports lense.core 1.0.0;
 }
@@ -62,8 +63,9 @@ module myFirstModule (1.0.0) {
 
 There must always exist a module in you application (you application *is* a module).
 A module can be executable if it contains an ``Application`` object. If it does not contain an ``Application`` oject it's library module to be used by other modules.
+A module can not contain more than one ``Application`` object.
 
-Each module must have a name and a version. In this case the name is *myFirstModule* and the version is *1.0.0*.
+Each module must have a name and a version. In this case the name is *MyApplicationModule* and the version is *1.0.0*. Lense understands version literals, no need to wrap the version in a string.
 If you need access to passed arguments you can read them from the ``arguments`` property in ``Application``.
 This property holds a ``Sequence<String>`` with the parameters given in the command line. If no arguments were passed or the application is running in an environment 
 without access to arguments (like a web browser) the sequence is empty.

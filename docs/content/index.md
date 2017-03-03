@@ -27,10 +27,16 @@ val name = "John"; //infers type String
 Variables and expressions can be easy inserted within a string using a simple syntax (see [string](strings.html)).
 
 ~~~~brush: lense 
-val birthday = new Date(1976, 4, 2);
+val age = 34;
 var name = "John";
 
-val message =  "{{ name }} was born on {{ birthday }}";
+console.print("{{ name }} is {{ age }} year old");
+~~~~
+
+Prints:
+
+~~~~console
+John is 34 years old
 ~~~~
 
 ## Object Oriented
@@ -48,7 +54,7 @@ No *statics*. All things are objects or exist within an object. Lense supports s
 
 No symbolic noise : operator symbols are predefined and associated with specific interfaces so classes like numbers and strings can use operators.However defining you own operator symbol is not allowed in order to maintain the code simple to read. The use of interfaces to define operations follows an algebraic structure paradigm so the compiler can reason about the operations (example : altering the order of operations the enhance performance if the operation is commutative)
 
-Suport to Rational, Imaginary and Complex numbers : Its important that these numeric types are supported even if the performance is not optimal. Peformance is a problem for the runtime , not the language and expression of intention is more important that performance.
+Suport to Rational, Imaginary and Complex numbers : It is important that these numeric types are supported even if the performance is not optimal. Peformance is a problem for the runtime , not the language. In Lense expression of intention is more important that performance.
 
 ~~~~brush: lense 
 var n : Natural = 3; // numbers are naturals by default. naturals are non negative
@@ -57,40 +63,30 @@ var d : Integer = -2; // integer holds negative whole numbers
 var r : Rational = -1.5; // decimal literals are rational numbers by default.
 
 if (r == n/d ){
-	// natural devision always produces a Rational
-	// numbers are compared by value independently of type.
+	// this will be true, because whole division always produces a Rational
+	// and numbers are compared by value independently of type.
+}
+
+val img : Imaginary = 4i;
+val complex = n + img;
+
+if (complex == 3 + 4i){
+	// this will be true because n==3 and img ==4i
+	// and numbers are compared by value independently of type.
 }
 ~~~~
 
-Lense supports progressions. Progressions are range like objects that can be iterated from a given start value to a given end value. The main difference between a progression and a range on other languages is that progressions have not to be linear.
+
+
+Lense supports [Intervals and Ranges](interval.html). 
 
 ~~~~brush: lense 
-for ( x in 3..7 ){
+for ( x in 3..7 ){ // iterate a range
 	// iterate from 3 to 7
 }
-~~~~
 
-Intervals are another usefull type to have fundamental support. Interval literals allow you to express in the limit is contained on the inteval or not. Also allows you to define only upper , or lower bounds
-
-~~~~brush: lense 
 if ( x in |[ 3 , 7)| ){
-	// x is >=3 and < 7
-}
-
-if ( x in |( * , 7)| ){
-	// x is < 7
-}
-
-if ( x in |[ 3, * )| ){
-	// x is >= 3
-}
-
-if ( x in |[]| ){
-	// always false. |[]| is the empty interval
-}
-
-if ( x in |( *, * )| ){
-	// always true. |( *, * )| means all values possible.
+	// test if x is >=3 and < 7
 }
 
 ~~~~
