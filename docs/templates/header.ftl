@@ -26,13 +26,12 @@
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushCSharp.js"></script>
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushDart.js"></script>
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushJava.js"></script>
-		
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushLense.js"></script>
 
 
     <!-- Le styles -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/bootstrap.min.css" rel="stylesheet">
-    <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/asciidoctor.css" rel="stylesheet">
+    
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify.css" rel="stylesheet">
   	<link rel="stylesheet" type="text/css" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/shCore.css"  >

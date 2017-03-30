@@ -1,35 +1,59 @@
 
 <ol>
 	<li>Introduction</i>
+	<li><a href="status.html">Status</a></i>
 	<li>Syntax and Semantics
 		<ol>
+			<li><a href="identifiers.html">Reserved Words</a></li>
 			<li>Variables</li>
 			<li>Mutability</li>
-			<li>Nullability</li>
+			<li><a href="nullability.html">Nullability</a></li>
 			<li>Comments</li>
 			<li>Generics</li>
 			<li>Functions</li>
+			
 			<li>Fundamental Types
+				
 				<ul>
 					<li><a href="strings.html">Strings</a></li>
-					<li><a href="strings.html">Numbers</a></li>
-					<li><a href="strings.html">Ranges</a></li>
-					<li><a href="strings.html">Intervals</a></li>
-					<li><a href="strings.html">Sequences</a></li>
-					<li><a href="strings.html">Tuples</a></li>
-				<ul>
+					<li><a href="numbers.html">Numbers</a></li>
+					<li>Ranges</li>
+					<li><a href="interval.html">Intervals</a></li>
+					<li><a href="arrays.html">Arrays</a></li>
+					<li>Tuples</li>
+					<li><a href="containerLiterals.html">Container Literals</a></li>
+				</ul>
 			</li>
-			<li>Decision Statement : if</li>
-			<li>Loop Statement : while</li>
-			<li>Iteration Statement : for</li>
-			<li>Classes</li>
+			<li>Control Statements
+				<ul>
+					<li>Decision: if</li>
+					<li>Loop : while</li>
+					<li>Iteration : for</li>
+					<li>Selection : switch</li>
+				</ul>
+			</li>
+			
+			<li><a href="objects.html">Classes and Objects</a>
+				<ul>
+					<li><a href="constructors.html">Constructors</a></li>
+					<li><a href="properties.html">Properties</a></li>
+				</ul>
+			</li>
 			<li>Enums</li>
+			<li><a href="enhancements.html">Enhancements</a></li>
 			<li>Lambdas</li>
 			<li>Casting</li>
-			<li>Operators Overloading</li>
+			<li><a href="operators.html">Operator Overloading</a></li>
+			
 		</ol>
 	</li>
-	<li>Concurrency
+	<li>Compilation
+		<ul>
+			<li><a href="platforms.html">Platforms</a></li>
+			<li><a href="erasure.html">Erasure</a></li>
+		</ul>
+	</li>
+	<li><a href="concurrency.html">Concurrency</a>
 		<ol>
 			<li>Promisses</li>
 			<li>Executors</li>
