@@ -14,14 +14,14 @@ Lense take a more object oriente aproach. Every variable refers to an existing o
 However the concept of an absent value is very usefull. Some data that is not yet calculated or the user as yet to inform. So Lense support the concept of an absent value using the tradiconal Maybe monad.
 
 ~~~~~~brush: lense 
-val h : Srring = "Hello"; 
-val w : Srring? = none; 
+val h : String = "Hello"; 
+val w : String? = none; 
 ~~~~~~
 
-The first line created a variable of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to *none*. 
-Please note that *none* is an object so the variable really refers to an object. No nulls are allowed.
+The first line created a variable of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to ``none``. 
+Please note that ``none`` is an object so the variable really refers to an object. No nulls are allowed.
 
-String? is a shorthand notation for [Maybe<String>](monads.html) and *none* is the object of type None.
+String? is a shorthand notation for [Maybe<String>](monads.html) and ``none`` is  the only instance of type ``None``.
 
 
 #Interoperatibility
@@ -54,31 +54,73 @@ This may prove cumbersome in code that tries to use native APIs.
 
 ## Rules of None
 
-For interop code , i.e. everytime the compiler identifies a native method is being called it let's you apply automatic filters according to the type you write. If no type is defined, the full optional type is used.
+###When Reading
+
+For interop code , i.e. everytime the compiler identifies a native method is being called it let's you apply automatic filters according to the type you write. If no type is defined, the full optional type is used. This works by automaticly matching the type of the native method with the type prefered by the lense program.
 
 ~~~~~~brush: lense 
-var names  = resolveNames();  // same as names : Array<String?>? = resolveNames()
-var names : Array<String>? = resolveNames();  // same as  names = new Maybe.of(resolveNames()).map( a -> a.Compact());
-var names : Array<String> = resolveNames();  // same as names = new Maybe.of(resolveNames()).map( a -> a.Compact()).or(new Array.empty<string>())
+var names  = resolveNames();  
+var names : Array<String>? = resolveNames();  // same as  names = new Maybe.of(resolveNames()).map( a -> a.compact());
+var names : Array<String> = resolveNames();  // same as names = new Maybe.of(resolveNames()).map( a -> a.compact()).or(new Array.empty<string>())
 var names : Array<String?> = resolveNames();  // same as names = new Maybe.of(resolveNames()).or(new Array.empty<string>())
 ~~~~~~
 
-<code>Maybe.of()</code> will understand *null* as equivalent to *node* and wrap the array in a possible absent type. The <code>Compact</code> method will remove *null* and *none*s from the array.
-In case the array may not be absent an default empty array is used. These rules applies to all <code>Iterable</code>s.
+In line **(1)** the original native return type is used. The Lense compiler will wrap the native array to a lense array. No special rules are needed.
+In line **(2)** the original native type is transformed by removing all possible ``none`` values. The equivalent code would be:
 
-For other boxed types that are not <code>Iterable</code>s the options are limited. We have to raise a compilation error for the cases the compiler cannot sort.
+~~~~~~brush: lense 
+var names : Array<String>? = resolveNames().map( a -> a.compact());
+~~~~~~
+
+In line **(3)** the original native type is further transformed by removing all possible ``none`` values and using an empty array in case the original is *null*. The equivalent code would be:
+
+~~~~~~brush: lense 
+var names : Array<String> = resolveNames().map( a -> a.compact()).or(new Array.empty<string>());
+~~~~~~
+
+In line **(4)** the original native type is further transformed by using an empty array in case the original is *null*. The equivalent code would be:
+
+~~~~~~brush: lense 
+var names : Array<String> = resolveNames().or(new Array.empty<string>());
+~~~~~~
+
+Lense interop geeration will understand native ``null`` as equivalent to ``none`` and wrap the array in a possible absent type. 
+
+The above rules apply to all <code>Iterable</code>s, not only arrays. In the general case, for other boxed types that are not <code>Iterable</code>s the options are limited. We have to raise a compilation error for the cases the compiler cannot sort (as it normally would).
 
 ~~~~~~brush: lense 
 var box  = resolveBoxedElements();  // same as box : Box<Element?>? = resolveBoxedElements()
-var box : Box<String>? = resolveNames();  // compilation error , cannot verify String is not null.
-var box : Box<String> = resolveNames();  // compilation , cannot verify String is not null.
-var box : Box<String?> = resolveNames();  // same as box = new Maybe.of(resolveNames()).value; 
+var box : Box<Element>? = resolveNames();  // compilation error , cannot verify Element is not null.
+var box : Box<String> = resolveNames();  // compilation error , cannot verify Element is not null.
+var box : Box<String?> = resolveNames(); // compiles to resolveNames().get() to force get the value from the maybe. 
 ~~~~~~
 
-<code>Maybe.value</code> is a valid method call in Lense that will raise an <code>ValueAbsentException</code> if no value is present. 
+Using the last line, will force the compiler to get the value inside the Maybe. This will raise <code>ValueAbsentException</code> if the box is absent.
 
 In Java 8, and above, types can be annotated with ``@NotNull`` or ``@Nullable``. These type annotations can made it possible to the compiler to determine if its possible to the value to be absent or not.
 When the compiler can determine it is safe the more restrict types will be allowed and no compilation errors would be raised. However, at this point in time, most APIs do not use these annotations.
 
 Even them, the problem will persist for interop with other platforms.
+
+###When writing
+
+When passing a value to a native method the compiler will generate code that transforms the Lense type to the native type. In the case a Maybe is being used a native ``orNull`` method will be called. This method does not exist in the Maybe type, is a native enviroment only method. So, for a method implemented in java like 
+
+~~~~~~brush: java 
+public void calculate(List<String> names, String other, int factor) { ... }
+~~~~~~
+
+It is not relevant what the methods does do, only what the parameters are. Lense will produce an interop code similar to 
+
+~~~~~~brush: lense 
+var names : Array<String> = ...
+var other String? = none;
+var factor : Integer? = none;
+
+calculate(asJavaList(names), other.orNull(), asJavaPrimitiveInt(factor.get()) { ... }
+~~~~~~
+
+Lense will try to use native ``null`` values where appliable. For primitives, a ``get`` is used to access the value. If the value is absent an excpetion will occur on lense side before calling the native method. This is to garantee native calls are not corrrupted.
+
+
 
