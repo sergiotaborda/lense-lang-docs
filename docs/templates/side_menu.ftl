@@ -29,18 +29,24 @@
 					<li>Decision: if</li>
 					<li>Loop : while</li>
 					<li>Iteration : for</li>
-					<li>Selection : switch</li>
+					<li>Selection/Matching : switch</li>
 				</ul>
 			</li>
-			
-			<li><a href="objects.html">Classes and Objects</a>
+			<li>Types 
+				<ul>	
+					<li><a href="classes.html">Classes</a></li>
+					<li><a href="objects.html">Objects</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+					<li>Enums</li>
+					<li><a href="enhancements.html">Enhancements</a></li>
+				</ul>
+			</li>
+			<li>Type Members 
 				<ul>
 					<li><a href="constructors.html">Constructors</a></li>
 					<li><a href="properties.html">Properties</a></li>
 				</ul>
 			</li>
-			<li>Enums</li>
-			<li><a href="enhancements.html">Enhancements</a></li>
 			<li>Lambdas</li>
 			<li>Casting</li>
 			<li><a href="operators.html">Operator Overloading</a></li>

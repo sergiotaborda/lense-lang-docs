@@ -51,7 +51,7 @@ public class Person {
 
 Now the properties look like fields. Remember that the compiler will produce polimorphic properties because you defined them as public.
 
-## Adding Beahvior
+## Adding Behavior
 
 Properties can be calculated and/or calculate state. When you need this funcionallity you simply declare the body of the acessor and modifier. 
 Remember that if you do not declare one of them the correspondig operation (read , or write) will not be available.
