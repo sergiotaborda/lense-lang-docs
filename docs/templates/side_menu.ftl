@@ -17,13 +17,16 @@
 				<ul>
 					<li><a href="strings.html">Strings</a></li>
 					<li><a href="numbers.html">Numbers</a></li>
-					<li>Ranges</li>
 					<li><a href="interval.html">Intervals</a></li>
-					<li><a href="arrays.html">Arrays</a></li>
+					<li>Maybe</li>
 					<li>Tuples</li>
+					<li>Iterable</li>
+					<li>Ranges</li>
+					<li>Sequence</li>
 					<li><a href="containerLiterals.html">Container Literals</a></li>
 				</ul>
 			</li>
+			<li><a href="arrays.html">Arrays</a></li>
 			<li>Control Statements
 				<ul>
 					<li>Decision: if</li>
@@ -44,7 +47,8 @@
 			<li>Type Members 
 				<ul>
 					<li><a href="constructors.html">Constructors</a></li>
-					<li><a href="properties.html">Properties</a></li>
+					<li><a href="properties.html">Fields and Properties</a></li>
+					<li>Methods</li>
 				</ul>
 			</li>
 			<li>Lambdas</li>

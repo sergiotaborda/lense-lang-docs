@@ -17,7 +17,7 @@ Identifiers are all names you use in the programs to name variables, methods, pr
 Lense, like all languages, reserves some words that cannot be used as identifiers. 
 Some of these reserved works are keywords, e.i. they have special meaning to the compiler. Some other are reserved to prevent use or for use in future versions.
 
-<table>
+<table class="set">
 	<tr>
 		<td>abstract</td>
 		<td>as</td>

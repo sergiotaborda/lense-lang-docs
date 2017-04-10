@@ -13,7 +13,7 @@ Lense supports operators and a special kind of operator overloading we named *Op
 
 Intrinsic operators cannot be redefined and are specially handled by the compiler.
 
-<table>
+<table class="listing">
 	<tr>
 		<th>Operator</th>
 		<th>Example</th>
@@ -61,7 +61,7 @@ Intrinsic operators cannot be redefined and are specially handled by the compile
 
 Lense supports the following overridable operators:
 
-<table>
+<table class="listing">
 	<tr>
 		<th>Operator</th>
 		<th>Example</th>
