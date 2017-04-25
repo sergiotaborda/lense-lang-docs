@@ -19,7 +19,13 @@ Lense syntax starts fom a C familly based syntax ( methods delimited with *{* an
 val n = 4; // infers type is Natural
 val r = 5.6; // infers type Rational
 
-var x = n + r; // infers type Rational 
+var i : Integer = 3; // read 3 as Natural , then promotes it to Integer;
+var negative = -3; // read -3 as Natural and applies symetric operator (infix -) returning an Integer
+val a : Rational = 10; // reads 10 as Natural, then promotes it to Rational
+
+var x = n + r; // infers type Rational
+var y = i + r; // infers type Rational
+var z = i + n; // infers type Integer
 
 val name = "John"; //infers type String
 ~~~~

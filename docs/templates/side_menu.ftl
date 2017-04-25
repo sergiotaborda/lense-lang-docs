@@ -18,11 +18,12 @@
 					<li><a href="strings.html">Strings</a></li>
 					<li><a href="numbers.html">Numbers</a></li>
 					<li><a href="interval.html">Intervals</a></li>
-					<li>Maybe</li>
+					<li><a href="maybe.html">Maybe</a></li>
 					<li>Tuples</li>
-					<li>Iterable</li>
+					<li><a href="iterable.html">Iterable</a></li>
 					<li>Ranges</li>
-					<li>Sequence</li>
+					<li><a href="sequence.html">Sequence</a></li>
+					<li>Association</li>
 					<li><a href="containerLiterals.html">Container Literals</a></li>
 				</ul>
 			</li>
@@ -48,6 +49,7 @@
 				<ul>
 					<li><a href="constructors.html">Constructors</a></li>
 					<li><a href="properties.html">Fields and Properties</a></li>
+					<li><a href="indexers.html">Indexed Properties</a></li>
 					<li>Methods</li>
 				</ul>
 			</li>

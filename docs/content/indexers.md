@@ -1,0 +1,55 @@
+title=Indexed properties
+date=2016-04-26
+type=post
+tags=tour, lense
+status=published
+~~~~~~
+
+# Indexed Properties
+
+<a name="indexed" ></a>Indexed properties are anonymous properties that allow you to associate a value of the property with one or more values of parameters called indexes. The most common examples are arrays that use numeric indexes and maps that use key object for indexes.
+
+The rules of normal [properties](properties.html) apply to indexed properties , you need to define an accessor, or a modifier, or both. Indexed properties never have backing fields associated with them.
+
+Indexed properties are not limited to one index. In the next example we use an array to implement a matrix using a mathematical trick of calculating the cell position in the array. We use the indexed property in the array to read and write values in the array.
+
+~~~~brush: lense
+// define the Matrix class
+public class Matrix<T> {
+
+	private val cells : Array<T>;
+	private val rowsCount : Natural;
+	private val columnsCount: Natural;
+	
+	contructor (private rowsCount : Natural, private columnsCount: Natural, private seed : T){
+		this.rowsCount = rowsCount;
+		this.columnsCount = columnsCount;
+		
+		this.cells = new Array.filled<T>(rowsCount * columnsCount, seed);
+	}
+    
+	public [Natural row, Natural column] : T { 
+		get {  
+			return items[calculateCell(row, column)]; 
+		}
+		set (value){
+		   items[calculateCell(row, column] = value;
+		}
+	}
+	
+	private calculateCell(Natural row, Natural column) : Natural{
+		return row * rowsCount + column;
+	}	
+}
+
+// then use it like so:
+
+val matrix = new Matrix(3, 3, 0);
+
+matrix[1,2 ] = 4;
+
+val four = matrix [1,2];
+~~~~
+
+An indexed property as no name, so it is not possible to overload it with the exact same number, and types, of indexes. 
+

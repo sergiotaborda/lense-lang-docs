@@ -92,7 +92,7 @@ public class Matrix<T> {
 
 # Sum Types
 
-In Lense is possible to define an abstract type that can only be implemented by a limited list of other types.
+<a name="sum-types"/>In Lense is possible to define an abstract type that can only be implemented by a limited list of other types.
 The classic example is the Node type. Normally we have a Branch node and a Leaf node. Tradicionally we would write:
 
 ~~~~brush: lense 

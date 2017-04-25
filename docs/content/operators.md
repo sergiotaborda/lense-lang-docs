@@ -7,11 +7,17 @@ status=published
 
 # Operators
 
-Lense supports operators and a special kind of operator overloading we named *Operator Interface*. Not all operators can be redefined some are intrinsic to the language.
+Lense supports operators and a special kind of operator overloading we named *Operator Interface*. Some are intrinsic to the language and can not be redefined.
+
+The set of available operators for redefinition is limited ( we do not what symbolic noise ) but extended enought to be usefull in a mathematical or engineering context.
+Each operator is defined by an interface with only one method, by implementing this interface on your classes the compiler will understand the operator symbol as a call to that method.
+In the end, the use of the operator is translated to a method call. This method implementation should not change the operand values in any way.
+
+Symbols are gathered from differente sources. Lense pays special attention to algebric structures that are related to the operators and symbols, this means, for example, that the symbol implies if the operation is comutable or not. As a rule of thumb, doubled char symbols mean to represent not comutative operations, and single char symbols mean to represent comutative operations or operations that can be both depending on the type class. However this is not a strict rule since operators can be redefined by the class. For example, eventhought the ``*`` operator is tradicionally comutative for numbers and not for matrices we still used it for matrices because multiplication itself is not comutative in general. On the other side we use ``**`` for exponentiation that we now is always non-comutative.
 
 ## Intrinsic Operators
 
-Intrinsic operators cannot be redefined and are specially handled by the compiler.
+Intrinsic operators can not be redefined and are specially handled by the compiler.
 
 <table class="listing">
 	<tr>
@@ -32,7 +38,7 @@ Intrinsic operators cannot be redefined and are specially handled by the compile
 	</tr>
 		<tr>
 		<td> :: </td>
-		<td> Function &lt;Natural, Natural&gt; plus = Natural::plus; </td>
+		<td> var plusOperator = Natural::plus; </td>
 		<td> Allows for easy reflection of class members </td>
 	</tr>
 	<tr>
@@ -43,12 +49,12 @@ Intrinsic operators cannot be redefined and are specially handled by the compile
 	<tr>
 		<td> && </td>
 		<td> a && b</td>
-		<td> *a* and *b* must be <code>Boolean</code>. Performs an AND logic operation on the operands but only is *a* is true. Otherwise simply return ``false`` </td>
+		<td> *a* and *b* must be <code>Boolean</code>. Performs an AND logic operation on the operands but only is *a* is true. Otherwise simply return ``false``. Because of the short-circuit behavior this is not a comutative operator. </td>
 	</tr>
 	<tr>
 		<td> || </td>
 		<td> a || b</td>
-		<td> *a* and *b* must be <code>Boolean</code>. Performs an OR logic operation on the operands but only is *a* is false. Otherwise simply return ``true`` </td>
+		<td> *a* and *b* must be <code>Boolean</code>. Performs an OR logic operation on the operands but only is *a* is false. Otherwise simply return ``true``.Because of the short-circuit behavior this is not a comutative operator. </td>
 	</tr>
 		<tr>
 		<td> ! </td>
@@ -88,93 +94,109 @@ Lense supports the following overridable operators:
 		<td> a + b </td>
 		<td> a.plus(b) </td>
 		<td> Summable<A,D,S> </td>
-		<td> Sums two values and returns in a third value. The operand values are not changed in any way </td>
+		<td> Sums two values and returns a third value. Prefer the + operator for comutative monoid operations with zero as identity element.</td>
+	</tr>
+	<tr>
+		<td> ++ </td>
+		<td> a ++ b </td>
+		<td> a.concat(b) </td>
+		<td> Concatenatable<A,D,S> </td>
+		<td> Concatenates two values and returns a third value. Prefer the ++ operator for non comutative monoid operations with empty as identity element </td>
 	</tr>
 	<tr>
 		<td> - </td>
 		<td> a - b </td>
-		<td> a.subtract(b) </td>
+		<td> a.minus(b) </td>
 		<td> Subtractable<D,A,S> </td>
-		<td> Substracts two values and returns in a third value. The operand values are not changed in any way </td>
+		<td> Substracts two values and returns in a third value. This operator represents a non-comutative operation.  </td>
 	</tr>
 	<tr>
 		<td> * </td>
 		<td> a * b </td>
 		<td> a.multiply(b) </td>
 		<td> Multiplyable<P,A,B> </td>
-		<td> Multiplies the two values and returns in a third value. The operand values are not changed in any way </td>
+		<td> Multiplies the two values and returns in a third value. Prefer the * operator for comutative monoid operations with one as identity. </td>
 	</tr>
 	<tr>
 		<td> ** </td>
 		<td> a ** b </td>
 		<td> a.raise(b) </td>
 		<td> Powerable<P,B,E> </td>
-		<td> Raises the first operand to the power of the second operand and returns the result in a third value. The operand values are not changed in any way </td>
+		<td> Raises the first operand to the power of the second operand and returns the result in a third value. Prefer the ** operator for non-comutative monoid operations with one as identity. </td>
 	</tr>
 	<tr>
 		<td> / </td>
 		<td> a / b </td>
-		<td> a.divide(b) </td>
+		<td> a.over(b) </td>
 		<td> Dividable<Q,N,D> </td>
-		<td> Divides the two values and returns in a third value. The operand values are not changed in any way. Note that Whole numbers implement Dividable<Rational, Whole,Whole> and
-			Decimals implement Dividable<Decimals,Decimals,Decimals>
+		<td> Divides the two values and returns in a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement Dividable&lt;Rational, Whole,Whole&gt; and
+			Decimals implement Dividable&lt;Decimals,Decimals,Decimals&lt;. 
+		</td>
+	</tr>
+	<tr>
+		<td> \ </td>
+		<td> a \ b </td>
+		<td> a.divide(b) </td>
+		<td> WholeDividable<W> </td>
+		<td> Performs whole division the two values and returns in a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement WholeDividable&lt;Whole&gt; 
 		</td>
 	</tr>
 	<tr>
 		<td> % </td>
 		<td> a % b </td>
 		<td> a.remainder(b) </td>
-		<td> Remainder<Q,N,D> </td>
-		<td> Divides the two values and returns the remainder in a third value. The operand values are not changed in any way. </td>
+		<td> WholeDividable<W> </td>
+		<td> Divides the two values and returns the remainder in a third value. This operator represents a non-comutative operation.  Note that it should true that <i>a = a \ b + a % b</i>
+		</td>
 	</tr>
 	<tr>
 		<td> - (infix) </td>
 		<td> -a </td>
 		<td> a.symetric() </td>
-		<td> Symmetric<T> </td>
-		<td> Returns the symmetric value. The Symmetric value of *x* is equivalent to that calculated by *0 - x*</td>
+		<td> Symmetric<T,R> </td>
+		<td> Returns the symmetric value. Keep in mind the rule  <i> -x = 0 - x</i> may not be true. For `Natural`s, for example the symetric value is an `Integer`. </td> 
 	</tr>
 	<tr>
 		<td> ~ (infix) </td>
 		<td> ~a </td>
-		<td> a.flipAll() </td>
-		<td> Binary<T> </td>
-		<td> Returns a values equivalent to the original with bits reversed (fliped)</td>
+		<td> a.complement() </td>
+		<td> Complementable<T,R> </td>
+		<td> Returns he complement of the value. For Binary values is equivalent to fliping all bits. For complex numbers is represents the conjugate so that  <i>~(a + ib) = a - ib</i> </td>
 	</tr>
 	<tr>
 		<td> ++ (infix) </td>
 		<td> ++a </td>
-		<td> a.increment() </td>
-		<td> Incrementable<T> </td>
-		<td> Increments the value by one unit</td>
+		<td> a.successor() </td>
+		<td> Enumerable<T> </td>
+		<td> Obtain the next value in the enumeration.</td>
 	</tr>
 	<tr>
 		<td> -- (infix) </td>
 		<td> --a </td>
-		<td> a.decrement() </td>
-		<td> Decrementable<T> </td>
-		<td> Decrements the value by one unit</td>
+		<td> a.predecessor() </td>
+		<td> Enumerable<T> </td>
+		<td>Obtain the previous value in the enumeration.</td>
 	</tr>
 	<tr>
 		<td> & </td>
 		<td> a & b </td>
 		<td> a.and(b) </td>
 		<td> Injunctable<R,A,B> </td>
-		<td> Injucts the two values and returns a third value. The operand values are not changed in any way. For binary forms, this implements a bitwise AND </td>
+		<td> Injucts the two values and returns a third value. For binary forms, this implements a bitwise AND </td>
 	</tr>
 	<tr>
 		<td> | </td>
 		<td> a | b </td>
 		<td> a.or(b) </td>
 		<td> Dijunctable<R,A,B> </td>
-		<td> Dijunsts the two values and returns a third value. The operand values are not changed in any way. For binary forms, this implements a bitwise OR </td>
+		<td> Dijunsts the two values and returns a third value. For binary forms, this implements a bitwise OR </td>
 	</tr>
 	<tr>
 		<td> ^ </td>
 		<td> a ^ b </td>
 		<td> a.xor(b) </td>
 		<td> ExclusiveDijunctable<R,A,B> </td>
-		<td> Exclusively dijunsts the two values and returns a third value. The operand values are not changed in any way. For binary forms, this implements a bitwise XOR </td>
+		<td> Exclusively dijunsts the two values and returns a third value. For binary forms, this implements a bitwise XOR </td>
 	</tr>
 	<tr>
 		<td> <=> </td>
@@ -236,7 +258,7 @@ Lense supports the following overridable operators:
 
 ### A note on Increment and Decrement operators (Under consideration)
 
-The infix ``--a`` and ``++b`` operators are transformed to calls into ``decrement`` and ``increment``. For example, this code:
+The infix ``--a`` and ``++b`` operators are transformed to calls into ``predecessor`` and ``successor``. For example, this code:
 
 ~~~~brush:lense 
 val a : Integer= 3;
@@ -248,13 +270,13 @@ Is equivalent to
 
 ~~~~brush:lense 
 var  a : Integer = 3;
-a = a.increment();
+a = a.successor();
 val b :Integer = a;
 ~~~~
 
 As you can see the value in the variable is incremented implicitly as you would expect, however a new object is created and the reference is redirected to this new object. 
 
-The suffix operators ``a--`` and ``a++`` are also transformed to calls into ``decrement`` and ``increment`` but in another sequence. For example,
+The suffix operators ``a--`` and ``a++`` are also transformed to calls into ``predecessor`` and ``successor``, but in a different sequence. For example:
 
 ~~~~brush:lense 
 val a : Integer= 3;
@@ -267,5 +289,68 @@ is translated internally to
 ~~~~brush:lense 
 var a : Integer = 3;
 val b : Integer = a;
-a = a.increment();
+a = a.successor();
+~~~~
+
+## Composed assignment operators
+
+Consider the following operator statement:
+
+~~~~brush:lense 
+var a : Integer = 3;
+
+a+=5;
+
+~~~~
+
+The ``+=`` is a composed assignment operator. Where the ``a+=5`` statement is equivalent to:
+
+~~~~brush:lense 
+var a : Integer = 3;
+
+a = a + 5;
+
+~~~~
+
+All composed assignment operator are decomposed by the compiler in an assignment an a call to the root operator. 
+
+<table class="listing">
+	<tr>
+		<td>+=</td>
+		<td>-=</td>
+		<td>*=</td>
+		<td>/=</td>
+		<td>\=</td>
+	</tr>
+	<tr>
+		<td>&=</td>
+		<td>|=</td>
+		<td>^=</td>
+		<td><<=</td>
+		<td>>>=</td>
+	</tr>
+</table>
+
+Remember that assignments are statemets in Lense, so the following code does not compile:
+
+~~~~brush:lense 
+var a : Integer = 3;
+
+if (a+=5 > 7){
+  // do something
+}
+
+~~~~
+
+This one does:
+
+~~~~brush:lense 
+var a : Integer = 3;
+
+a+=5;
+
+if (a > 7){
+  // do something
+}
+
 ~~~~

@@ -22,9 +22,8 @@
 		display: none !important;
 	}
 	
-	table.listing {
-		
-		
+	table.listing  th, td{
+		padding:5px;
 	}
 	
 	table.set th{

@@ -37,12 +37,14 @@ If you need to use a Unicode special character, simply enclose its hexadecimal c
 
 ## Concatenation
 
-You can concatenate strings using the ``+`` operator.
+You can concatenate strings using the ``++`` operator.
 
 ~~~~brush: lense
 	val name : String = "Alice";
-	val greating : String = "Hello, " + name;
+	val greating : String = "Hello, " ++ name;
 ~~~~
+
+However, you probably use interpolation a lot more that concatenation.
 
 ## Interpolation
 
@@ -63,11 +65,11 @@ You can interpolate any expression
 
 # Character 
 
-Character corresponds to a UTF-16 code point. Literals are inclosed in single quotes like ``'a'``.A character is not a number (like in java) but you can use some operations with naturals.
+Character corresponds to a UTF-16 code point. Literals are inclosed in a single quotes like ``'a'``. A character is an ``Enumerable``, not a number (like in java) however you can still use some operators and some operations with ``Natural``s.
 
 ~~~~brush: lense
 	var a = 'a';
 	
-	var b = a++; //  'b' 
+	var b = ++a; //  'b' 
 	var c = a + 2; // 'c'
 ~~~~

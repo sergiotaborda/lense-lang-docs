@@ -26,12 +26,12 @@ Lense supports Complex and Imaginary numbers. Even thought we are aware the perf
 			- Decimal64 - negative and positive decimal values that follow 64 bits IEEE 3744 conventions
 		* ArbitraryPrecisionDecimal - Represents Decimal elements with arbitrary precision:
 			- BigDecimal - Represents elements in the **&#8477;** set including truncated version of irrational numbers.Negative and positive decimal values with arbitrary precision limited only by available memory.
-* Imaginary - Represents elements from the mathematical **&#120128;** set. Numbers with pure imaginary parts of the form ``bi`` where ``b`` is a ``Number`` and ``i`` is the square root of -1.
-	- ImaginaryOverReals<T extends Real>; - uses a Real type to store the numeric value
+* Imaginary - Represents elements from the mathematical **&#120128;** set. Numbers with pure imaginary parts of the form ``bi`` where ``b`` is a ``Field`` and ``i`` is the square root of -1.
+	- ImaginaryOverReals&lt;T extends Real&gt;- uses a Real type to store the numeric value
 * Complex - Represents elements from the mathematical **&#8450;** set. Complex numbers are of the form ``a + bi`` where ``i`` it the square root of -1.
-	- ComplexOverReals<T extends Real>; - Use a Real to type to store a numeric value for the real part and a ImaginaryOverReals<T> for the imaginary part.
+	- ComplexOverReals&lt;T extends Real&gt; - Use a Real to type to store a numeric value for the real part and a ImaginaryOverReals<T> for the imaginary part.
 
-Type ``Natural`` is used as an indexer for ``Sequence``s. Limits to collections like arrays, lists and maps are only bound by the limit of Natural which in turn is limited only by available memory.
+Type ``Natural`` is used as an indexer for ``Sequence``s. Size limits to collections like arrays, lists and maps are only bound by the limit of Natural which in turn is limited only by available memory.
 Using a Natural to index sequences removes the necessity to check for negative indexes and because ``Arrays`` always have a upper limit and always are constructed by [factory like constructors](constructors.html#factory) the implementation for each platform can accommodate different implementations according to maximum length demand.
 
 For more information on how Natural relates to index of sequences, see how [Arrays](arrays.html) work in Lense.
@@ -96,12 +96,14 @@ If you need to define the type of the literal explicitly you can use specific su
 	var d: Complex = 3.9 + 0.2i; // equivalent to Rational.valueOf("3.9").plus(Imaginary.valueOf(Rational.valueOf("0.2"))
 ~~~~
 
-In any representation you can use _ to logically separate digits in the value to help readability.
+In any representation you can use underline (`_`) to logically separate digits in the value to help readability.
 
 ~~~~brush: lense
 	var x : Integer -1000000;
 	// or
 	var x : Integer = -1_000_000;
+	// or simply
+	var x = -1_000_000;
 ~~~~
 
 ### Other Bases for Literal Representations 
