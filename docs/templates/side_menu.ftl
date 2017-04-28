@@ -19,7 +19,7 @@
 					<li><a href="numbers.html">Numbers</a></li>
 					<li><a href="interval.html">Intervals</a></li>
 					<li><a href="maybe.html">Maybe</a></li>
-					<li>Tuples</li>
+					<li><a href="tuples.html">Tuples</a></li>
 					<li><a href="iterable.html">Iterable</a></li>
 					<li>Ranges</li>
 					<li><a href="sequence.html">Sequence</a></li>

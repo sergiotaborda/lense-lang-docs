@@ -28,7 +28,7 @@ You can write that, but Lense assumes you don't wish to, so it enables literals 
 
 ### Accessing elements 
 
-To acess an element in the tuple you use it like a sequence:
+To access an element in the tuple you use it like a sequence:
 
 ~~~~brush: lense
 var tuple  = ( 1 , "a", true);
@@ -38,7 +38,7 @@ var name = tuple[1];
 var predicate = tuple[2];
 ~~~~
 
-Tuples do not have indexers like sequencs do because the type depends on the index, but the compiler can translate that code to :
+Tuples do not have indexers like sequencs do because the type depends on the index, but the compiler can translate that code to:
 
 ~~~~brush: lense
 var tuple  = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
