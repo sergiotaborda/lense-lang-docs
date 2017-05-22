@@ -13,7 +13,7 @@ Properties store state like fields but behave like methods. All properties have 
 From the design point of view, fields represent state and properties represent the access to that state with the added value of intercepting the state read and write operations and eventually calculating the state on the fly from other properties. Because of this, fields are not supposed to be public because this will break polimorfic access and the client code will have knowledge of how the object stores its state. On the other hand, properties never need to be private because if they are they, the object is using encapsulation to protect it from it self. 
 
 So Lense does only have one construct named Property. However, Lense properties behave like fields if the are private, and like normal properties if the are not private hence having the best of both world in a single construct. Adicionally remember Lense requires all fields and properties to be initialized to a value. Only properties of type Maybe are initialized automaticly to ``none``.
- 
+
 ~~~~brush: lense
 public class Person {
 
@@ -38,6 +38,7 @@ The compiler will produce backing fields for non-public properties and will prod
 
 Note that properties are preceded with var or val. Properties with val are read-only and can only define an acessor (get) method. 
 Properties wih var are read-write and can define both acessor and modifier. By this rule we can them simplify the declarations like this:
+
 
 ~~~~brush: lense
 public class Person {
@@ -140,10 +141,10 @@ public class Person {
 If you omit the modifier near the acessor or modifier declarations the visibility of the property will be used.
 The visibility of the acessor or modifier may not be less restrictive than that of the property. Having a ``public get`` for a ``private`` property makes no sense. 
 
-## Intercepting And Acces to the Backing-Field 
+## Intercepting And Access to the Backing-Field 
 
 Sometimes you need to intercept the call to the acessor or the modifier but we would like the code to also write the result to the backing-field;
-This is very uncomon, so the example is a little contrived. The point is that can be done, if you need to.
+This is very uncomon, so the example is a little contrived. The point is that it can be done, if you need to.
 
 ~~~~brush: lense
 public class Doubler {
@@ -153,7 +154,7 @@ public class Doubler {
 	public someValue : Natural {
 		get {
 			log.trace("returning {{ someValue }}");
-			return 
+			return someValue;
 		}
 		set (value) {
 			val doubleValue = value *2;
