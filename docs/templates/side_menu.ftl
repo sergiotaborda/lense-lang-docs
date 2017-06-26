@@ -5,28 +5,34 @@
 	<li>Syntax and Semantics
 		<ol>
 			<li><a href="identifiers.html">Reserved Words</a></li>
-			<li>Variables</li>
-			<li>Mutability</li>
+			<li><a href="variables.html">Variables and Mutability</a></li>
 			<li><a href="nullability.html">Nullability</a></li>
 			<li>Comments</li>
 			<li>Generics</li>
 			<li>Functions</li>
 			
 			<li>Fundamental Types
-				
 				<ul>
-					<li><a href="strings.html">Strings</a></li>
-					<li><a href="numbers.html">Numbers</a></li>
-					<li><a href="interval.html">Intervals</a></li>
-					<li><a href="maybe.html">Maybe</a></li>
-					<li><a href="tuples.html">Tuples</a></li>
+					<li><a href="booleans.html">Boolean</a></li>
+					<li><a href="strings.html">String</a></li>
+					<li><a href="numbers.html">Number</a></li>
+					<li>Binary</li>
+					<li><a href="interval.html">Interval</a></li>
 					<li><a href="iterable.html">Iterable</a></li>
-					<li>Ranges</li>
-					<li><a href="sequence.html">Sequence</a></li>
-					<li>Association</li>
-					<li><a href="containerLiterals.html">Container Literals</a></li>
+					<li> Containers
+						<ul> 
+							<li><a href="maybe.html">Maybe</a></li>
+							<li><a href="tuples.html">Tuple</a></li>
+							
+							<li>Range</li>
+							<li><a href="sequence.html">Sequence</a></li>
+							<li>Association</li>
+							
+						</ul>
+					</li>
 				</ul>
 			</li>
+			<li><a href="containerLiterals.html">Container Literals</a></li>
 			<li><a href="arrays.html">Arrays</a></li>
 			<li>Control Statements
 				<ul>

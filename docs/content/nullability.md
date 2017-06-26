@@ -7,27 +7,23 @@ status=published
 
 #Nullability
 
-Lense does not allow variable to hold **null**. **null** is used in other languages to indicate the variable has not set. However when trying to dereference the object in the variable (i.e. use the dot operator) an exception is raized. It is easy to overlook the variable may contain null.
+Lense does not allow variables to hold **null**. **null** is used in other languages to indicate the variable has not set. However when trying to dereference the object in the variable (i.e. use the dot operator) an exception is raized. It is easy to overlook the variable may contain null.
 
-Lense take a more object oriente aproach. Every variable refers to an existing object. No **null**s are allowed, hence, no nulls exist.
+Lense take a more object oriented aproach. Every variable refers to an *existing* object. No **null**s are allowed, hence, no nulls exist.
 
-However the concept of an absent value is very usefull. Some data that is not yet calculated or the user as yet to inform. So Lense support the concept of an absent value using the tradiconal Maybe monad.
+However the concept of an absent value is very usefull. Some data that is not yet calculated or the user as yet to inform has no value. So Lense supports the concept of an absent value using the tradiconal [Maybe](maybe.html) type. ``String?`` is a shorthand notation for [Maybe<String>](maybe.html) and ``none`` is  the only instance of type ``None``.
 
 ~~~~~~brush: lense 
 val h : String = "Hello"; 
 val w : String? = none; 
 ~~~~~~
 
-The first line created a variable of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to ``none``. 
+The first line created a value of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to ``none``. 
 Please note that ``none`` is an object so the variable really refers to an object. No nulls are allowed.
-
-String? is a shorthand notation for [Maybe<String>](monads.html) and ``none`` is  the only instance of type ``None``.
-
 
 #Interoperatibility
 
-On Lense world no *null*s exist, but in the underlying platform , like java or .net, they may exist. Any method can return or aceppt null. We can not now if the value returned can be null or not.
-Let us take an example in java
+In Lense world no *null*s exist, but in the underlying platform , like java, javascript or .net, they may exist. Any method can return or aceppt null. We can not now if the value returned can be null or not. Let us take an example in java
 
 ~~~~~~brush: java 
 string[] names = resolveNames();

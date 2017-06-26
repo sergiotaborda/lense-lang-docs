@@ -161,7 +161,7 @@ Lense supports the following overridable operators:
 		<td> ~a </td>
 		<td> a.complement() </td>
 		<td> Complementable<T,R> </td>
-		<td> Returns he complement of the value. For Binary values is equivalent to fliping all bits. For complex numbers is represents the conjugate so that  <i>~(a + ib) = a - ib</i> </td>
+		<td> Returns the complement of the value. For Binary values is equivalent to fliping all bits. For complex numbers is represents the conjugate so that  <i>~(a + ib) = a - ib</i> </td>
 	</tr>
 	<tr>
 		<td> ++ (infix) </td>
@@ -195,7 +195,7 @@ Lense supports the following overridable operators:
 		<td> ^ </td>
 		<td> a ^ b </td>
 		<td> a.xor(b) </td>
-		<td> ExclusiveDijunctable<R,A,B> </td>
+		<td> ExclusivelyDijunctable<R,A,B> </td>
 		<td> Exclusively dijunsts the two values and returns a third value. For binary forms, this implements a bitwise XOR </td>
 	</tr>
 	<tr>

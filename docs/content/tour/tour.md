@@ -70,107 +70,6 @@ If you need access to passed arguments you can read them from the ``arguments`` 
 This property holds a ``Sequence<String>`` with the parameters given in the command line. If no arguments were passed or the application is running in an environment 
 without access to arguments (like a web browser) the sequence is empty.
 
-
-# Variables and Values
-
-Creating variables in Lense is very similar to other languages.
-
-~~~~brush: lense
-var  name : String = "Alice";
-~~~~
-
-Lense as type inference, to the this code can be simplified to :
-
-~~~~brush: lense
-var  name = "Alice";
-~~~~
-
-*Note*: For this tour we will always use the types explicitly to document and clarify what's going on, but in real code types can be omited.
-
-Variables always contain references to objects. The variable called *name* contains a reference to a ``String`` object with a value of *Alice*.
-The reference contained in a variable can be changed further down in the code to another reference, like :
-
-~~~~brush: lense
-var name : String = "Alice";
-name = "Beth";
-~~~~
-
-The use of the ``var`` keyword defines a variable (mutable) reference declaration. Immutable references are defined with the ``val`` keyword.
-
-~~~~brush: lense
-val name : String = "Alice";
-~~~~
-
-Immutable values cannot be changed, so trying to do so is a compilation error.
-
-~~~~brush: lense
-val name : String = "Alice";
-name = "Beth"; // Compilation Error 
-~~~~
-
-## Nullability
-
-Variables (immutable or not) must be initialized with values. Lense does not allow uninitialized variables to be used. So, this code will fail:
-
-~~~~brush: lense
-val  name : String;
-
-Console.println(name); // Compilation error. Variable was not initialized.
-~~~~
-
-In addition, Lense as no concept of "null reference". References always exist.
-This will also fail:
-
-~~~~brush: lense
-val name : String = null; // Compilation error. null is a reserved keyword to prevent use.
-
-Console.println(name); 
-~~~~
-
-However, Lense understands possible absent values if you use a ``Maybe<T>`` type. The ``Maybe<T>`` type is a [monad type](../monads.html) that holds a some value or none.
-
-
-~~~~brush: lense
-val  name : Maybe<String> = none;  
-
-Console.println(name); // prints "none";
-
-name = new Some("Alice"); 
-
-Console.println(name); // prints "Alice";
-~~~~
-
-``Maybe`` values are used very often in code, so Lense add some facilities to ease your writing.
-
-
-~~~~brush: lense
-val  name : String?;   // use ? shorthand notation for Maybe. Also auto-initializaed to 'none' implictly.
-
-Console.println(name); // prints "none";
-
-name = "Alice"; // implicitly promote values when assigned to a Maybe types variable.
-
-Console.println(name); // prints "Alice";
-~~~~
-
-The ? sign after the ``String?`` type is a shorthand notation for ``Maybe<String>``. You can use this notations with any type. The compiler will automaticlly initialize any maybe type variable to ``none`` unless otherwise specified. The compiler will also implicitly promote any value to a maybe on assignment.
-
-# Fundamental types
-The Lense language has special support for the following types:
-
-+ Number
-+ Binary
-+ String
-+ Boolean
-+ Range
-+ Interval
-+ Sequence (like Arrays and Lists)
-+ Associations (like Maps)
-+ Tuple
-+ Maybe
-
-You can initialize an object of any of these special types using a [literal](../containerLiterals.html). For example, 'this is a string' is a string literal, and ``true`` is a boolean literal.
-
 ## Numbers
 
 Numbers are separated in specific algebraic structures that conform to their mathematical rules.
@@ -222,17 +121,6 @@ If you need to use a Unicode a special character enclosing an hexadecimal natura
 val definePi : String = "The value of \{#03C0} is the ratio between the circumference and the diameter of a circle"
 ~~~~
 
-## Booleans
-
-To represent boolean values, Lense has a type named ``Boolean``. Only two objects have type Boolean: the boolean literals ``true`` and ``false``, which are both compile-time constants.
-Lense is strong types and only allows Boolean values and expressions where a Boolean is expected. For example, the following code will not compile:
-
-~~~~brush: lense
-val name : String = "Alice";
-if (name){  // Compilation error. Expected Boolean expression
-	printName(name);
-}
-~~~~
 
 
 # Collections
