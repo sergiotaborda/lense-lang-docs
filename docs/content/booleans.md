@@ -23,23 +23,14 @@ Operations upon booleans are divided in two categories Bitwise Operations and Lo
 
 ## Bitwise Operations
 
-Bitwise operations regard boolean values as being equivalent to a single bit an operate according to they respective tradicional [Truth Tables](https://en.wikipedia.org/wiki/Truth_table).
+´´Boolean`` implements ``Injuctable``, ``Dijunctable`` and ``ExclusiveDijunctable`` to allows for the use of the following operators as bitwise operators:
 
-+ &  - the bitwise AND operator
-+ |  - the bitwise OR operator
-+ ^  - the bitwise XOR (Exclusive-OR) operator
++ &  - from ``Injuctable`` : the bitwise AND operator 
++ |  - from ``Dijunctable`` : the bitwise OR operator
++ ^  - from ``ExclusiveDijunctable``: the bitwise XOR (Exclusive-OR) operator 
 
-These operators are comutative, so the order of the operands is not relevant.
-
-~~~~brush: lense
-assert(!checkA()); // checkA() returns false 
-assert(checkB()); // checkA() returns true 
-
-val check = checkA() & checkB();
-val checkReverse = checkB() & checkA();
-
-assert( check ==  checkReverse);
-~~~~
+These operators regard ``Boolean`` values as being equivalent to a single bit an operate bitwise according to they respective tradicional [Truth Tables](https://en.wikipedia.org/wiki/Truth_table).
+These operators are comutative: the order of the operands is not relevant.
 
 ## Logic Operators 
 
@@ -50,20 +41,7 @@ They are:
 + ||  - the logic OR operator
 + !  - the logic NOT operator
 
-Logic operators && and || are short-circuit, meaning that once the evaluation has determine the result is fixed no further expressions will be evaluated.
-Take this example:
+Logic operators ``&&`` and ``||`` are short-circuit. The ``&&`` operator evaluates the right side only if the left side is ``true``. The ``||`` operator evaluates the right side only if the left side is ``false``. These operators are not considered comutative because. Eventhought the end logic result is the same, the side effects may not be and as Lense is not a pure functional language and side effects must be considered in the operators definition.
 
-~~~~brush: lense
-assert(!checkA()); // checkA() returns false 
-assert(checkB()); // checkA() returns true 
-
-val check = checkA() && checkB();
-val checkReverse = checkB() && checkA();
-
-assert( check == checkReverse);
-~~~~
- 
-Because ``checkA`` return ``false`` the result at line 1 will be ``false`` no matter what ``checkB`` returns, so the call to ``checkB`` it will not be executed.
-In line 2 ``checkB()`` return ``true`` so ``checkA()`` must be called to determine the final value. The end result will be the same as using the ``&`` operator but the side effects would not.
-Because Lense is not a pure functional language and side effects mut be considered, the Logic operators are needed.
+In most cases you will like to use Logic operators instead of Bitwise operators.
 

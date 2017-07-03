@@ -146,22 +146,22 @@ Lense supports the following overridable operators:
 		<td> a % b </td>
 		<td> a.remainder(b) </td>
 		<td> WholeDividable<W> </td>
-		<td> Divides the two values and returns the remainder in a third value. This operator represents a non-comutative operation.  Note that it should true that <i>a = a \ b + a % b</i>
+		<td> Divides the two values and returns the remainder of integer devision. This operator represents a non-comutative operation.  Note that it should true that <i>a = a \ b + a % b</i>
 		</td>
 	</tr>
 	<tr>
 		<td> - (infix) </td>
 		<td> -a </td>
 		<td> a.symetric() </td>
-		<td> Symmetric<T,R> </td>
-		<td> Returns the symmetric value. Keep in mind the rule  <i> -x = 0 - x</i> may not be true. For `Natural`s, for example the symetric value is an `Integer`. </td> 
+		<td> Symmetrical<T,R> </td>
+		<td> Returns the symmetric value. Keep in mind the type need not be closed for subtraction. For `Natural`s, for example the symetric value is an `Integer`. </td> 
 	</tr>
 	<tr>
 		<td> ~ (infix) </td>
 		<td> ~a </td>
 		<td> a.complement() </td>
 		<td> Complementable<T,R> </td>
-		<td> Returns the complement of the value. For Binary values is equivalent to fliping all bits. For complex numbers is represents the conjugate so that  <i>~(a + ib) = a - ib</i> </td>
+		<td> Returns the complement of the value. For Binary values it is equivalent to fliping all bits. For complex numbers is represents the conjugate so that  <i>~(a + ib) = a - ib</i> </td>
 	</tr>
 	<tr>
 		<td> ++ (infix) </td>
@@ -182,14 +182,14 @@ Lense supports the following overridable operators:
 		<td> a & b </td>
 		<td> a.and(b) </td>
 		<td> Injunctable<R,A,B> </td>
-		<td> Injucts the two values and returns a third value. For binary forms, this implements a bitwise AND </td>
+		<td> Injucts the two values and returns a third value. For binary forms, this implements a bitwise AND. For sets this implements intersection</td>
 	</tr>
 	<tr>
 		<td> | </td>
 		<td> a | b </td>
 		<td> a.or(b) </td>
 		<td> Dijunctable<R,A,B> </td>
-		<td> Dijunsts the two values and returns a third value. For binary forms, this implements a bitwise OR </td>
+		<td> Dijuncts the two values and returns a third value. For binary forms, this implements a bitwise OR . For sets this implements union</td>
 	</tr>
 	<tr>
 		<td> ^ </td>
@@ -242,17 +242,17 @@ Lense supports the following overridable operators:
 	</tr>
 	<tr>
 		<td> >> </td>
-		<td> a >> b </td>
-		<td> a.rightShiftBy(b)</td>
+		<td> a >> n </td>
+		<td> a.rightShiftBy(n)</td>
 		<td> Binary<T> </td>
-		<td> Returns a value equivalent to the original with bits moved to the right *b* times. The operand values are not changed in any way.  </td>
+		<td> The arithmetic right shift operator returns a value equivalent to the original with bits moved to the right *n* times. This is equivalent to division by 2 *n* times for positieve numeric values.The operand values are not changed in any way.  </td>
 	</tr>
 	<tr>
 		<td> << </td>
-		<td> a << b </td>
-		<td> a.leftShiftBy(b)</td>
+		<td> a << n </td>
+		<td> a.leftShiftBy(n)</td>
 		<td> Binary<T> </td>
-		<td> Returns a value equivalent to the original with bits moved to the left *b* times. The operand values are not changed in any way.  </td>
+		<td> The arithmetic left shift operator returns a value equivalent to the original with bits moved to the left *n* times. This is equivalent to multiplication by 2 *n* times for positieve numeric values. The operand values are not changed in any way.  </td>
 	</tr>
 </table>
 
