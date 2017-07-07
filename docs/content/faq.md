@@ -31,10 +31,8 @@ From a readality point of view they help visually locate the condition.
 From a parser point of view there is no conflict between these two lines 
 
 ~~~~brush: lense
-
 if (a) { } else {}
 if a { } else {}
-
 ~~~~
 
 #### Mandatory braces in control structures
