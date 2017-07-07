@@ -6,9 +6,8 @@ status=published
 ~~~~~~
 
 
-Lense does not have primitives (values that are not objects) and thus all values are objets , all objects decend from some class and all variables are references. 
+Lense does not have primitives (values that are not objects) and thus all values are objects , all objects decend from some class and all variables are references. 
 The Lense back-end compiler may try to use the native plataform's primitives as much as possible to enhance performance, but this is an otimization. Conceptually primitives do not exist.
-All being objetcs also means no static members exist.
 
 # Classes
 
@@ -27,7 +26,7 @@ public val class Fraction {
         return new Fraction(value.toString());
     }
 
-    constructor valueOf (value : String){
+    constructor parse (value : String){
          val pos : Natural? = value.indexOf('.');
          if (pos.hasValue){
             val wholePart = new Integer.parse(value.subString(0,pos));
@@ -71,11 +70,11 @@ public class Matrix<T> {
     val rowsCount : Natural;
     val colsCount : Natural;
 
-    constructor Matrix( rowsCount : Natural, colsCount : Natural){
+    constructor Matrix( rowsCount : Natural, colsCount : Natural, seed : T){
         this.rowsCount = rowsCount;
         this.colsCount = colsCount;
 
-        backingArray = new Array<T>(rowsCount * colsCount);
+        backingArray = new Array<T>(rowsCount * colsCount, seed);
     }
 
     public  [row : Natural, column: Natural] : T {
@@ -100,7 +99,7 @@ public abstract class Node <T> {
 
 }
 
-public class Brunch<T> extends Node<T>{
+public class Branch<T> extends Node<T>{
 	constructor (left : Node<T>  , right: Node<T> );
 }
 	
@@ -109,7 +108,7 @@ public class Leaf <T> extends Node<T>{
 }
 ~~~~ 
 
-If we now need to visit a long and complex tree we need to normally do so validation of types. For example, in java would be:
+If we now need to collect all leafs in a tree, tradicionally, we would need to do some recursive algorithm that would decide what to do based on the type of the Node. For example, in java would be:
 
 ~~~~brush: java
 // java
@@ -125,7 +124,8 @@ public <T> void colectLeafs(Node<T> node, List<T> leafs){
 }
 ~~~~
 
-We need to make a decision based on the type of the object, then cast it, then capture the properties and use them.
+Of course this is not good OO design because we could add a method Node and make use of polymorism, but supose Node is given by some third party code and we cannot add the polimorfic  method. 
+Then, ee need to make a decision based on the type of the object, then cast it, then capture the properties and use them.
 In Lense we could use a similar construction using the flow-cast mechanism:
 
 ~~~~brush: lense 
@@ -162,7 +162,7 @@ The flow-cast mechanism still applies in the switch, but for this to work as exp
 
 ~~~~brush: lense 
 public abstract class Node<T> is Brunch<T> | Leaf<T> {
-
+	
 }
 
 public case class Brunch<T> extends Node<T> {
@@ -175,3 +175,44 @@ public case class Leaf<T> extends Node<T> {
 ~~~~ 
 
 With this new code the compiler knows that ``Brunch`` and ``Leaf`` are the only possible sub types of ``Node``.
+
+Another example of a sume type is [Maybe](maybe.html) that is defined as :
+
+~~~~brush: lense 
+public abstract class Maybe<T> is None | Some<T> {
+	public abstract isAbsent : Boolean {get}
+	public abstract map (transform: Function<R, T>) : Maybe<R> 
+	public abstract filter (predicate: Function<Boolean, T>) : Maybe<T> 
+}
+
+public case class None extends Maybe<Nothing> is none{
+	
+	public isAbsent : Boolean => true;
+	public map (transform: Function<R, T>) : Maybe<R>{
+		return none;
+	}
+	public filter (predicate: Function<Boolean, T>) : Maybe<T>{
+		return none;
+	}
+}
+
+public case object none extends None{
+	
+}
+
+public case class Some<T> extends Maybe<T> {
+	constructor (var value : T);
+	
+	public isAbsent : Boolean => false;
+	
+	public map (transform: Function<R, T> ) : Maybe<R> {
+		return new Some(transform.apply(value));
+	}
+
+	public filter (predicate: Function<Boolean, T>) : Maybe<T>{
+		return predicate.apply(value) ? this : none;
+	}
+}
+~~~~ 
+
+Note as ``none`` is a case object (instead of a case class)

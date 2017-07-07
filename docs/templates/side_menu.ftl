@@ -72,11 +72,6 @@
 		</ul>
 	</li>
 	<li><a href="concurrency.html">Concurrency</a>
-		<ol>
-			<li>Promisses</li>
-			<li>Executors</li>
-			<li>Actors</li>
-		</ol>
 	</li>
 
 <ol>

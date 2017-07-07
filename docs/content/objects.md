@@ -47,12 +47,10 @@ public class OtherClass {
 
 	public object SomeObject {
 	     
-	      public Void doItInTheObject {} 
+	      public doItInTheObject () {}  
 	}
    
-	public doItInTheOtherClass() {
-	
-	}
+	public doItInTheOtherClass() {}
 }
 
 // called like 
