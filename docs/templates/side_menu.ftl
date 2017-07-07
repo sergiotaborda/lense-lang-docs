@@ -16,7 +16,7 @@
 					<li><a href="booleans.html">Boolean</a></li>
 					<li><a href="strings.html">String</a></li>
 					<li><a href="numbers.html">Number</a></li>
-					<li>Binary</li>
+					<li><a href="binary.html">Binary</a></li>
 					<li><a href="interval.html">Interval</a></li>
 					<li><a href="iterable.html">Iterable</a></li>
 					<li> Containers
