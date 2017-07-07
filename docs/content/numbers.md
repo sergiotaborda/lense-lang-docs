@@ -115,35 +115,3 @@ The hexadecimal form begins with a ``#`` symbol followed by a valid hexadecimal 
 ~~~~brush: lense
 	var  color : Natural = #FF_EE_00; // hexadecimal
 ~~~~
-
-## Binary and Bytes
-
-Lense supports the ``Binary`` immutable interface to represent any value that can be understood as a sequence of bits. ``Binary`` does not,necessarily, represent a number. 
-Two default implementations of Binary exist :  ``BitArray``is a size imutable implementation , while is ``BitList`` a size mutable implementation.
-``BitList`` supports a variable size of bits. ``BitArray`` supports a fixed length of bits.
-
-``Byte`` is a special class that also implements ``Binary`` corresponding to a fixed length sequence of 8 bits. It's primarily intented for use in I/O operations. ``Byte`` is not a number, does not have an assigned numeric value and there is no automatic promotion from ``Byte`` to any type of ``Number``. Also it has no arithmetic operations. However, a ``Byte`` can be transformed explicitly to a ``Natural`` between 0 and 255 or to a ``Int32`` between -128 and 127 by means of the ``toNatural()`` and ``toInteger()`` functions.
-
-~~~~brush: lense
-	var  byte : Byte = $1111_0000; 
-	var  n : Natural = byte.toNatural(); // equivalent to 240;
-	var  i : Int32 = byte.toInteger(); // equivalent to -16
-	
-	var error : Natural = byte; // illegal. Byte is not assignable to Natural.
-~~~~
-
-``Int16`` , ``Int32`` and ``Int64`` also implement ``Binary`` corresponding to a fixed length sequence of 16, 32 and 64 bits respectively. Because this values have a signed numeric value, one of the bits is reserved to determine the sign. The rest of the bits represent the value if the value is positive, else represent the Two Complement representation of the (then negative) value.
-
-### Binary Literal Representation
-
-The literal of binary begins with a ``$`` sign flowed by a sequence of ones (to represent ``true``) and zeros (to represent ``false``). The ``_`` symbol can be used, as in number literals, to separate digits logically.
-
-All binary literals are assumed to be instances of ``BitArray`` with the given number of bits. It is not possible to have literal for a zero bits sequence. 
-
-~~~~brush: lense
-	var  byte : Byte= $1111_0000; // equivalent to Byte.valueOf(BitArray.valueOf(true,true,true,true,false,false,false,false));
-	var  short : Int16 = $1111_0000_1111_0000; // equivalent to Int16.valueOf(BitArray.valueOf(true,true,true,true,false,false,false,false,true,true,true,true,false,false,false,false));
-	var  flags : BitArray = $1111_0000_0101_0110_0010_0001_0101_1001; // equivalent to BitArray.valueOf(true,true,true,true,false,false,false,false,true,false,true,false,true,true,false,false,false,false,false,false,false,false,true,false,true,false,true,true,false,false,true);
-~~~~	
-
-*Note the equivalent expressions are conceptual, in practice the compiler uses more suitable constructors for each case.*

@@ -19,7 +19,7 @@ Operators are not fundamental in Lense so when you write `2 + 3` this is not spe
 	<li><a href="booleans.html">Boolean</a></li>
 	<li><a href="strings.html">String</a></li>
 	<li><a href="numbers.html">Number</a></li>
-	<li>Binary</li>
+	<li><a href="binary.html">Binary</a></li>
 	<li><a href="interval.html">Interval</a></li>
 	<li><a href="iterable.html">Iterable</a></li>
 	<li> Containers
