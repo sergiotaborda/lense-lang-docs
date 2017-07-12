@@ -126,7 +126,7 @@ public <T> void colectLeafs(Node<T> node, List<T> leafs){
 
 Of course this is not good OO design because we could add a method Node and make use of polymorism, but supose Node is given by some third party code and we cannot add the polimorfic  method. 
 Then, ee need to make a decision based on the type of the object, then cast it, then capture the properties and use them.
-In Lense we could use a similar construction using the flow-cast mechanism:
+In Lense we could use a similar construction using [flow-sensitive typing](https://en.wikipedia.org/wiki/Flow-sensitive_typing):
 
 ~~~~brush: lense 
 public colectLeafs<T>(Node<T> node, List<T> leafs): Void {
@@ -141,7 +141,7 @@ public colectLeafs<T>(Node<T> node, List<T> leafs): Void {
 ~~~~
 
 However the compiler would be blind to the fact ``Node`` is a sum type. If we did not had a ``else if`` to test for leafs the compiler 
-would not complain.  If we need the be sure all sub types are covered we can use the ``switch`` statement.
+would not complain.  When we need the be sure all sub types are covered we can use the ``switch`` statement.
 
 ~~~~brush: lense
 public colectLeafs<T>(Node<T> node, List<T> leafs) : Void {
@@ -158,7 +158,7 @@ public colectLeafs<T>(Node<T> node, List<T> leafs) : Void {
 }
 ~~~~
 
-The flow-cast mechanism still applies in the switch, but for this to work as expect we need to informe the compiler the children types of ``Node`` are limited to ``Brunch`` and ``Leaf``:
+Flow-sensitive typing mechanism still applies inside the switch case, but for this to work as expect we need to inform the compiler all children types of ``Node`` are limited to ``Brunch`` and ``Leaf``:
 
 ~~~~brush: lense 
 public abstract class Node<T> is Brunch<T> | Leaf<T> {
@@ -176,7 +176,7 @@ public case class Leaf<T> extends Node<T> {
 
 With this new code the compiler knows that ``Brunch`` and ``Leaf`` are the only possible sub types of ``Node``.
 
-Another example of a sume type is [Maybe](maybe.html) that is defined as :
+Another example of a sum type is [Maybe](maybe.html) that is defined as :
 
 ~~~~brush: lense 
 public abstract class Maybe<T> is None | Some<T> {
