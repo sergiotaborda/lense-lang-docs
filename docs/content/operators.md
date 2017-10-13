@@ -7,17 +7,19 @@ status=published
 
 # Operators
 
-Lense supports operators and a special kind of operator overloading we named *Operator Interface*. Some are intrinsic to the language and can not be redefined.
+Lense supports operators with a special kind of operator overloading. There are two types of operators : intrinsic and redefinable.
 
-The set of available operators for redefinition is limited ( we do not what symbolic noise ) but extended enought to be usefull in a mathematical or engineering context.
-Each operator is defined by an interface with only one method, by implementing this interface on your classes the compiler will understand the operator symbol as a call to that method.
-In the end, the use of the operator is translated to a method call. This method implementation should not change the operand values in any way.
+Intrinsic operators are native to the language and their behavior cannot be redefined. On the other hand, the set of available operators for redefinition is limited ( we do not what symbolic noise ) but extended enought to be usefull in a mathematical or engineering context.
+Redefinable operators are translated to calls to methods. Intrinsic operators are not translated to method calls.
 
-Symbols are gathered from differente sources. Lense pays special attention to algebric structures that are related to the operators and symbols, this means, for example, that the symbol implies if the operation is comutable or not. As a rule of thumb, doubled char symbols mean to represent not comutative operations, and single char symbols mean to represent comutative operations or operations that can be both depending on the type class. However this is not a strict rule since operators can be redefined by the class. For example, eventhought the ``*`` operator is tradicionally comutative for numbers and not for matrices we still used it for matrices because multiplication itself is not comutative in general. On the other side we use ``**`` for exponentiation that we now is always non-comutative.
+
+Symbols are gathered from differente sources. Lense pays special attention to algebric structures that are related to the operators and symbols, this means, for example, that the symbol implies if the operation is comutable or not. As a rule of thumb, doubled symbols always represent non-comutative operations. For example,we use ``^^`` for exponentiation that we now is always non-comutative and `^` for the XOR operator that is always comutative. On te same token we use `+` for comutative sum and `++` for non cumutative concatenation.
+
+
 
 ## Intrinsic Operators
 
-Intrinsic operators can not be redefined and are specially handled by the compiler.
+Intrinsic operators cannot be redefined and are specially handled by the compiler.
 
 <table class="listing">
 	<tr>
@@ -118,27 +120,27 @@ Lense supports the following overridable operators:
 		<td> Multiplies the two values and returns in a third value. Prefer the * operator for comutative monoid operations with one as identity. </td>
 	</tr>
 	<tr>
-		<td> ** </td>
-		<td> a ** b </td>
-		<td> a.raise(b) </td>
+		<td> ^^ </td>
+		<td> a ^^ b </td>
+		<td> a.raiseTo(b) </td>
 		<td> Powerable<P,B,E> </td>
-		<td> Raises the first operand to the power of the second operand and returns the result in a third value. Prefer the ** operator for non-comutative monoid operations with one as identity. </td>
+		<td> Raises the first operand to the power of the second operand and returns the result in a third value. Prefer the ^^ operator for non-comutative monoid operations with one as identity. </td>
 	</tr>
 	<tr>
 		<td> / </td>
 		<td> a / b </td>
-		<td> a.over(b) </td>
+		<td> a.divide(b) </td>
 		<td> Dividable<Q,N,D> </td>
-		<td> Divides the two values and returns in a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement Dividable&lt;Rational, Whole,Whole&gt; and
+		<td> Divides the two values and returns a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement Dividable&lt;Rational, Whole,Whole&gt; and
 			Decimals implement Dividable&lt;Decimals,Decimals,Decimals&lt;. 
 		</td>
 	</tr>
 	<tr>
 		<td> \ </td>
 		<td> a \ b </td>
-		<td> a.divide(b) </td>
+		<td> a.wholeDivide(b) </td>
 		<td> WholeDividable<W> </td>
-		<td> Performs whole division the two values and returns in a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement WholeDividable&lt;Whole&gt; 
+		<td> Performs whole division the two values and returns a third value. The operand values are not changed in any way. This operator represents a non-comutative operation. Note that Whole numbers implement WholeDividable&lt;Whole&gt; 
 		</td>
 	</tr>
 	<tr>
@@ -154,7 +156,7 @@ Lense supports the following overridable operators:
 		<td> -a </td>
 		<td> a.symetric() </td>
 		<td> Symmetrical<T,R> </td>
-		<td> Returns the symmetric value. Keep in mind the type need not be closed for subtraction. For `Natural`s, for example the symetric value is an `Integer`. </td> 
+		<td> Returns the symmetric value. Keep in mind the type needs not be closed for subtraction. For `Natural`s, for example the symetric value is an `Integer`. </td> 
 	</tr>
 	<tr>
 		<td> ~ (infix) </td>
@@ -167,14 +169,14 @@ Lense supports the following overridable operators:
 		<td> ++ (infix) </td>
 		<td> ++a </td>
 		<td> a.successor() </td>
-		<td> Enumerable<T> </td>
+		<td> Ordable<T> </td>
 		<td> Obtain the next value in the enumeration.</td>
 	</tr>
 	<tr>
 		<td> -- (infix) </td>
 		<td> --a </td>
 		<td> a.predecessor() </td>
-		<td> Enumerable<T> </td>
+		<td> Ordable<T> </td>
 		<td>Obtain the previous value in the enumeration.</td>
 	</tr>
 	<tr>
@@ -254,9 +256,48 @@ Lense supports the following overridable operators:
 		<td> Binary<T> </td>
 		<td> The arithmetic left shift operator returns a value equivalent to the original with bits moved to the left *n* times. This is equivalent to multiplication by 2 *n* times for positieve numeric values. The operand values are not changed in any way.  </td>
 	</tr>
+	<tr>
+		<td> <i>empty space</i> </td>
+		<td>  a b </td>
+		<td> a.juxtapose(b)</td>
+		<td> Juxtaposable<T> </td>
+		<td> (Under consideration) This is an operator with no symbol that means the two operands are simply "put together". This may mean a kind of multiplication like in `2 Kg` , or in matrix multiplication like `A B`. The juxtapose operator is non-comutative in general.  </td>
+	</tr>
 </table>
 
-### A note on Increment and Decrement operators (Under consideration)
+## Ternary operators 
+
+### Ternary Select operator 
+This operator test for the first term to be true. In the positieve case returns the second term. Otherwise returns the third.
+
+~~~~brush:lense 
+val c = (a == b) ? 1 : 4;
+~~~~
+
+
+### Ternary Comparison operator 
+This operator compares the second term with the other ones according to the comparison operators use in between them an returns true if both sides are true
+
+~~~~brush:lense 
+val isTeenager =  13 <= x <= 19;
+~~~~
+
+This operator is equivalent to 
+
+~~~~brush:lense 
+val isTeenager =  13 <= x && x <= 19
+~~~~
+
+but, we do not need to use the `&&` operator nor type the variable `x` twice. 
+Also this operator is equivalent to
+
+~~~~brush:lense 
+val isTeenager = x in |[ 13 , 19 ]|;
+~~~~
+
+but we do not need to create and interval object to text x agains it.
+
+## A note on Increment and Decrement operators (Under consideration)
 
 The infix ``--a`` and ``++b`` operators are transformed to calls into ``predecessor`` and ``successor``. For example, this code:
 
