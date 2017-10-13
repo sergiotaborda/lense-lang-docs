@@ -20,6 +20,8 @@
 
 	</script>
   
+	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/jquery-1.11.1.min.js"></script>
+  
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shCore.js"></script>
 
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushScala.js"></script>
@@ -48,6 +50,39 @@
     <!-- Fav and touch icons -->
 
     <link rel="shortcut icon" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>icon.png">
+	
+	<script>
+	$(document).ready(function() {
+	  $(".collapsible-menu").on("click", "li > a", function(e) {
+		var p = $(this).parent();
+		if (p.hasClass("has-children")) {
+			p.toggleClass("open").siblings(".open").removeClass("open");
+		}
+	  });
+	  
+	  var url = window.location.pathname;
+		var filename = url.substring(url.lastIndexOf('/')+1);
+		console.log("current=" + filename);
+		
+	  $(".collapsible-menu a").each(function(){
+		var link = $(this).attr("href");
+		console.log("link=" + link);
+		
+		if (filename == link) {
+			var item = $(this).parent();
+			
+			while (!item.hasClass("collapsible-menu")){
+				if (item.hasClass("has-children")) {
+					item.toggleClass("open").siblings(".open").removeClass("open");
+				}
+				item = $(item).parent()
+			}
+		}
+
+	  })
+	  
+	});
+	</script>
   </head>
   <body onload="prettyPrint()">
     <div id="wrap">
