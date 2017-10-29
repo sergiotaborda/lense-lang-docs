@@ -5,7 +5,7 @@
     
     <div id="footer">
       <div class="container">
-        <p class="muted credit">Lense is an open source project and a community driven effort</p>
+        <p class="muted credit">Lense is an open source project </p>
       </div>
     </div>
     
