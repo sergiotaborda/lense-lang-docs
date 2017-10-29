@@ -7,9 +7,8 @@ status=published
 
 # Status
 
-Lense is currently in the *Exploration Stage*. We are designing the language features and trying to understand how they interact together 
-and providing an AST parser for the language itself. Compilation to targets (like java) is being taken into account on development but not
- activly persueed at the time. Feel free to contribute.
+Lense is currently in the *Exploration Stage*. The language features are being defined and experimentaion is underway to understand how they interact together. 
+Compilation to targets (like java) is being taken into account on development but not activly persueed at the time. Feel free to contribute.
 
 # Roadmap
 

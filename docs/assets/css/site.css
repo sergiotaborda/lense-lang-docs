@@ -45,14 +45,14 @@ table.set td{
   width: 200px;
 }
 .collapsible-menu > li {
-  border-top: 1px solid gainsboro;
+  //border-top: 1px solid gainsboro;
 }
 .collapsible-menu li {
   padding: 0px;
   margin: 0px;
   position: relative;
   list-style: none;
-  background: #f5f5f5;
+  //background: #f5f5f5;
 }
 .collapsible-menu li.has-children.open > ul, .collapsible-menu li.has-children.active > ul {
   display: block;
@@ -62,7 +62,7 @@ table.set td{
   line-height: 0px;
   border-style: solid;
   border-width: 4px;
-  border-color: #333 transparent transparent transparent;
+ // border-color: #333 transparent transparent transparent;
   margin-top: -2px;
   right: 8px;
 }
@@ -74,10 +74,10 @@ table.set td{
   border-color: transparent transparent transparent #999;
 }
 .collapsible-menu li.open, .collapsible-menu li.active {
-  background: #cfcfcf;
+  //background: #cfcfcf;
 }
 .collapsible-menu li.open > a, .collapsible-menu li.active > a {
-  color: #333;
+  //color: #333;
 }
 .collapsible-menu li ul {
   padding: 0px;
@@ -88,18 +88,18 @@ table.set td{
   padding-left: 1em;
 }
 .collapsible-menu li ul li li {
-  background: #ededed;
+ // background: #ededed;
 }
 .collapsible-menu li ul li li li {
-  background: #e8e8e8;
+  //background: #e8e8e8;
 }
 .collapsible-menu li ul li li li li {
-  background: #e3e3e3;
+  //background: #e3e3e3;
 }
 .collapsible-menu li a {
   display: block;
-  color: #999;
-  padding: 12px;
+  //color: #999;
+  padding: 9px;
   position: relative;
   text-decoration: none;
 }

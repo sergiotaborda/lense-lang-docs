@@ -30,7 +30,6 @@
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushJava.js"></script>
 	<script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/shBrushLense.js"></script>
 
-
     <!-- Le styles -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/bootstrap.min.css" rel="stylesheet">
     
@@ -41,6 +40,12 @@
 	<link rel="stylesheet" type="text/css" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/shThemeDefault.css" >
 	<link rel="stylesheet" type="text/css" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/site.css" >
 
+	<style>
+		.navbar-toggle{
+			float:left;
+			margin-left:7px;
+		}
+	</style>
 	
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -62,11 +67,9 @@
 	  
 	  var url = window.location.pathname;
 		var filename = url.substring(url.lastIndexOf('/')+1);
-		console.log("current=" + filename);
 		
 	  $(".collapsible-menu a").each(function(){
 		var link = $(this).attr("href");
-		console.log("link=" + link);
 		
 		if (filename == link) {
 			var item = $(this).parent();
