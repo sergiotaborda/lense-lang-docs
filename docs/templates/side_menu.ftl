@@ -8,9 +8,14 @@
 			<li><a href="identifiers.html">Reserved Words</a></li>
 			<li><a href="variables.html">Variables and Mutability</a></li>
 			<li><a href="nullability.html">Nullability</a></li>
+			
+			 <!--
+			
 			<li>Comments</li>
 			<li>Generics</li>
 			<li>Functions & Lambdas</li>
+			
+			-->
 			
 			<li class="has-children">
 				<a href="javascript:void(0)">Fundamental Types</a>
