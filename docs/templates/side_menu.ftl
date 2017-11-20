@@ -10,7 +10,7 @@
 			<li><a href="nullability.html">Nullability</a></li>
 			<li>Comments</li>
 			<li>Generics</li>
-			<li>Functions</li>
+			<li>Functions and Lambdas</li>
 			
 			<li class="has-children">
 				<a href="javascript:void(0)">Fundamental Types</a>
@@ -65,8 +65,7 @@
 					<li>Methods</li>
 				</ul>
 			</li>
-			<li>Lambdas</li>
-			<li>Casting</li>
+			<li><a href="cast.html">Casting</a></li>
 			<li><a href="operators.html">Operator Overloading</a></li>
 			
 		</ul>
