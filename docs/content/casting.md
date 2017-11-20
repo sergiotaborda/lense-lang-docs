@@ -10,30 +10,70 @@ status=published
 Lense does not support an explicit cast operator like C or Java , it supports flow sensitive casting instead. This means the compiler can use flow directives like ``if`` or ``switch`` to understand the type of the variable.
 
 ~~~~brush: lense 
-val x : Any =  1; // x hold a Natural
+public collectLeafs( root : Node , leafs : List<Node>) {
+	
+	if ( obj is LeafNode){
+	   leafs.add(obj);
+	} else if (obj is BranchNode){
+		
+		for (var child in obj.Children){
+			collectLeafs(child, leafs);
+		}
+	} else {
+		throw new Exception("Unrecognised node");
+	}
 
-if ( x is Natural){
-   
-   x = x * 2; // the * operation is available for naturals.
-} 
+}
 ~~~~
-The ``is`` operator returns ``true`` if the variable holds an object of the specified type. The compiler then knows that all references to x inside the ``if``  refer to a ``Natural`` so the multiplication operation is allowed.
 
-Being the scens the compiler will introduce a plataforma specific cast to another variable operate on the variable has if it was a Natural.
+The ``is`` operator returns ``true`` if the variable holds an object of the specified type. The compiler then knows that all references to that variable inside the ``if`` realy refer to that type, and so all operations on that type are allowed.
 
-Flow sensitive typing simplifies writing of  the common *check and cast* idiom.
+Flow sensitive typing simplifies writing of *check and cast* idiom, very common when overriding ``equals``. In other languages, like Java you need to test for type and then cast:
+
+~~~~brush: java
+// Java 
+public class Person {
+
+	public long id;
+
+	public equals(Object other){
+		return (other instanceof Person) && ((Person)other).Id == this.Id;
+	}
+
+}
+~~~~
+
+in Lense the compiler is smart to understand that if tested, then the variable is of that type.
+
+~~~~brush: lense 
+public class Person {
+
+	public var Id : Natural;
+
+	public equals(other : Any){
+		return other is Person && other.Id == this.Id;
+	}
+
+}
+~~~~
 
 You can also use other flow directives like ``switch`` :
 
-
 ~~~~brush: lense 
-switch (x) {
-
-	case is Natural { 
-		return x * 2;
-	}
-	case is String {
-		return new Natural.parse(x) * 2;
+public collectLeafs( root : Node , leafs : List<Node>) {
+	
+	switch(obj){
+		case is LeafNode {
+		    leafs.add(obj);
+		}
+		case is BranchNode {
+			for (var child in obj.Children){
+				collectLeafs(child, leafs);
+			}
+		}
+		default{
+		 	throw new Exception("Unrecognised node");
+		}
 	}
 }
 ~~~~
@@ -41,11 +81,11 @@ switch (x) {
 and ``assert``:
 
 ~~~~brush: lense 
-...  // some other code 
+var node : Node  = ... // some node
 
-assert( x is Natural);
+assert( node is BranchNode);
 
-x = x * 2; // at this line the compiler kowns x is Natural because otherwise and exception would have been thrown.
+return node.Children.size; // at this line the compiler kowns node is a BranchNode because otherwise and exception would have been thrown.
 
 ~~~~
 
