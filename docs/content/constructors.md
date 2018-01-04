@@ -86,7 +86,7 @@ People often criticize java for being to verbose. The numerator and denominator 
 
 ## Types of constructors
 
-Other languages come up with new flavors of constructors to try to reduce the problems with constructors. However, because constructors are essentially linked with the concept of object instantiation and state validity they cannot be removed from the languages. Some type of constructor must exist.
+Other languages come up with new flavours of constructors to try to reduce the problems with constructors. However, because constructors are essentially linked with the concept of object instantiation and state validity they cannot be removed from the languages. Some type of constructor must exist.
 
 <a name="primary"></a> 
 ### Primary Constructor
@@ -102,7 +102,7 @@ class Fraction (Integer numerator, Integer denominator) {
 }
 ~~~~  
 
-This constructors immediately inform the compiler there must be a *numerator* and a *denominator* field in the class and the values of the parameters should be directly assign to those fields. This really reduces the boilerplate but leaves the validation of state problem orphan. 
+This constructors immediately informs the compiler there must be a *numerator* and a *denominator* field in the class and the values of the parameters should be directly assign to those fields. This really reduces the boilerplate but leaves the validation of state problem orphan. 
 
 Scala resolves this by means of companion objects that have methods that act like a static factory methods calling the constructor only after validating the parameters are correct. Other special constructors are possible (called auxiliary constructors) but they action is limited. In scala constructors are pretty much meant only for field initialization, other computations are made in methods on objects.
 
@@ -131,30 +131,25 @@ In Lense the primary constructor is written :
 ~~~~brush: lense 
 public class Fraction {
 
-   val Integer numerator;
-   val Integer denominator;
+   constructor (public val numerator : Integer, public val denominator : Natural);
    
-   constructor (Integer numerator, Integer denominator);
 }
 
-// invoke like 
+// and invoke as
 
-val third : Fraction = new Fraction(1, 3);
+val aThird = new Fraction(1, 3);
 ~~~~
 
-A constructor without a body means the parameters should be copied to the fields of the same name.
+A constructor without a body means the parameters represent properties with the same name and visiblity. Parameters marked with `val` will produce read-only properties.  Parameters marked with `var` will produce read-write properties. 
 
-All final value fields (the ones with ``val``) must be initialized by all constructors, i.e. the compiler must be able to prove that all ``val`` fields have been set by the constructor. If this is not the case a compilation error will be raised.
-
-There is no repetition of the class name and the keyword clearly states that the instruction is a constructor.
-There is no boilerplate. The types on the parameters are needed since the private fields must not have the same types.
+There is no boilerplate and there is no repetition of the class's name and the keyword clearly states that the instruction is a constructor.
 
 <a name="named"></a> 
 ## Named Constructors
 
-All is fine when the class only needs a constructor. But more time than people would realize an object can be created by different forms. Design can argument this other forms should be handled by factory object and the class it self as only a set of parameters. While this can obviously accomplished is not practical. 
+All is fine when the class only needs one constructor. But more times, than not, people would realize an object can be created by different forms. Design can argument this other forms should be handled by factory object and the class itself as only a set of parameters. While this can obviously accomplished is not practical. 
 
-If we intend to have a ``Color`` type that can be created from RGB or HSL values the two algorithms are different and one or both require calculations before we can set the object private fields. On the other hand we need some practical way of distinguishing between them. Here the static method factory come in handy because it provides a name to the construction form. So in java we could write
+If we intend to have a ``Color`` type that can be created from RGB or HSL values the two algorithms are different and one or both require calculations before we can set the object private fields. On the other hand we need some practical way of distinguishing between them. Here the static method factory comes handy because it provides a name to the construction form. So in java we could write
 
 ~~~~brush: java 
 // java
@@ -187,16 +182,16 @@ In Dart you can provide named constructors like
 }
 ~~~~
 
-Its a little odd to have dots in the name of the constructor , but at least is consistent with the tradiconal constructor syntax. In Lense because we have the ``constructor`` key word we simply write the same as:
+Its a little odd to have dots in the name of the constructor , but at least is consistent with the traditional constructor syntax. In Lense because we have the ``constructor`` key word we simply write the same as:
 
 ~~~~brush: lense 
 class Color {
 
-    constructor fromRGB(Rational red, Rational greee,Rational blue){
+    constructor fromRGB( red: Rational, green: Rational, blue : Rational){
          // code goes here  
     }
     
-    constructor fromHSL(Angle hue,Rational saturation,Rational lightness){
+    constructor fromHSL( hue: Rational, saturation: Rational, lightness: Rational){
          // code goes here  
     }
 
@@ -217,19 +212,17 @@ The named constructors must, at some point, directly or indirectly, invoke the p
 ~~~~brush: lense 
 public class Color {
 
-	 val Natural rgb;
-	 
-	private constructor(Natural rgb);
+	private constructor( private val rgb : Natural);
 	
-    public constructor fromRGB(Rational red, Rational greee,Rational blue){
-         	Natural rgb = red * 255;
+    public constructor fromRGB( red : Rational,  green: Rational, blue: Rational){
+         	var rgb : Natural = red * 255;
 			rgb = (rgb << 8) + green * 255;
 			rgb = (rgb << 8) + blue * 255;
 			return new Color(rgb);
     }
     
-    public constructor fromHSL(Angle hue,Rational saturation,Rational lightness){
-         // code goes here to caculate red, green and blue from the parameters , then call the fromRGB constructor
+    public constructor fromHSL(hue: Rational, saturation: Rational, lightness: Rational){
+         // code goes here to calculate red, green and blue from the parameters , then call the fromRGB constructor
          Rational red = ...
          Rational green = ...
          Rational blue = ...
@@ -239,17 +232,17 @@ public class Color {
 }
 ~~~~
 
-Notice how the ``new`` keyword is used to call the other constructors. In fact constructors in Lense act as factories and can return any object that could be assigned to the class.
+Notice how the ``new`` keyword is used to call the other constructors. In fact constructors in Lense act as factory methods and can return any object that could be assigned to the class.
 
 <a name="factory"></a> 
 ## Factory Constructor
 
-Constructors in Lense are real factories and can create and return any instance. This means constructors can control the number of instances being created and choose to create specific sub types. For instances the ``Array`` constructor is :
+Constructors in Lense are real factory methods and can create and return any instance that could be assigned to the class. This means constructors can control the number of instances being created and choose to create specific sub types. For instances the ``Array`` constructor is :
 
 ~~~~brush: lense 
-public class Array<T> implement EditableSequence<T> {
+public class Array<T> implements EditableSequence<T> {
 
-        constructor filled(Natural size, T value){
+        constructor filled( size: Natural, value : T){
         	if (T is Int32){
         	    return new Int32Array(size, value);
         	} else if (T is Int64){
@@ -261,7 +254,7 @@ public class Array<T> implement EditableSequence<T> {
         	}
         }
 		
-		constructor ofAbsent<T?>(Natural size){
+		constructor ofAbsent<T?>( size : Natural){
         	return new Array.filled<T?>(size, none);
         }
 		
@@ -278,7 +271,7 @@ public class Natural extends Whole {
 		val values = new Array.absent<Natural>(10);
 	}
 
-    constructor (Natural value){
+    public constructor (value: Natural){
        	if (value >= 0 && value < cache.values.size -1){
        		val cached = cache.values[value].or(value); 
        		cache.values[cached] = cached;
@@ -287,7 +280,7 @@ public class Natural extends Whole {
        	return other;
     }
     
-    constructor parse (String value){
+    public constructor parse ( value : String){
     	if (value.startsWith("-")){
     		throw new ParseException("Value cannot be negative");
     	}
@@ -295,16 +288,16 @@ public class Natural extends Whole {
     		throw new ParseException("Value cannot be decimal");
     	}
     	
-    	Natural power = 0;
-    	Natural value = 0;
+    	var power = 0;
+    	var value = 0;
     	for(char in value.replaceAll("_",""){
     	
     		val digit = char.toDigit();
     		
     		if (digit == none){
-    			throw new ParseException(char + "is not a digit.");
+    			throw new ParseException(char ++ "is not a digit.");
     		}
-    		value += digit * 10**power;
+    		value += digit * 10 ^^ power;
     		
     		power++;
     	}
@@ -319,7 +312,7 @@ It uses and [``object``](objects.html#object) to hold the cache data. If the giv
 This is valid because a constructors is like a factory, however the compiler will only allow the ``throw`` clause on a named constructor.
  
 <a name="conversion"></a> 
-## Implicit Conversion Constructor
+## Conversion Constructor
 
 A conversion constructor is used to obtain the state of the object from another object of a different type. For instance:
 
@@ -327,13 +320,13 @@ A conversion constructor is used to obtain the state of the object from another 
 val k : Integer = 23;
 ~~~~
 
-Because all whole literals are parser by the compiler as ``Natural``s,  23 is really a ``Natural``. On the other hand, because ``Natural``s are not an ``Integer``s the assignment would not be valid. Before a compilation error is risen, the compiler tries to find an constructor in the class Integer that is marked as ``implicit`` and has a single parameter of type ``Natural``. 
+Because all whole literals are parser by the compiler as ``Natural``s,  23 is really a ``Natural``. On the other hand, because ``Natural``s are not ``Integer``s the assignment would not be valid. Before a compilation error is risen, the compiler tries to find a constructor in the class Integer that is marked as ``implicit`` and has a single parameter of type ``Natural``. 
 
 ~~~~brush: lense 
 public class Integer extends Whole {
 
-	implicit constructor (Natural other){
-		return new BigInt(other.toString()); // this is not the real code, just and example.
+	implicit constructor ( other : Natural){
+		return new BigInt(other.toString()); // this is not the real code, just an example.
 	}
 }
 
@@ -378,12 +371,12 @@ val address : Uri = new Uri("http://www.google.com");
 
 ~~~~
 
-Implicit constructors, like primary constructors, are not recomended for object creation that can throw exceptions (under consideration). 
-For a parsing operation, or other, that possibly could go wrong, is not suited to a conversion constructor. It is recomemded that a constructor based on a string be a named constructor like ``parse(String)``. Named constructors can throw exceptions.
+Implicit constructors, like primary constructors, are not recommended for object creation that can throw exceptions (under consideration). 
+For a parsing operation, or other, that possibly could go wrong, is not suited to a conversion constructor. It is recommended that a constructor based on a string be a named constructor like ``parse(String)``. Only named constructors can throw exceptions.
 
-As we can see from the above examples, that the conversion constructor is a simple way to promote values of one class to another but only if it is guaranteed that conversion will never fail.
+As we can see from the above examples, the conversion constructor is a simple way to promote values of one class to another but only if it is guaranteed that conversion will never fail.
 
-As a limitation of conversion constructors the process only works if the class on the left side of the assignment accepts the instances of the class on the right side as valid argument. 
+As a limitation of conversion constructors the process only works if the class on the left side of the assignment accepts the instances of the class on the right side as a valid argument. This means than , if A is convertible to B and B to C , A *is not* convertible directly to C. 
 
 ## Constructors Enhancement (Under Consideration)
 
@@ -392,18 +385,18 @@ If the original designer of the left side class did not added the conversion con
 ~~~~brush: lense 
 public enhancement AddNaturalConvertionConstrutorToString extends String { // enhances String
 
-	public implicit constructor (Natural n){
+	public implicit constructor ( n : Natural){ // creates a string from a Natural
 	       return n.toString();
 	}
 }
 ~~~~
 
-With this enchamenent in scope we can write:
+With this enhancement in scope we can write:
 
 ~~~~brush: lense 
 val  s : String = 8; // not supported without the enhancement
 ~~~~
 
-This is very powerful feature of [enhancements](enhancements.html) and can easly be abused, so please design enhancements with care.   
+This is very powerful feature of [enhancements](enhancements.html) and can easily be abused, so please design enhancements with care.   
 
 
