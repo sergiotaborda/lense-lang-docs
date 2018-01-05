@@ -82,13 +82,16 @@ public class Matrix<T> {
 ~~~~
 
 <a name="sum-types"/>
-# Sum Types
+# Sealed Type Hierarchies
 
 In Lense is possible to define an abstract type that can only be implemented by a limited list of other types.
+This is called a Sealed Type Hierarchy. This mechanism is now in other languages as "sum type" or "algebraic" type.
+
+## Sealed Classes
 The classic example is the Node type. Normally we have a Branch node and a Leaf node. Traditionally we would write:
 
 ~~~~brush: lense 
-public abstract class Node <T> {
+public abstract class Node <T> { 
 
 }
 
@@ -154,10 +157,12 @@ public colectLeafs<T>(Node<T> node, List<T> leafs) : Void {
 Flow-sensitive typing mechanism still applies inside the switch case, but for this to work as expect we need to inform the compiler all children types of ``Node`` are limited to ``Brunch`` and ``Leaf``:
 
 ~~~~brush: lense 
-public abstract class Node<T> is Brunch<T> | Leaf<T> {
+// the root type must be abstract and have an is clause
+public abstract class Node<T> is Brunch<T> , Leaf<T> { 
 	
 }
 
+// the children must be marked has case class ans extend from the root class
 public case class Brunch<T> extends Node<T> {
 	constructor (var left : Node<T> , var right : Node<T>);
 }
@@ -170,64 +175,92 @@ public case class Leaf<T> extends Node<T> {
 With this new code the compiler knows that ``Brunch`` and ``Leaf`` are the only possible sub types of ``Node``.
 
 With this syntax the classes can be defined in any file. The ``case`` keyword informs the compiler this is child type of ``Node`` so the compiler checks to see if 
-``Node`` has defined it in the ``is`` clause
+``Node`` has defined it in the ``is`` clause.
 
-Another example of a sum type is [Maybe](maybe.html) that is defined as :
+The hierarchy can continue has um child of a sum type can the be the root of a new some type.  Take [Maybe](maybe.html) as an example :
 
 ~~~~brush: lense 
-public abstract class Maybe<T> is None | Some<T> {
-	public abstract isAbsent : Boolean {get}
-	public abstract map (transform: Function<R, T>) : Maybe<R> 
-	public abstract filter (predicate: Function<Boolean, T>) : Maybe<T> 
-	public abstract or (otherValue: T) : T
-	public abstract orThrow (exceptionSupplier: Function<Exception>) : T
+public abstract class Maybe<T> is None , Some<T> {
+
+	// methods
+	
 }
 
-public case class None extends Maybe<Nothing> is none{
+public case class None extends Maybe<Nothing> is none{ // defines an object as only child
 	
-	public isAbsent : Boolean => true;
-	public map (transform: Function<R, T>) : Maybe<R>{
-		return none;
-	}
-	public filter (predicate: Function<Boolean, T>) : Maybe<T>{
-		return none;
-	}
-	
-	public or (otherValue: T) : T {
-		return otherValue;
-	}
-	
-	public orThrow (exceptionSupplier: Function<Exception>) : T{
-		throw exceptionSupplier();
-	}
+	// methods
 }
 
-public case object none extends None{
-	
-}
+public case object none extends None {}
 
 public case class Some<T> extends Maybe<T> {
 
-	constructor (private val value : T);
-	
-	public isAbsent : Boolean => false;
-	
-	public map (transform: Function<R, T> ) : Maybe<R> {
-		return new Some(transform.apply(value));
-	}
-
-	public filter (predicate: Function<Boolean, T>) : Maybe<T>{
-		return predicate.apply(value) ? this : none;
-	}
-	
-	public or (otherValue: T) : T {
-		return value;
-	}
-	
-	public orThrow (exceptionSupplier: Function<Exception>) : T{
-		return value;
-	}
+	// methods
 }
 ~~~~ 
 
-Note as ``none`` is a ``case object`` (instead of a ``case class``)
+Note as ``none`` is a ``case object`` on ``None``.
+
+You can define each type in a separate file for each, or group them together in a single file. It is not relevant for the compiler. 
+The only rule is that the entire hierarchy must exist in a single module.
+
+## Sealed interfaces
+
+You can also define a sealed type hierarchy with interfaces:
+  
+~~~~brush: lense 
+public interface FileSystemElement is File , Folder , Drive {
+	// methods
+}
+
+public case class Folder extends FileSystemElement(){
+	// methods
+}
+
+public case class Drive extends FileSystemElement(){
+	// methods
+}
+
+public case interface File extends FileSystemElement is ContentFile, CompactedFileSystem{
+	// methods
+}
+
+
+public case class ContentFile extends File {
+	// methods
+}
+
+public case class CompactedFileSystem extends File {
+	// methods for zip like files 
+}
+~~~~
+
+
+## Sealed Instances 
+
+Lense does no have enums like Java or C# , sum types are used instead 
+
+~~~~brush: lense 
+public abstract class Suit is hearts , diamonds , clubs , spades {
+}
+
+public case object hearts extends Suit();
+public case object diamonds extends Suit();
+public case object clubs extends Suit();
+public case object spades extends Suit();
+~~~~
+
+You can reduce boilerplate by defining the cases in a nested form
+
+~~~~brush: lense 
+public abstract class Suit { // the is clause is not necessary if all the cases are nested
+
+	 case object hearts;   // assumed public and that extends the encompassing type
+	 case object diamonds; // assumed public and that extends the encompassing type
+	 case object clubs;    // assumed public and that extends the encompassing type
+	 case object spades;   // assumed public and that extends the encompassing type
+
+}
+~~~~
+
+You can do this is class types also, but because you need to implement methods it is not quite convenient in that scenario. 
