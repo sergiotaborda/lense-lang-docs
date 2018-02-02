@@ -6,12 +6,126 @@ status=published
 ~~~~~~
 # Lense
 
-Lense is a strong typed, pure object oriented programming language that tries to be carefully crafted by meticulous observation and analysis of language design state-of-the-art and comparison with other language design decisions (and mistakes, yes). Even with this analysis and comparation with the state-of-the-art, Lense does not aim to be an academic driven language even when it tries to follow a more scientific and logic approach to design decision making.
+Lense is a strong typed, pure object oriented programming language that aims to be a familiar simple languages that could compile to any object oriented platform. First  focusing on the Java Virtual Machine (JVM) and then on other possible platforms like Javascript and CRL (.NET).
 
-Lense goal is to be a simple language, easy to read and write that could be compiled to any object oriented platform. The first effort will focus on running Lense in the Java Virtual Machine (JVM). Other possible platforms are Javascript and CRL (.NET)
+* [ ]  Modular - the compiler produces modules with dependency and version information on other modules.
+* [ ]  Object Oriented - every variable holds an object, no nulls. No primitives, every object is an instance of a Type (classes or interfaces)
+* [x] Strong Static Typing with Inference - all objects have a type at compile time, and the compiler can infer most types
+- [x] Single Inheritance for classes , multiple inheritance for interface
+- [x] Support for External Extension - you can use Enhancements to add methods to types you don't control.
+- [x] Immutability first - you have to opt out of immutability explicitly 
+- [x] Support for Sealed Type Hierarchies - you can limit the instances of a type and/or the types that inherit from it.
+- [x] Operator Overloading with no noise - Operators are related to type interfaces and follow mathematical concepts like Magma, Monoid and Group
+- [x] Math friendly - support for Natural, Integer , Rational, Imaginary and Complex numbers. Support for the power operator 
+- [x] Flow Sensitive Typing - casts are not necessary when the compiler  knows a variable is already of a given type.
+- [x] Native code inter-op - Call you favourite platform native library 
+- [x] Type parametrization  - make your types generics 
+- [x] Reflection - event on generics with Reification
+- [x] Support for Monads , Lambdas and higher order functions
+- [x] Familiar Syntax - from the C family similar to Java, C# and TypeScript 
 
-# Basic Syntax
-Lense syntax starts fom a C familly based syntax ( methods delimited with *{* and *}* ) but moves the type declaration to the end. This is because types can be infered when not declared.
+## Modular
+Lense is Modular. The compiler merges code and meta information into a "module bundle" (think .jar or .dll) with information about their respective dependencies. This  allows for the runtime to determine the modules that are needed for a given module to run.
+
+~~~~brush: lense 
+module com.my.application 1.2.0 {
+
+	requires other.some.library 1.0.0;
+	requires other.some.new.library 1.3.5;
+}
+~~~~
+
+# Object Oriented
+All variables are treated as holding objects. All objects are instances of some type. All methods and properties belong to a type.  Some [fundamental types](glossary.html#fundamentalType) receive special handling from the compiler in the form of literals or specific operators. 
+
+At compile time, the platform-specific compiler backend is free to optimize types to plataform's primitives (see [erasure](erasure.html)).
+
+## No Nulls
+Because everything is an object all variables must have been initialized at some point and cannot hold *null*. The concept of "absent value" is support by introducing the [Maybe monad](monads.html) (see [nullability](nullability.html)).
+
+## No Static scope
+All things are objects or exist within an object, including methods and properties.
+
+## Support for singleton objects
+Lense supports singleton object definition.
+
+
+## Single Inheritance for classes , multiple inheritance for interface
+
+
+
+
+
+# Strong Static Typing with Inference
+
+# Support for External Extension with Enhancements
+
+# Immutability first
+
+# Support for Sealed Type Hierarchies
+
+# Math friendly Operator Overloading with no noise
+
+
+Operators symbols are predefined and associated with specific interfaces so classes like numbers and strings can use operators.However defining you own operator symbol is not allowed in order to maintain the code simple to read and avoid symbolic noise. The use of interfaces to define operations follows an algebraic structure paradigm so the compiler can reason about the operations (example : altering the order of operations to enhance performance if the operation is commutative)
+
+Suport to Rational, Imaginary and Complex numbers. It is important for Lense that all these numeric types are supported even if the performance is not optimal. Peformance is a problem for the runtime , not the language. In Lense expression of intention is more important that performance.
+
+~~~~brush: lense 
+var n : Natural = 3; // numbers are naturals by default. naturals are non negative
+var d : Integer = -2; // integer holds negative whole numbers 
+
+var r : Rational = -1.5; // decimal literals are rational numbers by default.
+
+if (r == n/d ){
+	// this will be true, because whole division always produces a Rational
+	// and numbers are compared by value independently of type.
+}
+
+val img : Imaginary = 4i;
+val complex = n + img;
+
+if (complex == 3 + 4i){
+	// this will be true because n==3 and img ==4i
+	// and numbers are compared by value independently of type.
+}
+
+// you can use the power operator even to take roots
+val distance = (x^^2 + y^^2) ^^ 1/2;  
+~~~~
+
+Lense also supports [Intervals and Ranges](interval.html). 
+
+~~~~brush: lense 
+for ( x in 3..7 ){ // iterate a range
+	// iterate from 3 to 7
+}
+
+if ( x in |[ 3 , 7)| ){
+	// test if x is >=3 and < 7
+}
+~~~~
+
+# Flow Sensitive Typing
+
+# Native code inter-op
+
+# Type parametrization with Reification
+
+Generics are reified and the type information of the generic type parameters can be inspected at runtime. This is really works well with [factory constructors](constructors.html#factory)
+
+Types can have generic parameters and these parameters can declare their intended variance on site. 
+
+~~~~brush: lense
+public interface Sequence<out T> { ... }
+
+public interface Validator<in T> { ... }
+~~~~
+
+# Reflection
+
+# Familiar Syntax 
+Lense syntax starts with a syntax based in the C family of syntaxes  ( methods delimited with *{* and *}* ) but moves the type declaration to the end. This is because types can be inferred when not declared.
 
 ~~~~brush: lense 
 val n = 4; // infers type of n value t be Natural
@@ -45,80 +159,9 @@ Prints:
 John is 34 years old
 ~~~~
 
-# Object Oriented
-All types are treated as objects in the heap. Some [fundamental types](glossary.html#fundamentalType) receive special handling from the compiler in the form of literals or specific operators. The compiler is free to optimize them to the plataform's primitives as it sees fit (see [erasure](erasure.html)).
+# Support for Monads , Lambdas and higher order functions
 
-Because everything is an object all variables must have been initialized at some point and cannot hold *null*. The concept of "absent value" is support by introducing the [Maybe monad](monads.html) (see [nullability](nullability.html)).  
-
-Generics are reified and the type information of the generic type parameters can be inspected at runtime. This is really works well with [factory constructors](constructors.html#factory)
-
-Types can have generic parameters and these parameters can declare their intended variance on site. 
-
-~~~~brush: lense
-public interface Sequence<out T> { ... }
-
-public interface Validator<in T> { ... }
-~~~~
-
-No *statics*. All things are objects or exist within an object. Lense supports singleton object definition.
-
-# Math friendly
-
-Operators symbols are predefined and associated with specific interfaces so classes like numbers and strings can use operators.However defining you own operator symbol is not allowed in order to maintain the code simple to read and avoid symbolic noise. The use of interfaces to define operations follows an algebraic structure paradigm so the compiler can reason about the operations (example : altering the order of operations to enhance performance if the operation is commutative)
-
-Suport to Rational, Imaginary and Complex numbers. It is important for Lense that all these numeric types are supported even if the performance is not optimal. Peformance is a problem for the runtime , not the language. In Lense expression of intention is more important that performance.
-
-~~~~brush: lense 
-var n : Natural = 3; // numbers are naturals by default. naturals are non negative
-var d : Integer = -2; // integer holds negative whole numbers 
-
-var r : Rational = -1.5; // decimal literals are rational numbers by default.
-
-if (r == n/d ){
-	// this will be true, because whole division always produces a Rational
-	// and numbers are compared by value independently of type.
-}
-
-val img : Imaginary = 4i;
-val complex = n + img;
-
-if (complex == 3 + 4i){
-	// this will be true because n==3 and img ==4i
-	// and numbers are compared by value independently of type.
-}
-
-// you can use the power operator even to take roots
-val distance = (x^^2 + y^^2) ^^ 1/2;  
-
-~~~~
-
-Lense also supports [Intervals and Ranges](interval.html). 
-
-~~~~brush: lense 
-for ( x in 3..7 ){ // iterate a range
-	// iterate from 3 to 7
-}
-
-if ( x in |[ 3 , 7)| ){
-	// test if x is >=3 and < 7
-}
-~~~~
-
-# Modern
-
-## Modular
-Lense if Modular. You compile code and meta information into a "module bundle" (think .jar or .dll) with information about their respective dependencies. This  allows for the runtime to determine the modules that are needed for a given module to run.
-
-~~~~brush: lense 
-module com.my.application 1.2.0 {
-
-	requires other.some.library 1.0.0;
-	required other.some.new.liberary 1.3.5;
-}
-~~~~
-
-## Functional
-Lense supports funcional programming with monads and lambdas:
+Lense supports functional programming with monads and lambdas:
 
 ~~~~brush: lense 
 var evenNumbers = Sequence.iterate(0, i -> i++).map( i -> i*2); 

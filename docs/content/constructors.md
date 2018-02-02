@@ -385,8 +385,8 @@ If the original designer of the left side class did not added the conversion con
 ~~~~brush: lense 
 public enhancement AddNaturalConvertionConstrutorToString extends String { // enhances String
 
-	public implicit constructor ( n : Natural){ // creates a string from a Natural
-	       return n.toString();
+	public implicit constructor fromNumber( n : Number){ // creates a string from a Number
+	       return n.asString();
 	}
 }
 ~~~~
@@ -395,6 +395,8 @@ With this enhancement in scope we can write:
 
 ~~~~brush: lense 
 val  s : String = 8; // not supported without the enhancement
+// or 
+val  s : String = new String.fromNumber(8); // not supported without the enhancement
 ~~~~
 
 This is very powerful feature of [enhancements](enhancements.html) and can easily be abused, so please design enhancements with care.   

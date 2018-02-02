@@ -1,0 +1,54 @@
+
+
+# new index of contents
+
+Plataforms
+Tutorial
+	1 . Getting Started 
+		- What you will need
+		- Hello World
+	2. Types
+		- The type system  = static (vs dynamic) , non nulls , nominal sub-typing, reified
+		- Classes
+			- fields and properties
+			- Constructors (primary, implicit)
+			- Methods (names parameters, default parameters )
+		- Sealed Classes 
+		- Data Classes
+		- Interfaces (structural)
+			- traits (nominal)
+		- Enhancements 	
+		- Type classes
+		- Type Interfaces
+		- Actors
+		- Values
+		- Combining Types 
+			- Tuples
+			- Unions 
+			- Intersections
+		- Type alias
+	3. Expressions
+		- Literals
+		- Variables
+		- Operators
+		- Control Structures
+		- Exceptions
+		- Equality
+	4. Generics
+	    - Classes
+		- Methods
+		- Enhancements
+		- Constraints
+		- Reification
+	5. Modules
+		- module descriptor
+		- visibility
+		- imports
+	6. Platform dependent code
+	
+	Appendices
+		- Reserved words
+		- Examples
+		- Compiler arguments
+		- Serialization
+		
