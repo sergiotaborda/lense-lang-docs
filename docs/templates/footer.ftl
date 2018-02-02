@@ -14,6 +14,14 @@
     <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/bootstrap.min.js"></script>
     <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/prettify.js"></script>
     <script>
+	
+		$(document).ready(function() {
+			<#assign langs = ['lense', 'java', 'c-sharp', 'typescript', 'dart', 'swift']>
+			<#list langs as lang >
+				$("code.language-${lang}").addClass("brush: ${lang}");
+			</#list>
+		});
+	
     	SyntaxHighlighter.config.tagName = 'code';
 		SyntaxHighlighter.defaults.toolbar = false;
 		SyntaxHighlighter.all();
