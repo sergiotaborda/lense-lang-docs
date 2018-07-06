@@ -1,0 +1,62 @@
+title=Objects
+date=2015-12-19
+type=post
+tags=tour, lense
+status=published
+~~~~~~~~~~~~~~~~~~
+
+== Objects
+
+Instead of static members, Lense has object declarations. An object declaration instructs the compiler to 
+create a singleton object that exists at the package level.
+
+[source, lense]
+----
+public object Console {
+
+	public println(String text) {
+         // implementation goes here ... 
+    }
+}
+----
+
+Objects are then imported normally like a type using the `import` statement:
+
+[source, lense]
+----
+import somepackage.Console;
+
+public class OtherClass {
+
+	public doIt() {
+	     Console.println("Hello, world");
+	}
+}
+
+----
+
+As you can see from this example, calling methods on the object is very much like a static call in other languages.
+
+When declaring an object Lense will really create a single instance of the given anonymous class in the parent scope. Objects can implement interfaces and inherit from other classes but not from other objects. 
+
+== Nested Objects (Under Consideration)
+
+Objects can be nested in other types and other objects. In this case the object will have access to the private members of the surrounding type.
+Nested objects calls must be prefixed with the type they are in:
+
+[source, lense]
+----
+public class OtherClass {
+
+	public object SomeObject {
+	     
+	      public doItInTheObject () {}  
+	}
+   
+	public doItInTheOtherClass() {}
+}
+
+// called like 
+
+OtherClass.SomeObject.doItInTheObject()
+----
