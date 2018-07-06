@@ -1,0 +1,73 @@
+title=FAQ
+date=2017-06-01
+type=post
+tags=faq, lense
+status=published
+~~~~~~~~~~~~~~~~~~
+
+=== Language Design FAQs
+
+==== Goals
+
+===== Object Oriented
+
+===== Favor Imutability 
+
+* Do not poibit mutability, but make it more explicit and not the default. Mutability must be opted in.
+
+===== Multiple Plataforms
+
+Run in JVM, Javacript VM and others.
+
+==== Syntax
+
+===== String interpolation
+
+===== Mandatory semicolon at the end of line
+
+===== Parenthesis in control structures
+
+From a readality point of view they help visually locate the condition.
+From a parser point of view there is no conflict between these two lines 
+
+[source, lense]
+----
+if (a) { } else {}
+if a { } else {}
+----
+
+===== Mandatory braces in control structures
+
+===== Angle brakets for generics
+
+===== Inheritance declared with extends instead of colon
+
+==== Language Features
+
+===== Mathematicis are coehrent
+
+===== Indexing with Naturals
+
+===== No Check Exception
+
+===== Overloading 
+
+===== Implict Constructors
+
+===== Extention methods and properties
+
+===== Optional types 
+
+===== Private fields and public properties
+
+===== Variance
+
+===== Pattern matching
+
+===== Higher Order functions
+
+===== Polymorphic returns
+
+===== Sum Types 
+
+===== Union and Intersection Types 

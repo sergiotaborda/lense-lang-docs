@@ -1,0 +1,116 @@
+title=Features
+date=2016-11-14
+type=post
+tags=lense, features
+status=published
+~~~~~~~~~~~~~~~~~~
+
+== Fundamental Types
+
+Some types have fundamental support from the compiler. This means these types have build-in integration with the language.
+Lense fundamental types are : link:strings.html[`String`] , link:numbers.html[`Number`], `Boolean`, link:nullability.html[`Maybe`], `Range`, link:interval.html[`Interval`] , `Sequence` and `Iterable`. 
+
+| Lense type | Literal | Support
+| :----------- | :-----------: | :-------------------: |   
+| `String` | "Hello, World" |  link:strings.html[Interpolation] : "Hello, {{ name }}". |   
+| `Number` | *1* , *3.14* or *4+5i* | Creates whole , rational and complex numbers from they literals |  
+| `Boolean`|  `true` and `false` | link:erasure.html[Erasured] to the runtime plataform's boolean. Flow control conditions must evaluate to a `Boolean`  |
+| `Maybe`  | `none` , String? | Compiler translates any type X followed by a ? (like X?) to Maybe<X> |
+| `Range` | 1..4 or 5..<7 | Generates a `Range` from  the literal. Ranges are imutable. |
+| `Interval` |  `|(3, 8]|` | Generates an `Interval` from the literal.Intervals are imutable. |
+| `Sequence`| [1,2,3,4] | Generates a `Sequence` from the literal. Sequences are imutable. |
+| `Iterable` || Allows for iteration with `for` directive, and map-reduce like operations. |  
+
+In addition specific sub-types of `Sequence` also receive link:containerLiterals.html[literal support]:
+
+| Lense type | Literal | Support
+| :----------- | :-----------: | :-------------------: |   
+| `Sequence`| [1,2,3,4] |  Standard representation ordered sequences like lists and arrays. |
+| `Association` | { 1 : "en", 2 : "pt" , 3 : "es" } | Standard representation for key-value associations | 
+| `Tuple` | (1, "Hello", false) | Standard representation for tuples |
+
+== Classes, interfaces and inheritance
+
+Lense supports structuring code in objects and use classes to template objects and interfaces to template contracts.
+Lense also supports concepts like inheritance and traits.
+
+== Algebric Data Types
+
+Lense supports defining a type that limits it's possible values or it's possible subtypes. 
+
+[source,lense]
+----
+public class Awnser is yes, no{
+
+}
+----
+The compiler will create objects `yes` and `no` and proibit `Anwser` from being instanciated marking it *abstract*.
+When we want to define subtypes we need to explicitly define the other types so the compiler does not create objects instead.
+Here's an example:
+
+[source,lense]
+----
+public class Maybe<T> is Some<T>, None {
+
+	public abstract isAbsent() : Boolean;
+	public abstract value : T { get; }
+
+	public abstract map <R>(Function<R,T> mapping) : Maybe<R>
+}  
+
+public class Some<T> extends Maybe<T>{ 
+
+	public constructor (public val value : T);	
+	public isAbsent() { return false;}
+	
+	public map <R>(Function<R,T> mapping) : Maybe<R> {
+		return new Some<R>(mapping.apply(this.value));
+	}
+}
+
+public class None extends Maybe<Nothing> is none{ 
+
+	public isAbsent() { return true;}
+	public value : Nothing { get { throw new NoValuePresentException(); }}
+		
+	public map <R>(Function<R,T> mapping) : Maybe<R> {
+		return none;
+	}		
+}
+
+public object none extends None {}
+----
+
+== Tuples
+
+== Records
+
+== Interval Literals
+
+== Inlined Calls
+
+*under consideration*
+
+== Iterators
+
+== Local functions and Closures
+
+*under consideration*
+
+== Annotations
+
+== Enhancements
+
+Enhancments are extentions for existing types that allow to add functionality without having access to the type source code.
+
+== String Interpolation
+
+== Pattern Matching
+
+== Properties
+
+== Type Parameters, Constraints and Variance
+
+== Flow sensitive typing 
+
+== Rational and Complex Numbers
