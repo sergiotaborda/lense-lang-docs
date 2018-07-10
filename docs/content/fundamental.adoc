@@ -3,7 +3,7 @@ date=2017-04-18
 type=post
 tags=fundamental types, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 ==Fundamental Types
 

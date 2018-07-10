@@ -3,7 +3,7 @@ date=2017-06-01
 type=post
 tags=faq, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 === Language Design FAQs
 

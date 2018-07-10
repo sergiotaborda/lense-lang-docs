@@ -3,7 +3,7 @@ date=2016-02-01
 type=post
 tags=keywords,glossary, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Glossary
 - <a name="erasure">Erasure</a> : Process by which adcional type information is removed and a simpler type is placed in the compiled form. This can refer to removing parametric type (gneerics) information from types and methods, or convert a Lense type to a <a href="#primitiveType">primitive type</a>;
