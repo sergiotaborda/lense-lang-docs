@@ -3,9 +3,9 @@ date=2016-10-17
 type=post
 tags=arrays, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
-==Nullability
+== Nullability
 
 Lense does not allow variables to hold **null**. **null** is used in other languages to indicate the variable has not set. However when trying to dereference the object in the variable (i.e. use the dot operator) an exception is raized. It is easy to overlook the variable may contain null.
 
@@ -13,6 +13,7 @@ Lense take a more object oriented aproach. Every variable refers to an *existing
 
 However the concept of an absent value is very usefull. Some data that is not yet calculated or the user as yet to inform has no value. So Lense supports the concept of an absent value using the tradiconal link:maybe.html[Maybe] type. `String?` is a shorthand notation for link:maybe.html[Maybe<String>] and `none` is  the only instance of type `None`.
 
+[source, lense]
 ----
 val h : String = "Hello"; 
 val w : String? = none; 
@@ -21,25 +22,29 @@ val w : String? = none;
 The first line created a value of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to `none`. 
 Please note that `none` is an object so the variable really refers to an object. No nulls are allowed.
 
-==Interoperatibility
+== Interoperatibility
 
-In Lense world no *null*s exist, but in the underlying platform , like java, javascript or .net, they may exist. Any method can return or aceppt null. We can not now if the value returned can be null or not. Let us take an example in java
+In Lense world no *null*s exist, but in the underlying platform , like java, javascript or .net, they may exist. Any method can return or aceppt null. We can not know if the value returned can be null or not. Let us take an example in java
 
+[source, java]
 ----
-stringlink:names = resolveNames([];
+// java
+String[] names = resolveNames();
 List<Address> addresses = resolveAddressesFor(names);
 ----
 
 Has we have no way of knowing if the methods will return null this would be mapped to Lense as:
 
+[source, lense]
 ----
 var names : Array<String>? = resolveNames();
 var addresses : List<Address>? = resolveAddressesFor(names);
 ----
 
-At this point we can test if the collections exist, but how about the elements ? Have we certain no nulls exist inside the array or the list ?
+At this point we can test if the collections exists, but how about the elements ? Have we certain no nulls exist inside the array or the list ?
 This problem is more general and exists everywhere the objets are boxed in other objects. We then have to be sure and write:
 
+[source, lense]
 ----
 var names : Array<String?>? = resolveNames();
 var addresses : List<Address?>? = resolveAddressesFor(names);
@@ -50,10 +55,11 @@ This may prove cumbersome in code that tries to use native APIs.
 
 === Rules of None
 
-====When Reading
+==== When Reading
 
 For interop code , i.e. everytime the compiler identifies a native method is being called it let's you apply automatic filters according to the type you write. If no type is defined, the full optional type is used. This works by automaticly matching the type of the native method with the type prefered by the lense program.
 
+[source, lense]
 ----
 var names  = resolveNames();  
 var names : Array<String>? = resolveNames();  // same as  names = new Maybe.of(resolveNames()).map( a -> a.compact());
@@ -64,18 +70,21 @@ var names : Array<String?> = resolveNames();  // same as names = new Maybe.of(re
 In line **(1)** the original native return type is used. The Lense compiler will wrap the native array to a lense array. No special rules are needed.
 In line **(2)** the original native type is transformed by removing all possible `none` values. The equivalent code would be:
 
+[source, lense]
 ----
 var names : Array<String>? = resolveNames().map( a -> a.compact());
 ----
 
 In line **(3)** the original native type is further transformed by removing all possible `none` values and using an empty array in case the original is *null*. The equivalent code would be:
 
+[source, lense]
 ----
 var names : Array<String> = resolveNames().map( a -> a.compact()).or(new Array.empty<string>());
 ----
 
 In line **(4)** the original native type is further transformed by using an empty array in case the original is *null*. The equivalent code would be:
 
+[source, lense]
 ----
 var names : Array<String> = resolveNames().or(new Array.empty<string>());
 ----
@@ -84,6 +93,7 @@ Lense interop geeration will understand native `null` as equivalent to `none` an
 
 The above rules apply to all <code>Iterable</code>s, not only arrays. In the general case, for other boxed types that are not <code>Iterable</code>s the options are limited. We have to raise a compilation error for the cases the compiler cannot sort (as it normally would).
 
+[source, lense]
 ----
 var box  = resolveBoxedElements();  // same as box : Box<Element?>? = resolveBoxedElements()
 var box : Box<Element>? = resolveNames();  // compilation error , cannot verify Element is not null.
@@ -98,16 +108,19 @@ When the compiler can determine it is safe the more restrict types will be allow
 
 Even them, the problem will persist for interop with other platforms.
 
-====When writing
+==== When writing
 
 When passing a value to a native method the compiler will generate code that transforms the Lense type to the native type. In the case a Maybe is being used a native `orNull` method will be called. This method does not exist in the Maybe type, is a native enviroment only method. So, for a method implemented in java like 
 
+[source, java]
 ----
+// Java
 public void calculate(List<String> names, String other, int factor) { ... }
 ----
 
 It is not relevant what the methods does do, only what the parameters are. Lense will produce an interop code similar to 
 
+[source, lense]
 ----
 var names : Array<String> = ...
 var other String? = none;

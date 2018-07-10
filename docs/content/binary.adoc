@@ -3,7 +3,7 @@ date=2017-07-04
 type=post
 tags=binary, shift, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Binary
 

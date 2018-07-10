@@ -3,7 +3,7 @@ date=2016-02-03
 type=post
 tags=lense, operator overloading
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Operators
 
