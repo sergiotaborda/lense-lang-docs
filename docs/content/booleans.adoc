@@ -3,7 +3,7 @@ date=2017-06-14
 type=post
 tags=boolean, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Booleans
 
@@ -24,7 +24,7 @@ Operations upon booleans are divided in two categories Bitwise Operations and Lo
 
 === Bitwise Operations
 
-´´Boolean` implements `Injuctable`, `Dijunctable` and `ExclusiveDijunctable` to allows for the use of the following operators as bitwise operators:
+´Boolean` implements `Injuctable`, `Dijunctable` and `ExclusiveDijunctable` to allows for the use of the following operators as bitwise operators:
 
 + &  - from `Injuctable` : the bitwise AND operator 
 + |  - from `Dijunctable` : the bitwise OR operator

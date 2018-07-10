@@ -3,7 +3,7 @@ date=2017-04-20
 type=post
 tags=tuple, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 === Tuples
 

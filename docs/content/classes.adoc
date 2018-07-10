@@ -3,8 +3,7 @@ date=2015-12-19
 type=post
 tags=tour, lense
 status=published
-~~~~~~~~~~~~~~~~~~
-
+~~~~~~
 
 Lense does not have primitives (values that are not objects) and thus all values are objects , all objects descend from some class and all variables are references. 
 The Lense back-end compiler may try to use the native plataform's primitives as much as possible to enhance performance, but this is an otimization. Conceptually primitives do not exist.

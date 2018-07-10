@@ -3,7 +3,7 @@ date=2016-10-17
 type=post
 tags=erasure, boolean, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Erasure
 

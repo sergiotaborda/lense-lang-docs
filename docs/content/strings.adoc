@@ -3,7 +3,7 @@ date=2016-05-12
 type=post
 tags=strings, lense
 status=published
-~~~~~~~~~~~~~~~~~~
+~~~~~~
 
 == Strings
 
