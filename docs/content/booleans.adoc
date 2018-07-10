@@ -24,25 +24,25 @@ Operations upon booleans are divided in two categories Bitwise Operations and Lo
 
 === Bitwise Operations
 
-´Boolean` implements `Injuctable`, `Dijunctable` and `ExclusiveDijunctable` to allows for the use of the following operators as bitwise operators:
+`Boolean` implements `Injuctable`, `Dijunctable` and `ExclusiveDijunctable` to order to allow the use of the following bitwise operators:
 
-+ &  - from `Injuctable` : the bitwise AND operator 
-+ |  - from `Dijunctable` : the bitwise OR operator
-+ ^  - from `ExclusiveDijunctable`: the bitwise XOR (Exclusive-OR) operator 
+* &  - from `Injuctable` : the bitwise AND operator 
+* |  - from `Dijunctable` : the bitwise OR operator
+* ^  - from `ExclusiveDijunctable`: the bitwise XOR (Exclusive-OR) operator 
 
-These operators regard `Boolean` values as being equivalent to a single bit an operate bitwise according to they respective tradicional https://en.wikipedia.org/wiki/Truth_table[Truth Tables].
-These operators are comutative: the order of the operands is not relevant.
+These operators are not exclusive to `Boolean`s. When applied, these operators, regard `Boolean` values as being equivalent to a single bit an operate bitwise according to they respective tradicional https://en.wikipedia.org/wiki/Truth_table[Truth Tables].
+These operators are comutative as the order of the operands is not relevant and both operands are evaluated.
 
 === Logic Operators 
 
-Logic operators are operators that can only operate on expressions of type `Boolean`. In Lense these operators are link:operators.html#intrinsic[intrinsic] and cannot be overloaded.
+Logic operators can only operate on `Boolean` expressions. In Lense, logical operators are link:operators.html#intrinsic[intrinsic] and cannot be overloaded.
 They are:
 
-+ &&  - the logic AND operator
-+ ||  - the logic OR operator
-+ !  - the logic NOT operator
+* &&  - the logic AND operator
+* ||  - the logic OR operator
+* !  - the logic NOT operator
 
-Logic operators `&&` and `||` are short-circuit. The `&&` operator evaluates the right side only if the left side is `true`. The `||` operator evaluates the right side only if the left side is `false`. These operators are not considered comutative because. Eventhought the end logic result is the same, the side effects may not be and as Lense is not a pure functional language and side effects must be considered in the operators definition.
+Logic operators `&&` and `||` are short-circuit. The `&&` operator evaluates the right side only if the left side is `true`. The `||` operator evaluates the right side only if the left side is `false`. These operators are not considered comutative because, eventhought the end logic result is the same, the side effects may not be and as Lense is not a pure functional language and side effects must be considered in the operators definition.
 
 In most cases you will like to use Logic operators instead of Bitwise operators.
 
