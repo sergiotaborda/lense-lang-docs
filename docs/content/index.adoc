@@ -4,7 +4,8 @@ type=post
 tags=tour, lense
 status=published
 ~~~~~~
-== Lense
+
+= Lense
 
 Lense is a strong typed, pure object oriented programming language that aims to be a familiar simple languages that could compile to any object oriented platform. First  focusing on the Java Virtual Machine (JVM) and then on other possible platforms like Javascript and CRL (.NET).
 

@@ -1,0 +1,50 @@
+title=Maybe
+date=2016-02-03
+type=post
+tags=tour, lense
+status=published
+~~~~~~
+
+==Maybe
+
+Maybe is a link:monads.html[monad] that allows us to manipulate possible absent values. `Maybe<T>` is a link:classes.html#sum-types[sum type] with only two subtypes : `Some<T>` and `None`. `None` has a single instance named `none`. `none` represents the absence of value. 
+Maybe is equivalent to the `Optional` type that exist in other languages. However, in Lense, Maybe is a fundamental type and it is the only way you can handle the concept of "null" since Lense does not allow the traditional `null` reference value. 
+
+[source, lense ]
+----
+public calculateNameLength( name : Maybe<String>) : Maybe<Natural> {
+	return name.map(m -> m.size());
+}
+----
+
+Because Maybe is a fundamental type in Lense we can simplify this method with some shorter syntax:
+
+[source, lense ]
+----
+public calculateNameLength( name: String?) : Natural? {
+	return name.map(m -> m.size());
+}
+----
+
+This simple method returns the length of the given name and we can called it like:
+
+[source, lense ]
+----
+val x : Natural? = calculateNameLength("London"); // x holds a Some<Natural> with a value 6 inside
+val y : Natural?= calculateNameLength(none); // y holds the instance of 'none'. 
+----
+
+Note that the methods does not use any decision directive to handle the absence of value directly. This is handled by the `map` method it self.
+If the original Maybe is really and instanceof of `Some` it has some value in it, that value is passed to the given lambda and a new `Some` is created having inside the calculated value.
+If the original Maybe is really a `none` the lambda is not invoked and `none` is returned.
+
+You can, if you want to, transform a Maybe<T> to a T by offering a default value, like this:
+
+[source, lense ]
+----
+val  x : Natural? =  ... // obtain in some way
+
+val size : Natural = x.orElse(0);
+----
+
+this means that, if *x* has a value, that value will assigned to *size*, otherwise 0 will be assigned.

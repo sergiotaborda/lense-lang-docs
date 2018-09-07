@@ -1,0 +1,13 @@
+title=Glossary
+date=2016-02-01
+type=post
+tags=keywords,glossary, lense
+status=published
+~~~~~~
+
+== Glossary
+- <a name="erasure">Erasure</a> : Process by which adcional type information is removed and a simpler type is placed in the compiled form. This can refer to removing parametric type (gneerics) information from types and methods, or convert a Lense type to a <a href="#primitiveType">primitive type</a>;
+
+- <a name="fundamentalType">Fundamental Type</a> : A type that is recognized and/or handled specilly by the compiler or the language. Lense fundamental types are numbers , strings, booleans , sequences , progressions , intervals and the maybe type. Language literals only exist for fundamental types.
+
+- <a name="primitiveType">Primitive Type</a> : A type that represents a value that is direclty handled in the machine stack and/or has native support in the machine. Is common for numbers, booleans and arrays to be primitive types. Primitive types are often also fundamental types and the compiler and/or the language handle them specilly. Lense language does not have primitive types but the compiler is free to optimize the code to use them in the compiled form. For example, to use primitive boolean instead of <code>lense.core.lang.Boolean</code>.

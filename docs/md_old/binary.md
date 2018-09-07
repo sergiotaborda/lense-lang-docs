@@ -1,0 +1,85 @@
+title=Binary
+date=2017-07-04
+type=post
+tags=binary, shift, lense
+status=published
+----
+
+== Binary
+
+A Binary in Lense is a sequence of bits and implements `Sequence<Boolean>` and does not,necessarily, represent a number. 
+`Binary` is a link:glossary.html#fundamental[fundamental type] in Lense so it is specially supported by the language.
+
+Two main implementations of `Binary` exist : `BitList` that supports a variable size of bits, and `BitArray` that supports a fixed length of bits.
+
+=== Binary Literal Representation
+
+The literal of binary begins with a `$` sign folowed by a sequence of ones (to represent `true`) and zeros (to represent `false`). The `_` symbol can be used, as in link:numbers.html[number literals], to separate digits logically.
+
+
+All binary literals are assumed to be instances of `BitArray` with the given number of bits. It is not possible to represent a zero bits sequence with a literal.
+
+[source, lense]
+----
+	val  byte = $1111_0000; 
+	val  short = $1111_0000_1111_0000; 
+	val  flags = $1111_0000_0101_0110_0010_0001_0101_1001; 
+----
+
+The above code is equivalente to this one :
+
+[source, lense]
+----
+	val  byte : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false);
+	val  short : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, true,true,true,true, false,false,false,false);
+	val  flags : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, false,true,false,true, false,true,true,false, false,false,true,false, false,false,false,true, false,true,false,true, true, false,false,true);
+----
+
+This equivalency is conceptual, in practice the compiler uses more suitable constructors for each literal case.
+
+
+=== Binary and Bytes
+
+`Byte` is a special case of `Binary`that corresponds to a fixed sequence length of 8 bits. `Byte` is primarily intented for use in I/O operations and is not a number. `Byte`does not have an assigned numeric value and there is no automatic promotion from `Byte` to any type of `Number`. Also it has no arithmetic operations. However, a `Byte` can be transformed explicitly to a `Natural` between 0 and 255 or to a `Int32` between -128 and 127 by means of the `toNatural()` and `toInteger()` functions.
+
+[source, lense]
+----
+	val  byte : Byte = $1111_0000; 
+	val  n : Natural = byte.toNatural(); // equivalent to 240;
+	val  i : Int32 = byte.toInteger(); // equivalent to -16
+	
+	val error : Natural = byte; // illegal. Byte is not assignable to Natural.
+----
+
+`Int16` , `Int32` and `Int64` also implement `Binary` corresponding to a fixed length sequence of 16, 32 and 64 bits respectively. Because this values have a signed numeric value, one of the bits is reserved to determine the sign as numbers. The other bits represent the value if the value is positive, or represent the https://en.wikipedia.org/wiki/Two%27s_complement[two complement] representation of the (then negative) value.
+
+=== Bitwise Operations
+
+`Binary` satisfies `Injuctable`, `Dijunctable` and `ExclusiveDijunctable` to allow for the use of the following operators as bitwise operators:
+
++ &  - from `Injuctable` : the bitwise AND operator 
++ |  - from `Dijunctable` : the bitwise OR operator
++ ^  - from `ExclusiveDijunctable`: the bitwise XOR (Exclusive-OR) operator 
+
+These operators are comutative and operate bitwise according to they respective tradicional https://en.wikipedia.org/wiki/Truth_table[Truth Tables]. 
+
+` Binary` also satisfies `Complementable` to allow for the use of the complement operator:
+
++ ~ - from `Complementable` : the bitwise NEGATION operator. 
+
+` Binary` adicionally defines two other bitwise operators: 
+
++ &gt;&gt; - arithmetic right shift
++ << - arithmetic left shift 
+
+These operators are called arithmetic because the are related to multiplication/division operations
+
+[source, lense]
+----
+	val  byte : Byte = $0011_1100; // equivalent to 60
+	
+	assert( byte << 2 == $1111_0000 ) // equivalent to 360 = 60 * 2 * 2
+	assert( byte >> 2 == $0000_1111 ) // equivalent to 15 = 60 / 2 / 2 
+----
+
+You can use other examples to conclude that shifting to the left **n** types is equivalent to multiplying by 2 **n** times. On the other hand shifting to the right **n** types is not quite equivalent to divide by 2 **n** times. In general right shifting is equivalent to taking the floor of the division.
