@@ -16,14 +16,14 @@ A string literal is just a text enclosed in double quotes.
 
 [source, lense]
 ----
-	val  greating : String = "Hello, world";
+	let  greating : String = "Hello, world";
 ----
 
 String are mulit-line, so you can simply right
 
 [source, lense]
 ----
-val greating : String = "Hello, 
+let greating : String = "Hello, 
 	wold";
 ----
 
@@ -35,7 +35,7 @@ If you need to use a Unicode special character, simply enclose its hexadecimal c
 
 [source, lense]
 ----
-	val definitionOfPi = "The value of \{#03C0} is the ratio between the circumference and the diameter of a circle"
+	let definitionOfPi = "The value of \{#03C0} is the ratio between the circumference and the diameter of a circle"
 ----
 
 === Concatenation
@@ -44,8 +44,8 @@ You can concatenate strings using the `++` operator.
 
 [source, lense]
 ----
-	val name : String = "Alice";
-	val greating : String = "Hello, " ++ name;
+	let name : String = "Alice";
+	let greating : String = "Hello, " ++ name;
 ----
 
 However, you probably use interpolation a lot more that concatenation.
@@ -56,8 +56,8 @@ You can interpolate values inside literal strings using `{{` and `}}` as delimit
 
 [source, lense]
 ----
-	val name : String = "Alice";
-	val greating : String = "Hello, {{ name }}";
+	let name : String = "Alice";
+	let greating : String = "Hello, {{ name }}";
 ----
 
 You can interpolate any expression

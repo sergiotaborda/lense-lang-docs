@@ -111,7 +111,7 @@ Well, left look closer to the return of `first`
 ----
 public class Hello extends ConsoleApplication {
 	public run () {
-		val String? argument = Arguments.first();
+		let String? argument = Arguments.first();
 		Console.print("Hi!, the first argument is {{ argument }}.");
 	}
 }
@@ -164,15 +164,15 @@ In any scope when can define a value
 
 [source, lense]
 ----
-	val k = 3;
-	val u: Int;
+	let k = 3;
+	let u: Int;
 	u = 90;
 	u = 80; // error!
 ----
 
 Values are immutable and cannot be changed after initialized. All values need to be explicit initialized before they can be read.
 Once again the compiler will infer the type of the value from the initialization expression. If there is no initialization, the declarion of the type is required.
-A value can be made mutable by using the `var` annotation instead of `val`. An mutable value is called a <i>variable</i>.
+A value can be made mutable by using the `var` annotation instead of `let`. An mutable value is called a <i>variable</i>.
 
 [source, lense]
 ----
@@ -231,14 +231,14 @@ Using reflection, methods can be converter to functions if the instance object i
 
 [source, lense]
 ----
-    val Number number = 4;
+    let Number number = 4;
 
-    val two = number.sqrt();
+    let two = number.sqrt();
 
     // extract the underlying function
-    val Function<Number,Number> f = number::sqrt(); // f has a parameter of type Number representing the bounded value of sqrt.
+    let Function<Number,Number> f = number::sqrt(); // f has a parameter of type Number representing the bounded value of sqrt.
 
-    val alsoTwo = f(4);
+    let alsoTwo = f(4);
 ----
 
 Note the use of the `::` operator to detach members from object instances. 
@@ -388,8 +388,8 @@ You can define a class with the `class` keyword.
 /**A polar coordinate**/
 public class Polar {
 
-	private val Float angle; // imutable values
-	private val Float radius; // imutable values
+	private let Float angle; // imutable values
+	private let Float radius; // imutable values
 	
 	// an initializer , aka constructor
 	public Polar (Float angle, Float radius){
@@ -413,12 +413,12 @@ public class Polar {
 }
 ----
 
-The values angle and radius are imutable, so the class as a whole is imutable. We can inform the compilr of this fact by adding `val` to the class definition.
+The values angle and radius are imutable, so the class as a whole is imutable. We can inform the compilr of this fact by adding `let` to the class definition.
 
 [source, lense]
 ----
 /**An imutable polar coordinate**/
-public val class Polar {
+public let class Polar {
 
  ...
 }

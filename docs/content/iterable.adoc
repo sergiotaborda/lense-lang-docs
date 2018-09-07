@@ -15,8 +15,8 @@ You can explicitly iterate over the elements of any `Iterable<T>` with the *for-
 
 [source, lense ]
 ----
-val cities : Sequence<String> = ["New York", "London", "Paris"];
-val lengths : List<Natural> = new List<Natural>();
+let cities : Sequence<String> = ["New York", "London", "Paris"];
+let lengths : List<Natural> = new List<Natural>();
 
 for (String city in cities){
 	lengths.add(city.size());
@@ -27,8 +27,8 @@ The *for-each* directive can be used on any type that implements `Iterable`. The
 
 [source, lense ]
 ----
-val cities : Sequence<String> = ["New York", "London", "Paris"];
-val lengths : List<Natural> = new List<Natural>();
+let cities : Sequence<String> = ["New York", "London", "Paris"];
+let lengths : List<Natural> = new List<Natural>();
 
 Iterator<Natural> it = cities.iterator();
 while (it.moveNext()){
@@ -44,8 +44,8 @@ Because all Iterables are monads , they have a `map` method that receives a lamb
 
 [source, lense ]
 ----
-val cities : Sequence<String> = ["New York", "London", "Paris"];
-val lengths : Sequence<Natural>  =  cities.map( city -> city.size());
+let cities : Sequence<String> = ["New York", "London", "Paris"];
+let lengths : Sequence<Natural>  =  cities.map( city -> city.size());
 ----
 
 This code simply applies a transformation to all elements of the original container (*cities*) and produces a new *Sequence<Natural>* with the lenghts of the cities names. 
@@ -63,7 +63,7 @@ This a very simple, readable, code that means the same that:
 
 [source, lense ]
 ----
-val  cubes = new List<Natural>();
+let  cubes = new List<Natural>();
 
 for (Natural n in 1..100) {
 	if (n.isOdd()) {

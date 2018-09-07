@@ -12,7 +12,7 @@ Lense decision directives only allow `Boolean` values and expressions as argumen
 
 [source, lense]
 ----
-val name : String = "Alice";
+let name : String = "Alice";
 if (name){  // Compilation error. Expected Boolean expression
 	printName(name);
 }

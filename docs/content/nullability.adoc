@@ -15,8 +15,8 @@ However the concept of an absent value is very usefull. Some data that is not ye
 
 [source, lense]
 ----
-val h : String = "Hello"; 
-val w : String? = none; 
+let h : String = "Hello"; 
+let w : String? = none; 
 ----
 
 The first line created a value of type <code>String</code> with value *"Hello"*. The second line create a possible absent value of a <code>String</code> type and initializes it to `none`. 

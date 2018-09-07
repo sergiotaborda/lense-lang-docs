@@ -18,9 +18,9 @@ The literal of binary begins with a `$` sign followed by a sequence of ones (to 
 
 [source, lense]
 ----
-	val  byte = $1111_0000; 
-	val  short = $1111_0000_1111_0000; 
-	val  flags = $1111_0000_0101_0110_0010_0001_0101_1001; 
+	let  byte = $1111_0000; 
+	let  short = $1111_0000_1111_0000; 
+	let  flags = $1111_0000_0101_0110_0010_0001_0101_1001; 
 ----
 
 All binary literals are assumed to be instances of `BitArray` with a size equivalent to the given number of bits. 
@@ -31,9 +31,9 @@ The above code is equivalent to:
 
 [source, lense]
 ----
-	val  byte : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false);
-	val  short : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, true,true,true,true, false,false,false,false);
-	val  flags : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, false,true,false,true, false,true,true,false, false,false,true,false, false,false,false,true, false,true,false,true, true, false,false,true);
+	let  byte : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false);
+	let  short : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, true,true,true,true, false,false,false,false);
+	let  flags : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, false,true,false,true, false,true,true,false, false,false,true,false, false,false,false,true, false,true,false,true, true, false,false,true);
 ----
 
 NOTE: This equivalency is conceptual, in practice, the compiler can optimize the construction of literals.
@@ -44,11 +44,11 @@ NOTE: This equivalency is conceptual, in practice, the compiler can optimize the
 
 [source, lense]
 ----
-	val  byte : Byte = $1111_0000; 
-	val  n : Natural = byte.toNatural(); // equivalent to 240;
-	val  i : Int32 = byte.toInteger(); // equivalent to -16
+	let  byte : Byte = $1111_0000; 
+	let  n : Natural = byte.toNatural(); // equivalent to 240;
+	let  i : Int32 = byte.toInteger(); // equivalent to -16
 	
-	val error : Natural = byte; // illegal. Byte is not assignable to Natural.
+	let error : Natural = byte; // illegal. Byte is not assignable to Natural.
 ----
 
 `Int16` , `Int32` and `Int64` also implement `Binary` corresponding to a fixed length sequence of 16, 32 and 64 bits respectively. Because this values have a signed numeric value, one of the bits is reserved to determine the sign as numbers. The other bits represent the value if the value is positive, or represent the link:https://en.wikipedia.org/wiki/Two%27s_complement[two's complement] representation of the (then negative) value.
@@ -78,7 +78,7 @@ These operators are called arithmetic because they are related to the multiplica
 
 [source, lense]
 ----
-	val number : Int32 = 60; 
+	let number : Int32 = 60; 
 	
 	assert( number << 2 == 360 ) // equivalent to 360 = 60 * 2 * 2 
 	assert( number >> 2 == 15 ) // equivalent to 15 = 60 / 2 / 2 
@@ -88,7 +88,7 @@ Using binary literals:
 
 [source, lense]
 ----
-	val number : Byte = $0011_1100; 
+	let number : Byte = $0011_1100; 
 	
 	assert( number << 2 == $1111_0000 ) // equivalent to 360 = 60 * 2 * 2 
 	assert( number >> 2 == $0000_1111 ) // equivalent to 15 = 60 / 2 / 2 

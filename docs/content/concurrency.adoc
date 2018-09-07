@@ -5,15 +5,17 @@ tags=tour, lense
 status=published
 ~~~~~~
 
+IMPORTANT: The features explained here are still conceptual and require further study.
+
 == Parallelism and Concurrency
 
 Lense chooses not to force any specific memory model or thread model because there is no guarantee it would be available in all platforms.
-Instead if defines types and libraries that can be used to take advantege of the platform parallelism, if any exists.
+Instead if defines types and libraries that can be used to take advantage of the platform parallelism, if any exists.
 So, concurrency is enabled,  not by language constructs, but by means of specific APIs that hide the details of parallelism and concurrency.
 
 === Promises and Deference
 
-A `Promise` is a monad that can hold functions to be executed once a value is calculated. The promise does not define if the calculation is executed in another thread or not, but conceptually is better to work as if it where. The thread that executes the value also executes the passed functions. A promise holds a function for when the value is calculated sucessufly and a function for when the promise can not be calculated, i.e. the calculation ends in an exception.
+A `Promise` is a monad that can hold functions to be executed once a value is calculated. The promise does not define if the calculation is executed in another thread or not, but conceptually is better to work as if it where. The thread that executes the value also executes the passed functions. A promise holds a function for when the value is calculated successfully and a function for when the promise can not be calculated, i.e. the calculation ends in an exception.
 
 [source, lense]
 ----
@@ -38,23 +40,23 @@ public object Calculator{
     // n: 0	1	2	3	4	5	6	7 ...
     // f: 0	1	1	2	3	5	8	13 ...
 	public fibonacci( n: Natural)  {
-	        val deferred  = new Deferred.empty();
+	        let deferred  = new Deferred.empty();
 	         
-	         try {      
-	         		deferred.sucess(calculateRecursively (n));
-	         	} catch (Exception e){
-	         		deferred.error(e);
-	         	}
+	        try {      
+	         	deferred.sucess(calculateRecursively (n));
+	        } catch (Exception e){
+	         	deferred.error(e);
+	        }
 	         
-	         return deferred.promisse(); 
+	        return deferred.promisse(); 
 	}
 	
-	private  calculateRecursively ( n:  Natural){
+	private  calculateRecursively ( n:  Natural) : Natural {
 		if (n <= 1){
 			return n;
 		} else if (n > 1000){
 		 	// just for it to be possible to have an exception.
-			throw new Exception("Cannot calculate Fibonacci for numbers greated than 1000");
+			throw new Exception("Cannot calculate Fibonacci for numbers greater than 1000");
 		}
 		
 		return calculateRecursively (n-1) + calculateRecursively (n-2)
@@ -99,7 +101,7 @@ The `TimedExecutor` and `DeferredExecutor` are implemented in java using the Jav
 
 [source, lense ]
 ----
-val env : ActorEnvironment = new StompActorEnvironment("http://server.side.address.com");
+let env : ActorEnvironment = new StompActorEnvironment("http://server.side.address.com");
 
 // register the actor with a name
 
@@ -118,7 +120,7 @@ public class MyActor extends Actor {
 
        public onMesssage( msg: Message) {
        
-             val n = msg.payload as Natural;
+             let n = msg.payload as Natural;
              
              if (exists n){
                Natural fibonacci =  calculateRecursively(n);

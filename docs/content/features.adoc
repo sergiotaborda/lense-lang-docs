@@ -60,7 +60,7 @@ public class Maybe<T> is Some<T>, None {
 
 public class Some<T> extends Maybe<T>{ 
 
-	public constructor (public val value : T);	
+	public constructor (public let value : T);	
 	public isAbsent() { return false;}
 	
 	public map <R>(Function<R,T> mapping) : Maybe<R> {

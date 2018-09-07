@@ -272,7 +272,7 @@ This operator test for the first term to be true. In the positieve case returns 
 
 [source,lense ]
 ----
-val c = (a == b) ? 1 : 4;
+let c = (a == b) ? 1 : 4;
 ----
 
 
@@ -281,14 +281,14 @@ This operator compares the second term with the other ones according to the comp
 
 [source,lense ]
 ----
-val isTeenager =  13 <= x <= 19;
+let isTeenager =  13 <= x <= 19;
 ----
 
 This operator is equivalent to 
 
 [source,lense ]
 ----
-val isTeenager =  13 <= x && x <= 19
+let isTeenager =  13 <= x && x <= 19
 ----
 
 but, we do not need to use the `&&` operator nor type the variable `x` twice. 
@@ -296,7 +296,7 @@ Also this operator is equivalent to
 
 [source,lense ]
 ----
-val isTeenager = x in |[ 13 , 19 ]|;
+let isTeenager = x in |[ 13 , 19 ]|;
 ----
 
 but we do not need to create and interval object to text x agains it.
@@ -307,8 +307,8 @@ The infix `--a` and `++b` operators are transformed to calls into `predecessor` 
 
 [source,lense ]
 ----
-val a : Integer= 3;
-val b : Integer = ++a;
+let a : Integer= 3;
+let b : Integer = ++a;
 ----
 
 At the end of this code, both *a* and *b* are 4.
@@ -318,7 +318,7 @@ Is equivalent to
 ----
 var  a : Integer = 3;
 a = a.successor();
-val b :Integer = a;
+let b :Integer = a;
 ----
 
 As you can see the value in the variable is incremented implicitly as you would expect, however a new object is created and the reference is redirected to this new object. 
@@ -327,8 +327,8 @@ The suffix operators `a--` and `a++` are also transformed to calls into `predece
 
 [source,lense ]
 ----
-val a : Integer= 3;
-val b : Integer = a++;
+let a : Integer= 3;
+let b : Integer = a++;
 ----
 
 At the end of this code, *b* is 3 and *a* is 4.
@@ -337,7 +337,7 @@ is translated internally to
 [source,lense ]
 ----
 var a : Integer = 3;
-val b : Integer = a;
+let b : Integer = a;
 a = a.successor();
 ----
 

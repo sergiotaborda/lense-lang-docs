@@ -15,22 +15,22 @@ A class to represent fraction objects could be implemented like so:
 
 [source, lense]
 ----
-public val class Fraction {
+public let class Fraction {
     
-    private constructor ( public val numerator: Integer, public val denominator: Integer);
+    private constructor ( public let numerator: Integer, public let denominator: Integer);
 
     public constructor valueOf ( value: Decimal){
         return new Fraction(value.toString());
     }
 
     public constructor parse (value : String){
-         val pos : Natural? = value.indexOf('.');
+         let pos : Natural? = value.indexOf('.');
          if (pos != none){
-            val wholePart = new Integer.parse(value.subString(0,pos));
-            val multiplier =  10 ^^ (value.size - pos); // 10 to the power of the number of decimal digits
-            val decimalPart = new Integer.parse(value.subString(pos+1));     
+            let wholePart = new Integer.parse(value.subString(0,pos));
+            let multiplier =  10 ^^ (value.size - pos); // 10 to the power of the number of decimal digits
+            let decimalPart = new Integer.parse(value.subString(pos+1));     
 
-            val numerator = wholePart * multiplier + decimalPart;
+            let numerator = wholePart * multiplier + decimalPart;
 
             return new Fraction(numerator, multiplier);
          } else {
@@ -51,7 +51,7 @@ public val class Fraction {
 ----
 
 Classes in Lense support link:properties.html[properties], link:properties.html#indexed[indexers], methods and link:constructors.html[constructors] as you would expect.
-Lense also support immutability declaration for classes with `val class`.
+Lense also support immutability declaration for classes with `let class`.
 Any type or member can also have generic type parameters.
 
 [source, lense]
@@ -81,7 +81,7 @@ public class Matrix<T> {
 }
 ----
 
-<a name="sum-types"/>
+[[sum-types]]
 == Sealed Type Hierarchies
 
 In Lense is possible to define an abstract type that can only be implemented by a limited list of other types.

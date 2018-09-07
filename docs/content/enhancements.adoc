@@ -33,7 +33,7 @@ public enhancement RepeatableString extends String {
 
 	public repeat(count : Natural): String {
 		var result = "";
-		for ( val i in 1..count){
+		for ( let i in 1..count){
 			result+= this; // this referes to the enhanced object
 		}
 		return result;
@@ -58,13 +58,13 @@ public enhancement MeasureableInterval extends Interval<Natural> {
 
 // normally intervals have no length because they are not iterable
 
-val stringInterval = |[ 'a' , 'z' ]|;
-val length = stringInterval.length; // will fail at compile time
+let stringInterval = |[ 'a' , 'z' ]|;
+let length = stringInterval.length; // will fail at compile time
 
 // but we can have a lenght if we have a closed interval of Naturals
 
-val naturalInterval = |[ 4 , 10 ]|;
-val length = naturalInterval.length; // ok, because we have an enhancement.
+let naturalInterval = |[ 4 , 10 ]|;
+let length = naturalInterval.length; // ok, because we have an enhancement.
 
 assert( 6 == length);
 ----

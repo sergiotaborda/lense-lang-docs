@@ -20,10 +20,10 @@ Interfaces can extend other interfaces an are implemented by classes or objects.
 
 [source, lense]
 ----
-public val class MailValidator implements Validator<String> {
+public let class MailValidator implements Validator<String> {
 
      public validate( String candidate) : ValidatorResult{
-            val result = new ValidatorResult ();
+            let result = new ValidatorResult ();
 
             if (!candidate.indexOf('@').isPresent){
                 result.addReason("Invalid email");

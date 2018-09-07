@@ -30,8 +30,8 @@ This simple method returns the length of the given name and we can called it lik
 
 [source, lense ]
 ----
-val x : Natural? = calculateNameLength("London"); // x holds a Some<Natural> with a value 6 inside
-val y : Natural?= calculateNameLength(none); // y holds the instance of 'none'. 
+let x : Natural? = calculateNameLength("London"); // x holds a Some<Natural> with a value 6 inside
+let y : Natural?= calculateNameLength(none); // y holds the instance of 'none'. 
 ----
 
 Note that the methods does not use any decision directive to handle the absence of value directly. This is handled by the `map` method it self.
@@ -42,9 +42,9 @@ You can, if you want to, transform a Maybe<T> to a T by offering a default value
 
 [source, lense ]
 ----
-val  x : Natural? =  ... // obtain in some way
+let  x : Natural? =  ... // obtain in some way
 
-val size : Natural = x.orElse(0);
+let size : Natural = x.orElse(0);
 ----
 
 this means that, if *x* has a value, that value will assigned to *size*, otherwise 0 will be assigned.

@@ -41,7 +41,7 @@ The most basic program is a console interaction program. The famous *Hello, word
 public object MyApplication extends ConsoleApplication {
 
 	public run (){
-		val name : String = this.arguments[0];
+		let name : String = this.arguments[0];
 		
 		this.console.println("Hello, {{ name }}!");
 	}
@@ -89,27 +89,27 @@ For more detail on number visit the dedicated [numbers](numbers.html) page
 A string in Lense is a Sequence of Character. Characters are UTF-16 code points. A string literal is just a text enclosed in double quotes.
 
 ~~~~brush: lense
-val greating : String = "Hello, world";
+let greating : String = "Hello, world";
 ~~~~
 
 You can interpolate values inside literal strings using ``{{`` and ``}}`` as delimiters.
 
 ~~~~brush: lense
-val  name : String= "Alice";
-val  greating : String = "Hello, {{ name }}";
+let  name : String= "Alice";
+let  greating : String = "Hello, {{ name }}";
 ~~~~
 
 You can concatenate strings using the ``+`` operator.
 
 ~~~~brush: lense
-val name : String = "Alice";
-val greating : String = "Hello, " + name;
+let name : String = "Alice";
+let greating : String = "Hello, " + name;
 ~~~~
 
 String are mulit-line, so you can simply right
 
 ~~~~brush: lense
-val greating : String = "Hello, 
+let greating : String = "Hello, 
 	wold";
 ~~~~
 
@@ -118,7 +118,7 @@ The line break , tab and spaces in the second line will be preserved.
 If you need to use a Unicode a special character enclosing an hexadecimal natural value with ``\{`` and ``}`` delimiters.
 
 ~~~~brush: lense
-val definePi : String = "The value of \{#03C0} is the ratio between the circumference and the diameter of a circle"
+let definePi : String = "The value of \{#03C0} is the ratio between the circumference and the diameter of a circle"
 ~~~~
 
 
@@ -135,9 +135,9 @@ Sequences are immutable and read-only. Sequences are fundamental in Lense and no
 Lense provides a very familiar syntax for sequences:
 
 ~~~~brush: lense
-val cities : Sequence<String>  = ["New York", "London", "Paris"];
+let cities : Sequence<String>  = ["New York", "London", "Paris"];
 
-val london = cities[1]; // access by a Natural index
+let london = cities[1]; // access by a Natural index
 ~~~~
 
 ### Arrays
@@ -146,9 +146,9 @@ In Lense an ``Array``in an implementation of ``EditableSequence``s. This means y
 Arrays in Lense are fixed in size. To add a new element to the array you need to create a new array. Also keep in mind arrays in Lense are objects of the ``Array<T>`` class and not primitive types like in Java.
 
 ~~~~brush: lense
-val cities : Array<String> = ["New York", "London", "Paris"];
+let cities : Array<String> = ["New York", "London", "Paris"];
 
-val london = cities[1]; // access by a natural index
+let london = cities[1]; // access by a natural index
 
 cities[1] = "São Paulo"; // position 1 now refers to "São Paulo" and not to "London" any more.
 ~~~~
@@ -161,7 +161,7 @@ Because of Lense's [conversion constructors](../constructors.html) you can initi
 ``List`` implementation is equivalent to ``ArrayList`` in Java.
  
 ~~~~brush: lense
-val cities : List<String> = ["New York", "London", "Paris"];
+let cities : List<String> = ["New York", "London", "Paris"];
 
 cities.remove(1); // removes element at index 1, "London" in this example
 cities.add("São Paulo"); // add a new element at end of the list
@@ -173,13 +173,13 @@ Lense supports Ranges. A Range is a special sequence of elements that has a *sta
 A Range is normally created from a Rangeable. A Rangeable defines an ``upTo`` method that returns a Range.
 
 ~~~~brush: lense
-val  range Range<Natural> = 1.upTo(9);
+let  range Range<Natural> = 1.upTo(9);
 ~~~~
 
 This constructs a Range from 1 inclusive to 9 inclusive. Lense also supports an operator called ``..`` that you can use instead of ``upTo``.
 
 ~~~~brush: lense
-val range Range<Natural>  = 1..9;
+let range Range<Natural>  = 1..9;
 ~~~~
 
 This is usefull in interations
@@ -195,7 +195,7 @@ for (Natural n in 1..9){
 Associations are like sequences, but instead of attributing a Natural index to each element, you can attribute an object to each element. This object act like a key to later retrive the stored object. Lense also provides a familiar literal for Associations. Associations, like sequences, are imutable.
 
 ~~~~brush: lense
-val personsAndJobs : Association<String, String>  = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
+let personsAndJobs : Association<String, String>  = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
 ~~~~
 
 Like Sequences, Associations are immutable and read-only.
@@ -205,7 +205,7 @@ Like Sequences, Associations are immutable and read-only.
 ``Dictionary`` is an implementation of ``EditableAssociation`` that allows for the edition of the values associated with keys, but does not allow the modification of the keys.
 
 ~~~~brush: lense
-val personsAndJobs  Dictionary<String, String> = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
+let personsAndJobs  Dictionary<String, String> = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
 
 personsAndJobs.replace("Alice", "CTO"); // replaces the value pointed by the 
 ~~~~
@@ -215,7 +215,7 @@ personsAndJobs.replace("Alice", "CTO"); // replaces the value pointed by the
 ``Map`` is an implementation of ``ResizableAssociation`` that you can use to manipulate editable and resizeable associations.  In Lense, Map implementation is similar to that of HashMap in Java.
 
 ~~~~brush: lense
-val personsAndJobs  Map<String, String> = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
+let personsAndJobs  Map<String, String> = { "Alice": "CEO", "Bob":"CIO" , "Claude":"CFO" };
 
 personsAndJobs.removeKey("Alice"); // removes the key and its value.
 ~~~~
@@ -225,13 +225,13 @@ personsAndJobs.removeKey("Alice"); // removes the key and its value.
 Tuples are special assortments. They are like sequences of objects in the sense each element has an index. The difference is that each element can be of a different type with no relation to the other elements (has in a sequence all elements are off the same class or inherit from it).
 
 ~~~~brush: lense
-val  personsAndJobs : (String, Natural , Boolean) = ("Alice", 42 , true);
+let  personsAndJobs : (String, Natural , Boolean) = ("Alice", 42 , true);
 ~~~~
 
 Lense provides the abose short sintax to create tuple's types and values. the compiler will translate that notation to the following notation that you can also use.
 
 ~~~~brush: lense
-val personsAndJobs : Tuple<String, Tuple<Natural , Tuple<Boolean, Nothing>>>  = ("Alice", 42 , true);
+let personsAndJobs : Tuple<String, Tuple<Natural , Tuple<Boolean, Nothing>>>  = ("Alice", 42 , true);
 ~~~~
 
 If you are interested, you can read [more on container literals](../containerLiterals.html). 
@@ -239,11 +239,11 @@ If you are interested, you can read [more on container literals](../containerLit
 Lense understands that a variable of type X can be considered a variable of type 1-tuple of X, so 1-tuples can be assigned to variables directly and vice-versa:
 
 ~~~~brush: lense
-val tuple1 : (String)  = ("Alice"); // commom pattern
-val tuple1 : (String)  = "Alice"; // also valid
-val name : String  = "Alice"; // commom pattern
-val name : String  = ("Alice"); // also valid
-val name : String  = tuple1; //  also valid
+let tuple1 : (String)  = ("Alice"); // commom pattern
+let tuple1 : (String)  = "Alice"; // also valid
+let name : String  = "Alice"; // commom pattern
+let name : String  = ("Alice"); // also valid
+let name : String  = tuple1; //  also valid
 ~~~~
 
 # Functions
@@ -281,8 +281,8 @@ Functions are objects of type *Function*. There is a type for each number of par
 ``Function<R,T,U>`` is for a function of two parameters, and do on ...
 
 ~~~~brush: lense
-	 val f : Function<Int, Int> = x -> x*x; 
-	 val g : Function<Int, Int, Int>= (x,y) -> x*y;
+	 let f : Function<Int, Int> = x -> x*x; 
+	 let g : Function<Int, Int, Int>= (x,y) -> x*y;
 	 
 	 Console.println(f(3));  
 	 Console.println(g(3,2));
@@ -303,15 +303,15 @@ Method can make calls to the ``this`` variable that implicitly represent the ins
 Using reflection, methods can be converter to functions that can be invoked if the instance object is passed explicitly 
 
 ~~~~brush: lense
-	val  one : Integer= 1;
+	let  one : Integer= 1;
 
-    val  minusOne: Integer = one.negative();
+    let  minusOne: Integer = one.negative();
 
     // extract the underlying function
-    val negativeOf : Function<Number,Number>  = one::negative(); // f has a parameter of type Number representing the bounded value of *negative*.
+    let negativeOf : Function<Number,Number>  = one::negative(); // f has a parameter of type Number representing the bounded value of *negative*.
 
-    val  alsoMinusOne : Integer = negativeOf(one);
-	val  minusTwo : Integer = negativeOf(2);
+    let  alsoMinusOne : Integer = negativeOf(one);
+	let  minusTwo : Integer = negativeOf(2);
 ~~~~
 
 Note the use of the `::` operator to detach members from object instances. 
@@ -319,10 +319,10 @@ You can do the same using the class instead of the instance.
 
 ~~~~brush: lense
     // extract the underlying function
-    val negativeOf : Function<Number,Number> = Integer::negative(); // f has a parameter of type Number representing the bounded value of *negative*.
+    let negativeOf : Function<Number,Number> = Integer::negative(); // f has a parameter of type Number representing the bounded value of *negative*.
 
-    val alsoMinusOne : Integer = negativeOf(one);
-	val minusTwo : Integer = negativeOf(2);
+    let alsoMinusOne : Integer = negativeOf(one);
+	let minusTwo : Integer = negativeOf(2);
 ~~~~
 
 # Operators
@@ -373,7 +373,7 @@ while (condition){
 A very common task in object oriented programming is iterating over a collection of elements. Lense provides the *for-each* structure to help in this very common task.
 
 ~~~~brush: lense
-for (val element in collection){
+for (let element in collection){
 	// repeat this code for each element 
 }
 ~~~~
@@ -469,8 +469,8 @@ Instead Lense provides an actor based API to handle concurrency and parallelism.
 Lense offer a reflection API based on the ``Type`` class. 
 
 ~~~~brush: lense
-   val stringType : Type = typeOf(String);
-   val alsoStringType : Type = "some String".getType(); 
+   let stringType : Type = typeOf(String);
+   let alsoStringType : Type = "some String".getType(); 
 
    Console.println("String has {{ stringType.Methods.size }} methods");
 ~~~~
@@ -490,7 +490,7 @@ Lense supports inline comments with ``//`` and multi-line comments with ``/{`` a
 public class Client {
 
      // the following line uses a single line comment to inform the role of the field
-      val  name : Natural; // the name of the client       
+      let  name : Natural; // the name of the client       
 }
 ~~~~
 

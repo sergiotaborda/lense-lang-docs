@@ -87,7 +87,7 @@ Intervals can be used in switch statements as any `Category` can
 
 [source, lense]
 ----
-	val x = 9;
+	let x = 9;
 	switch (x) { 
 	   case (in |link:[ 0, 9] {
 		  return "Single digit number";

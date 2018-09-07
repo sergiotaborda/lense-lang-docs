@@ -40,18 +40,18 @@ var  name : Sequence<Character> = "Alice";
 
 == Values 
 
-The use of the `var` keyword defines a variable (mutable) reference declaration. Immutable references are defined with the `val` keyword.
+The use of the `var` keyword defines a variable (mutable) reference declaration. Immutable references are defined with the `let` keyword.
 
 [source, lense]
 ----
-val name : String = "Alice";
+let name : String = "Alice";
 ----
 
 Immutable values cannot be changed, so trying to do so is a compilation error.
 
 [source, lense]
 ----
-val name : String = "Alice";
+let name : String = "Alice";
 name = "Beth"; // Compilation Error 
 ----
 
@@ -61,7 +61,7 @@ In Lense you can define the value or the variable and initialize the value later
 
 [source, lense]
 ----
-val name : String;
+let name : String;
 
 name = "Alice";
 ----
@@ -70,9 +70,9 @@ But, because in Lense link:nullability.html[there are no nulls], the compiler wi
 
 [source, lense]
 ----
-val name : String;
+let name : String;
 
-val nameSize = name.size; // Compilation error. Variable 'name' has not be initialized yet
+let nameSize = name.size; // Compilation error. Variable 'name' has not be initialized yet
 
 name = "Alice";
 ----

@@ -87,8 +87,8 @@ if (r == n/d ){
 	// and numbers are compared by value independently of type.
 }
 
-val img : Imaginary = 4i;
-val complex = n + img;
+let img : Imaginary = 4i;
+let complex = n + img;
 
 if (complex == 3 + 4i){
 	// this will be true because n==3 and img ==4i
@@ -96,7 +96,7 @@ if (complex == 3 + 4i){
 }
 
 // you can use the power operator even to take roots
-val distance = (x^^2 + y^^2) ^^ 1/2;  
+let distance = (x^^2 + y^^2) ^^ 1/2;  
 ----
 
 Lense also supports [Intervals and Ranges](interval.html). 
@@ -136,27 +136,27 @@ Lense syntax starts with a syntax based in the C family of syntaxes  ( methods d
 
 [source, lense]
 ----
-val n = 4; // infers type of n value t be Natural
-val r = 5.6; // infers type of r value to be Rational
+let n = 4; // infers type of n value t be Natural
+let r = 5.6; // infers type of r value to be Rational
 
 var i : Integer = 3; // read 3 as Natural , then promotes it to Integer;
 var negative = -3; // read 3 as Natural then applies symetric operator ``-`` returning an Integer
-val a : Rational = 10; // reads 10 as Natural, then promotes it to Rational
+let a : Rational = 10; // reads 10 as Natural, then promotes it to Rational
 
-val half = 1/ 2; // dividing any Whole number by another Whole number results in a Rational
+let half = 1/ 2; // dividing any Whole number by another Whole number results in a Rational
 
 var x = n + r; // infers type of variable x to be a Rational
 var y = i + r; // infers type of variable y to be a Rational
 var z = i + n; // infers type of variable z to be a Integer
 
-val name = "John"; //infers type of value name to be a String
+let name = "John"; //infers type of value name to be a String
 ----
 
 Variables and expressions can be easy inserted within a string using a simple syntax (see [string](strings.html)).
 
 [source, lense]
 ----
-val age = 34;
+let age = 34;
 var name = "John";
 
 console.print("{{ name }} is {{ age }} year old");

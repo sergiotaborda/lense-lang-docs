@@ -19,9 +19,9 @@ Indexed properties are not limited to one index. In the next example we use an a
 // define the Matrix class
 public class Matrix<T> {
 
-	private val cells : Array<T>;
-	private val rowsCount : Natural;
-	private val columnsCount: Natural;
+	private let cells : Array<T>;
+	private let rowsCount : Natural;
+	private let columnsCount: Natural;
 	
 	contructor (private rowsCount : Natural, private columnsCount: Natural, private seed : T){
 		this.rowsCount = rowsCount;
@@ -46,11 +46,11 @@ public class Matrix<T> {
 
 // then use it like so:
 
-val matrix = new Matrix(3, 3, 0);
+let matrix = new Matrix(3, 3, 0);
 
 matrix[1,2 ] = 4;
 
-val four = matrix [1,2];
+let four = matrix [1,2];
 ----
 
 An indexed property as no name, so it is not possible to overload it with the exact same number, and types, of indexes. 

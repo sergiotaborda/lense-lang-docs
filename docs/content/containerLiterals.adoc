@@ -40,7 +40,7 @@ Lense uses common brackets to represent `Sequence` literals. Keep in mind arrays
 
 [source, lense]
 ----
-val sequence : Sequence<Natural>   = [1, 2, 3];
+let sequence : Sequence<Natural>   = [1, 2, 3];
 var array : Array<Natural>  = [1, 2, 3];
 ----
 
@@ -52,14 +52,14 @@ Currently there is no special syntax for sets. A set can be created by using a l
 
 [source, lense]
 ----
-val sequence : Set<Natural> = new HashSet([1, 2, 2, 3, 4, 3]);
+let sequence : Set<Natural> = new HashSet([1, 2, 2, 3, 4, 3]);
 ----
 
 Or, you can use the `toSet` method in `Sequence`:
 
 [source, lense]
 ----
-val sequence : Set<Natural> = link:toSet([1, 2, 2, 3, 4, 3];
+let sequence : Set<Natural> = link:toSet([1, 2, 2, 3, 4, 3];
 ----
 
 The set will only contain the elements 1, 2, 3 and 4 once.
@@ -71,7 +71,7 @@ Associations are used to maintain pairs of values related to each other. Normall
 
 [source, lense]
 ----
-val  association : Association<Natural,String> = { 1:"First", 2:"Second", 3:"Third" };
+let  association : Association<Natural,String> = { 1:"First", 2:"Second", 3:"Third" };
 var  map : Map<Natural, String> =  { 1:"First", 2:"Second", 3:"Third" };
 ----
 
