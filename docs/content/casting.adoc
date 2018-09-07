@@ -7,7 +7,7 @@ status=published
 
 == Casting
 
-Lense does not support an explicit cast operator like C or Java , it supports flow sensitive casting instead. This means the compiler can use flow directives like `if` or `switch` to understand the type of the variable.
+Lense does not support an explicit cast operator like C or Java do. Lense supports flow sensitive casting instead. This means the compiler can use flow directives like `if` or `switch` to understand the type of the variable.
 
 [source, lense ]
 ----
@@ -17,7 +17,8 @@ public collectLeafs( root : Node , leafs : List<Node>) {
 	   leafs.add(obj);
 	} else if (obj is BranchNode){
 		
-		for (var child in obj.Children){
+		// obj.children is visible because the compiler knows obj is a BranchNode
+		for (var child in obj.children){ 
 			collectLeafs(child, leafs);
 		}
 	} else {
@@ -27,13 +28,13 @@ public collectLeafs( root : Node , leafs : List<Node>) {
 }
 ----
 
-The `is` operator returns `true` if the variable holds an object of the specified type. The compiler then knows that all references to that variable inside the `if` realy refer to that type, and so all operations on that type are allowed.
+The `is` operator returns `true` if the variable holds an object of the specified type. The compiler then knows that all references to that variable inside the `if` really refer to that type, and so all operations on that type are allowed.
 
-Flow sensitive typing simplifies writing of *check and cast* idiom, very common when overriding `equals`. In other languages, like Java you need to test for type and then cast:
+Flow sensitive typing simplifies writing the *check and cast* idiom, very common when overriding `equals`. In other languages, like Java, you need to test for type and then cast:
 
 [source, java]
 ----
-// Java 
+// java 
 public class Person {
 
 	public long id;
@@ -51,7 +52,7 @@ in Lense the compiler is smart to understand that if tested, then the variable i
 ----
 public class Person {
 
-	public var Id : Natural;
+	public Id : Natural;
 
 	public equals(other : Any){
 		return other is Person && other.Id == this.Id;
@@ -71,7 +72,7 @@ public collectLeafs( root : Node , leafs : List<Node>) {
 		    leafs.add(obj);
 		}
 		case is BranchNode {
-			for (var child in obj.Children){
+			for (var child in obj.children){
 				collectLeafs(child, leafs);
 			}
 		}
@@ -90,7 +91,7 @@ var node : Node  = ... // some node
 
 assert( node is BranchNode);
 
-return node.Children.size; // at this line the compiler kowns node is a BranchNode because otherwise and exception would have been thrown.
+return node.children.size; // at this line the compiler knows node is a BranchNode because otherwise and exception would have been thrown earlier.
 
 ----
 

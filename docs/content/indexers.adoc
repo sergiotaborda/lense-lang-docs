@@ -5,6 +5,7 @@ tags=tour, lense
 status=published
 ~~~~~~
 
+[[index-properties]]
 == Indexed Properties
 
 <a name="indexed" ></a>Indexed properties are anonymous properties that allow you to associate a value of the property with one or more values of parameters called indexes. The most common examples are arrays that use numeric indexes and maps that use key object for indexes.

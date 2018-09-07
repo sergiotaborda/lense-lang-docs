@@ -5,12 +5,12 @@ tags=tour, lense
 status=published
 ~~~~~~
 
-Lense does not have primitives (values that are not objects) and thus all values are objects , all objects descend from some class and all variables are references. 
-The Lense back-end compiler may try to use the native plataform's primitives as much as possible to enhance performance, but this is an otimization. Conceptually primitives do not exist.
+Lense does not have link:glossary.html#primtiveTypes[primitive types] and thus all values are objects , all objects descend from some class and all variables are references. 
+The Lense back-end compiler may try to use the native plataform's primitives as much as possible to enhance performance, but this is an optimization. Conceptually primitives do not exist.
 
 == Classes
 
-Classes are the main tool to define your own objects.
+Classes are the main tool for defining your own objects.
 A class to represent fraction objects could be implemented like so:
 
 [source, lense]
@@ -54,14 +54,13 @@ Classes in Lense support link:properties.html[properties], link:properties.html#
 Lense also support immutability declaration for classes with `val class`.
 Any type or member can also have generic type parameters.
 
-
 [source, lense]
 ----
 public class Matrix<T> { 
 
-    private val backingArray : Array<T> = new Array<T>();
-    private val rowsCount : Natural;
-    private val colsCount : Natural;
+    private backingArray : Array<T>;
+    private rowsCount : Natural;
+    private colsCount : Natural;
 
     constructor Matrix( rowsCount : Natural, colsCount : Natural, seed : T){
         this.rowsCount = rowsCount;
@@ -86,7 +85,7 @@ public class Matrix<T> {
 == Sealed Type Hierarchies
 
 In Lense is possible to define an abstract type that can only be implemented by a limited list of other types.
-This is called a Sealed Type Hierarchy. This mechanism is now in other languages as "sum type" or "algebraic" type.
+This is called a Sealed Type Hierarchy. This mechanism is known in other languages as "sum type" or "algebraic type".
 
 === Sealed Classes
 The classic example is the Node type. Normally we have a Branch node and a Leaf node. Traditionally we would write:
@@ -123,7 +122,7 @@ public <T> void colectLeafs(Node<T> node, List<T> leafs){
 }
 ----
 
-Of course this is not good OO design because we could add a method to Node and make use of polymorphism, but suppose Node is given by some third party code and we cannot add the polymorphic  method. 
+Of course this is not good Object Oriented design because we could add a method to Node and make use of polymorphism, but suppose Node is given by some third party code and we cannot add the polymorphic  method. 
 Then, we need to make a decision based on the type of the object, then cast it, then capture the properties and use them.
 In Lense we could use a similar construction using https://en.wikipedia.org/wiki/Flow-sensitive_typing[flow-sensitive typing]:
 
@@ -180,10 +179,9 @@ public case class Leaf<T> extends Node<T> {
 
 With this new code the compiler knows that `Brunch` and `Leaf` are the only possible sub types of `Node`.
 
-With this syntax the classes can be defined in any file. The `case` keyword informs the compiler this is child type of `Node` so the compiler checks to see if 
-`Node` has defined it in the `is` clause.
+With this syntax the case classes can be defined in any file. The `is` clause marks the type as the root of the Sealed Type Hierarchy. The `case` keyword informs the compiler this is a child type of `Node` so the compiler checks to see if  `Node` has defined it in the `is` clause.
 
-The hierarchy can continue has um child of a sum type can the be the root of a new some type.  Take link:maybe.html[Maybe] as an example :
+The hierarchy can continue has a child of a sum type can the be the root of a new sealed type hierarchy.  Take link:maybe.html[Maybe] as an example :
 
 [source, lense ]
 ----
@@ -221,11 +219,11 @@ public interface FileSystemElement is File , Folder , Drive {
 	// methods
 }
 
-public case class Folder extends FileSystemElement(){
+public case interface Folder extends FileSystemElement{
 	// methods
 }
 
-public case class Drive extends FileSystemElement(){
+public case interface Drive extends FileSystemElement{
 	// methods
 }
 
@@ -234,11 +232,11 @@ public case interface File extends FileSystemElement is ContentFile, CompactedFi
 }
 
 
-public case class ContentFile extends File {
+public class ContentFile implements File {
 	// methods
 }
 
-public case class CompactedFileSystem extends File {
+public class CompactedFileSystem implements File {
 	// methods for zip like files 
 }
 ----
@@ -246,7 +244,7 @@ public case class CompactedFileSystem extends File {
 
 === Sealed Instances 
 
-Lense does no have enums like Java or C# , sum types are used instead 
+Lense does no have enums like Java or C# , sealed types are used instead 
 
 [source, lense ]
 ----
@@ -259,7 +257,7 @@ public case object clubs extends Suit();
 public case object spades extends Suit();
 ----
 
-You can reduce boilerplate by defining the cases in a nested form
+If no override or overload is necessary, you can reduce boilerplate by defining the cases in a nested form
 
 [source, lense ]
 ----

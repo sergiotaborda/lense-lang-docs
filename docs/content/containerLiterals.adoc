@@ -9,6 +9,7 @@ status=published
 
 Lense recognizes literals for `Sequence`s, `Association`s and `Tuple`s. As a rule, because Lense has type inference it must be possible to infer the type of literal from the syntax, so we need a diferent sintax for each container type. 
 
+[[sequence-literal]]
 === Sequences
 
 In C-familly languages an array is a fundamental type and can be created literally using curly brackets *{* and *}*, but in more mathematical oriented languages such as Fortran an Julia common brackets are used. 

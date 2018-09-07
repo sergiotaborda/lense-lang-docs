@@ -9,59 +9,58 @@ status=published
 
 In some other languages arrays are normally link:glossary.html#primtiveTypes[primitive types] or at least link:glossary.html#fundamentalTypes[fundamental types]. In Lense, arrays are simply objects of the `Array` class. This class belongs to the Collections API and receives no special handling by the language or the compiler. The Collections API is a set of common object structures like hash tables and linked lists implemented in a coherent framework.
 
-This means you create arrays as you would any other class (i.e invoking the constructor). There is no `new someArray[2]` sintax for array definition. Arrays in Lense are the default implementation of the `EditableSequence` interface that behave like arrays in other languages. They have fixed length and values can be edited.However , becasue Lense has no null, arrays always have to be pre-initialized. 
+You create arrays as you would create any other class, by invoking one of its constructors. There is no `new SomeArray[2]` syntax for array definition. Arrays in Lense are the default implementation of the `EditableSequence` interface that behaves like arrays in other languages. `EditableSequence`s have fixed length and values can be set at given positions, but new objects cannot be added to the sequence. However , because Lense has no `null`s, arrays must always be pre-initialized. 
 
-=== Inicialization
+=== Initialization
 
-Because Lense does not have the concept of `null` all arrays must be inicialized correctly with a specified value. There are no default values. If you cannot determine the initialization values you will be better using a `List`( or any other `ResizableSequence` like `LinkedList`) that allows you to start with zero elements in que collection and add the elements as you go.  When you use `Array` you need to supply the elements at creation time. The easiest way to do this is with a literal:
+Because Lense does not have the concept of `null` arrays must be initialized correctly with a specified value. There are no default values. If you cannot determine the initialization values you will be better using a `List`( or any other `ResizableSequence` like `LinkedList`) that allows you to start with zero elements in the collection and add the elements as you go.  When you use `Array` you need to supply the elements at creation time. The easiest way to do this is with a link:containerLiterals$sequence-literal[sequence literal]:
 
 [source, lense]
 ----
+	// with type annotation
     val numbers : Array<Natural> = [1, 2, 3 , 4 , 5];
+	// with no type annotation, using type inference
+    val numbers = [1, 2, 3 , 4 , 5];
 ----
 
-Remember `Array` is not a fundamental type in Lense. That literal above really creates a `Sequence` object that is read-only by definition. The compiler then uses a constructors.html#conversion[conversion constructor] to create the `Array` from the `Sequence`. If you wish to initilize all position in the array to the same value you can use a special constructors.html#named[named constructor]:
+Remember `Array` is not a fundamental type in Lense. That literal above really creates a `Sequence` object that is read-only by definition. The compiler then uses a constructors.html#conversion[conversion constructor] to create the `Array` from the `Sequence`. If you wish to initialize all position in the array to the same value you can use a special constructors.html#named[named constructor].
+The next example crates array with 5 elements all equal to zero.
 
 [source, lense]
 ----
-    // this code creates an array with 5 elements all equal to zero.
-    val numbers : Array<Natural>  = new Array.filled<Natural>(5, 0);
+    // with type annotation
+    val numbers : Array<Natural>  = new Array.filled(5, 0);
+	// with no type annotation, using type inference
+	var numbers = new Array.filled(5, 0);
 ----
 
-Here we will be writing the examples with no generic type inference, but normally you would write with less ceremony:
-
-[source, lense]
-----
-    var numbers = new Array.filled(5, 0);
-----
-
-Its all the same.
-
-If a constant is not a good option in your case, you can, alternativly, use the overloaded version that receives a initialization function.
+If a constant is not a good option in your case, you can, alternatively, use the overloaded version that receives a initialization function.
+This code also  creates an array with 5 elements, but in this case they correspond to the first 5 even numbers.
 
 [source, lense]
 ----
     // this code creates an array with 5 elements corresponding to the first 5 even numbers.
-    val numbers = new Array.filled<Natural>(5, i -> 2 * i);
+    val numbers = new Array.filled(5, i -> 2 * i);
 ----
 
-This constructor receives a lambda expression to inicialize each elements. The `i` parameter (can be any variable name) is the position in the array from 0 to the size array exclusivly. In the example we inicialize the arrays with the first 5 even numbers.
+This constructor receives a lambda expression to initialize each elements from the position in the array represented by the `i` parameter (can be any variable name). This parameter assumes all values for the position in the array from 0 to the size array exclusively (4 in this case). In the example we initialize the arrays with the first 5 even numbers.
 
-# Optional values
-Alternativly you can create an array with an optional type. This means each position of the array can have an absent value. You can create an array of optional type the same way you create it for any other type:
+=== Optional values
+Alternatively you can create an array with an optional type. This means each position of the array can have an absent value. You can create an array of an optional type the same way you create it for any other type. The following also created an array with 5 positions, but this time they hold the `none` value
 
 [source, lense]
 ----
-    // this code creates an array with 5 elements all equal to none.
-    val numbers : Array<Natural?> = new Array.filled<Natural?>(5, none);
+    // with type annotation
+    val numbers : Array<Natural?> = new Array.filled(5, none);
+	// with no type annotation, using type inference
+	val numbers = new Array.filled(5, none);
 ----
 
 Remember `none` is the single value of type `None` that is equivalent to `Maybe<Nothing>`. You can also use the shorter constructor:
 
 [source, lense]
 ----
-    // this code creates an array with 5 elements all equal to none.
-    val numbers : Array<Natural?> = new Array.ofAbsent<Natural>(5);
+	val numbers = new Array.ofAbsent<Natural>(5);
 ----
 
 === Empty Arrays
@@ -77,7 +76,7 @@ In practice is useful to be able to create an empty array. The empty constructor
     val numbers : Array<Natural?> = new Array.empty<Natural?>(); 
 ----
 
-In this case there is no diference if you use optional types because the arrays have no elements (its size is zero).
+In this case there is no difference if you use optional types because the arrays have no elements (its size is zero) so not elements can be retrieved any way
 
 === Indexing
 
@@ -94,10 +93,10 @@ In java , for example, you would write:
 ----
 
 In java, and other languages, the array is a fundamental type and so the language and the compiler have special treatment for the index operator `[]`. In Lense arrays are not fundamental, but the index operator is.
-In reallity is not an operator, is the way you use link:properties.html#indexed[indexed properties]. Indexer properties are a type of member of types that allow to read and write values based on indexes. 
-In Lense all `Sequence`s have an indexed property for reading values at a given position in the sequence, and for `Array`s is also possible to write to that property. 
+In reality is not an operator, is the way you use link:properties.html#indexed[indexed properties]. Indexer properties are members of types that allow to read and write values based on one or more indexes. 
+In Lense all `Sequence`s have an indexed property for reading values at a given position in the sequence, and for `Array`s is also possible to write to that property since it is a `EditableSequence`.
 
-This means you can still use the `array[i]` sintax to read from, and write to, array positions.
+In practice you can still use the `array[i]` sintax to read from, and write to, array positions , like in other languages:
 
 [source, lense]
 ----
@@ -110,11 +109,13 @@ public updateArray( numbers : Array<Natural> ) {
 }
 ----
 
-Addicionally indexes for all `Sequences` are `Natural`s. Natural ranges from zero onwards in the positive direction, so no "negative index" validation is necessary.
+But you can also using indexes with other classes. 
+
+Additionally, indexes for all `Sequences` are `Natural`s. Natural ranges from zero onwards in the positive direction, so no "negative index" validation is necessary.
 
 === Interoperability
 
-`Array`s and other `Sequence` types have some link:nullability.html[issues in interop] mode because they can be null and contains nulls. 
+`Array`s and other `Sequence`s have some link:nullability.html[issues in interop] mode because they counterparts in other languages can be `null` and contain `null`s. 
 
-On the other hand, when creating instances of arrays, Lense will leverage native arrays to minimize space consumptidon and optimize speed. This is done by leveraging Lense's link:constructors.html#factory[factory like constructors] and reified generics to provide the more specific/eficient implementation possible. Obviously this is only possible in some platforms.
+On the other hand, when creating instances of arrays, Lense will leverage native arrays to minimize space consumption and optimize speed. This is done by leveraging Lense's link:constructors.html#factory[factory like constructors] and reified generics to provide the more specific/efficient implementation possible. Obviously this is only possible in some platforms.
 
