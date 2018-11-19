@@ -1,6 +1,6 @@
 
 <ul class="collapsible-menu">
-	<li><a href="#">Introduction</a></i></i>
+	<li><a href="index.html">Introduction</a></i></i>
 	<li><a href="status.html">Status</a></i>
 	<li class="has-children">
 		<a href="javascript:void(0)">Syntax and Semantics</a>
