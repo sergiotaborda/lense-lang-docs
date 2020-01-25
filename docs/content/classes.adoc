@@ -20,7 +20,7 @@ public let class Fraction {
     private constructor ( public let numerator: Integer, public let denominator: Integer);
 
     public constructor valueOf ( value: Decimal){
-        return new Fraction(value.toString());
+        return new Fraction.parse(value.toString());
     }
 
     public constructor parse (value : String){
