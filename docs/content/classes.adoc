@@ -5,7 +5,7 @@ tags=tour, lense
 status=published
 ~~~~~~
 
-Lense does not have link:glossary.html#primtiveTypes[primitive types] and thus all values are objects , all objects descend from some class and all variables are references. 
+Lense does not have link:glossary.html#primtiveTypes[primitive types] and thus all instances are objects, all objects descend from some class and all variables are references. 
 The Lense back-end compiler may try to use the native plataform's primitives as much as possible to enhance performance, but this is an optimization. Conceptually primitives do not exist.
 
 == Classes
