@@ -148,7 +148,7 @@ A constructor without a body means the parameters represent properties with the 
 
 There is no boilerplate and there is no repetition of the class's name and the keyword clearly states that the instruction is a constructor.
 
-<a name="named"></a> 
+[[named]]
 === Named Constructors
 
 All is fine when the class only needs one constructor. But more times, than not, people would realize an object can be created by different forms. Design can argument this other forms should be handled by factory object and the class itself as only a set of parameters. While this can obviously accomplished is not practical. 
