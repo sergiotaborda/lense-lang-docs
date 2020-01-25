@@ -51,7 +51,7 @@ public let class Fraction {
 ----
 
 Classes in Lense support link:properties.html[properties], link:properties.html#indexed[indexers], methods and link:constructors.html[constructors] as you would expect.
-Lense also support immutability declaration for classes with `let class`.
+Lense also support immutability declaration for classes with `immutable class`.
 Any type or member can also have generic type parameters.
 
 [source, lense]
