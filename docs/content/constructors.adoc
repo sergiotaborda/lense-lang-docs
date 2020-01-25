@@ -244,7 +244,7 @@ public class Color {
 
 Notice how the `new` keyword is used to call the other constructors. In fact constructors in Lense act as factory methods and can return any object that could be assigned to the class.
 
-<a name="factory"></a> 
+[[factory]]
 === Factory Constructor
 
 Constructors in Lense are real factory methods and can create and return any instance that could be assigned to the class. This means constructors can control the number of instances being created and choose to create specific sub types. For instances the `Array` constructor is :
