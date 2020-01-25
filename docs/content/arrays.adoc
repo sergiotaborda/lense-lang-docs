@@ -9,11 +9,11 @@ status=published
 
 In some other languages arrays are normally link:glossary.html#primtiveTypes[primitive types] or at least link:glossary.html#fundamentalTypes[fundamental types]. In Lense, arrays are simply objects of the `Array` class. This class belongs to the Collections API and receives no special handling by the language or the compiler. The Collections API is a set of common object structures like hash tables and linked lists implemented in a coherent framework.
 
-You create arrays as you would create any other class, by invoking one of its constructors. There is no `new SomeArray[2]` syntax for array definition. Arrays in Lense are the default implementation of the `EditableSequence` interface that behaves like arrays in other languages. `EditableSequence`s have fixed length and values can be set at given positions, but new objects cannot be added to the sequence. However , because Lense has no `null`s, arrays must always be pre-initialized. 
+You create arrays as you would create any other class, by invoking one of its constructors. There is no `new SomeArray[2]` syntax for array definition. Arrays in Lense are the default implementation of the `EditableSequence` interface that behave like arrays in other languages. `EditableSequence`s have fixed length and values can be set at given positions, but new objects cannot be added to the sequence. Moreover, because Lense has no `null`s, arrays must always be pre-initialized. 
 
 === Initialization
 
-Because Lense does not have the concept of `null` arrays must be initialized correctly with a specified value. There are no default values. If you cannot determine the initialization values you will be better using a `List`( or any other `ResizableSequence` like `LinkedList`) that allows you to start with zero elements in the collection and add the elements as you go.  When you use `Array` you need to supply the elements at creation time. The easiest way to do this is with a link:containerLiterals$sequence-literal[sequence literal]:
+Because Lense does not have the concept of `null`, arrays must be initialized correctly with a specified value. There are no default values. If you cannot determine the initialization values you will be better using a `List`( or any other `ResizableSequence` like `LinkedList`) that allows you to start with zero elements in the collection and add the elements as you go.  When you use `Array` you need to supply the elements at creation time. The easiest way to do this is with a link:containerLiterals$sequence-literal[sequence literal]:
 
 [source, lense]
 ----
