@@ -8,7 +8,7 @@ status=published
 === Tuples
 
 Tuples are similar to link:sequence.html[sequences], but each index has its own type. Tuples are fundamental types in Lense.
-Structurally a Tuple is a node in a linked-list kind of structure. But `Tuple`s are not `Sequence`s, eventhought they are `Iterable<Any>`
+Structurally a Tuple is a node in a linked-list kind of structure. But a `Tuple` are not a `Sequence`, eventhought it is an `Iterable<Any>`
 The literal syntax is similar to `Sequence`s, but with parentesis instead of brakets.
 
 [source, lense]
@@ -19,18 +19,18 @@ var tuple : (Natural , String , Boolean) = ( 1 , "a" , true );
 This creates a tuple of 3 elements where the first is a `Natural`, the second a `String` and the third a `Boolean`.
 You can also observe that the type of the tupe is a tuple of the types. 
 
-The tuple is a fundamental type with a lot of syntax sugar in Lense. That code wil be compiler like so :
+The tuple is a fundamental type with a lot of syntax sugar in Lense. That code may be compiler as:
 
 [source, lense]
 ----
 var tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
 ----
 
-You can write that, but Lense assumes you don't wish to, so it enables literals for tuple values and types.
+You can write it like that, if you really want to, but Lense assumes you don't wish to, So it enables literals for tuple values and types.
 
 ==== Accessing elements 
 
-To access an element in the tuple you use it like a sequence:
+To access an element in the tuple you use it's index property:
 
 [source, lense]
 ----
@@ -41,7 +41,7 @@ var name = tuple[1];
 var predicate = tuple[2];
 ----
 
-Tuples do not have indexers like sequencs do because the type depends on the index, but the compiler can translate that code to:
+Tuples do not really have indexers like sequencs do, but the compiler can translate that code to:
 
 [source, lense]
 ----
