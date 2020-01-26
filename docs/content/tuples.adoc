@@ -66,5 +66,10 @@ Lense understans that a single value and a 1-tuple, are the same thing so the co
 
 ==== Void
 
-The `Void` is a special case of a tuple. The 0-tuple. A 0-tuple can only have one element. This element is designated by the `()` literal. 
+The `Void` type is a special case of a tuple. The 0-tuple. A 0-tuple can only have one element. This element is designated by the `()` literal. 
+
+[source, lense]
+----
+public class Void extends Tuple<Nothing, Nothing> {}
+----
 
