@@ -77,6 +77,6 @@ Character corresponds to a UTF-16 code point. Literals are inclosed in a single 
 ----
 	var a = 'a';
 	
-	var b = ++a; //  'b' 
+	var b = a.successor(); //  'b' 
 	var c = a + 2; // 'c'
 ----
