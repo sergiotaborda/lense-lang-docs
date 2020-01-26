@@ -65,7 +65,7 @@ This a very simple, readable, code that means the same that:
 ----
 let  cubes = new List<Natural>();
 
-for (Natural n in 1..100) {
+for (n in 1..100) {
 	if (n.isOdd()) {
 		lengths.add(n ^^ 3);
 	}
