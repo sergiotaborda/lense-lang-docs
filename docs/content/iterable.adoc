@@ -67,7 +67,7 @@ let  cubes = new List<Natural>();
 
 for (Natural n in 1..100) {
 	if (n.isOdd()) {
-		lengths.add(n ** 3);
+		lengths.add(n ^^ 3);
 	}
 }
 ----
