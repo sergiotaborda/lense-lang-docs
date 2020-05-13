@@ -22,13 +22,15 @@ Primtive erasure allows for the compiled code to be more compatible with the pla
 
 Where is the list of erased types so far. 
 
-| Lense type | Erased to |         |   
-| :----------- | :-----------: | :-------------------: |   
-| <code>lense.core.lang.Void</code>| plataform's primitive *void* | |   
-| <code>lense.core.lang.Boolean</code>| plataform's primitive *boolean* |  Boolean constants (Boolean.False, Boolean.True) are also erased to their primitive conterparts (false, true). |   
+|=======
+| *Lense type* 				| *Erased to* 								|     
+| `lense.core.lang.Void` 	| plataform's primitive *void* 				| 
+| `lense.core.lang.Boolean` | plataform's primitive *boolean* 			|  Boolean constants (Boolean.False, Boolean.True) are also erased to their primitive conterparts (false, true).  
+| `lense.core.math.Int32` 	| plataform's primitive *32 bits integer* 	|   
+| `lense.core.math.Int64` 	| plataform's primitive *64 bits integer* 	|  
+|=======
 
-
-Other candidates to consider are <code>lense.core.lang.String</code> and the bounded numeric types.
+Other candidates to consider are `lense.core.lang.String` , `lense.core.lang.Maybe` and the bounded numeric types.
 
 
 
