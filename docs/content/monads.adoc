@@ -5,7 +5,7 @@ tags=tour, lense
 status=published
 ~~~~~~
 
-==Monads
+== Monads
 
 Lense supports the concept of Monad. A monad is a special container type that allows operations to occur on the contained type without explicitly requiring 
 the boxing and unboxing of the contained instances. Monads are a special case of the Decorator pattern where all operations return a new object and transform the decorated type in some way.

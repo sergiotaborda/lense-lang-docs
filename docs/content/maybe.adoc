@@ -5,7 +5,7 @@ tags=tour, lense
 status=published
 ~~~~~~
 
-==Maybe
+== Maybe
 
 Maybe is a link:monads.html[monad] that allows us to manipulate possible absent values. `Maybe<T>` is a link:classes.html#sum-types[sum type] with only two subtypes : `Some<T>` and `None`. `None` has a single instance named `none`. `none` represents the absence of value. 
 Maybe is equivalent to the `Optional` type that exist in other languages. However, in Lense, Maybe is a fundamental type and it is the only way you can handle the concept of "null" since Lense does not allow the traditional `null` reference value. 

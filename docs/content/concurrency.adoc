@@ -152,14 +152,14 @@ This code will create and register two actors. The first calculates the fibonacc
 Actors communicate thought messages. Each actor has access to the environment is registered with and can use it to send messages to other actors. 
 Actors names are only significant in a given environment.
 
-The communication is normally asynconous whenever the `sendTo` method is called. The sent message e delivered to the actor's message queue. The message is removed from the queue and 
+The communication is normally asynchronous whenever the `sendTo` method is called. The sent message e delivered to the actor's message queue. The message is removed from the queue and 
 delivered to the `onMessage` method. 
 
 === Passing the correct data between actors
 
 All data passed between actors is not shared, we do not want a shared memory model. This means the objects passed as payloads need to be serializable. If the objects are serializable, we can always serialize the object and deserialize it again to obtain a safe copy. This also is a requirement if we need to transfer the object to another machine (depending on the ActorEnvironment implementation).
 
-For in memory envoriments the envoriment can opt for not serializing the object for performance reasons. This is only possible if the object is imutable.
+For in memory environments, the environment can opt for not serializing the object for performance reasons. This is only possible if the object is immutable.
 If objects are imuable there is no risk in sharing them because they cannot be changed in the first place. 
 
 For these reasons the `sendTo` method takes a `Serializable` as its message payload:

@@ -49,7 +49,7 @@ let lengths : Sequence<Natural>  =  cities.map( city -> city.size());
 ----
 
 This code simply applies a transformation to all elements of the original container (*cities*) and produces a new *Sequence<Natural>* with the lenghts of the cities names. 
-The main diference from explicit iteration is that explicit iteration normally involves some kind of mutable object , like `List` in this example, while implicit iteration does not.
+The main difference from explicit iteration is that explicit iteration normally involves some kind of mutable object , like `List` in this example, while implicit iteration does not.
 
 You can use several other methods like `filter` that allows you to exclude some values. 
 For example, if we want to calculate the cubes of only odd numbers between 1 and 100 we can use a `Range` and write:

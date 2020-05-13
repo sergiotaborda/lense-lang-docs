@@ -5,9 +5,9 @@ tags=tour, lense
 status=published
 ~~~~~~
 
-==Category 
+== Category 
 
-A categoy is an assortement of elements that is not iterable and not contable. It defines a `contains` method that can be invoked directly of by means of the `in` operator.
+A category is an assortment of elements that is not iterable and not countable. It defines a `contains` method that can be invoked directly of by means of the `in` operator.
 
 [source, lense]
 ----
@@ -26,7 +26,7 @@ is the same as
 ----
 
 
-==Interval
+== Interval
 
 Lense support intervals as fundamental types. An `Interval` forms a ordered `Category` of `Comparable` elements that contain values between a start and an end element. So you can test if an element exists in the interval.
 
@@ -99,7 +99,7 @@ Intervals can be used in switch statements as any `Category` can
 ----
 
 
-==Ranges
+== Ranges
 
 Ranges are closely related to intervals. Ranges are also `Categories`, but of `Enumerable`s making them `Iterable`.  Ranges can be understood as intervals of `Enumerable` values as `Enumerable` types are also `Comparable`. Because `Enumerable` values can produce a sequence of value ranges are iterable. Ranges cannot have open ends. Ranges are also fundamental types in Lense and have their own literal.
 
@@ -120,7 +120,7 @@ By default both ends of the range are included in the range. We can iterate the 
 ----
 
 this prints:
-
+[source]
 ----
 2
 3
