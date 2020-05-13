@@ -148,7 +148,7 @@ A constructor without a body means the parameters represent properties with the 
 
 There is no boilerplate and there is no repetition of the class's name and the keyword clearly states that the instruction is a constructor.
 
-<a name="named"></a> 
+[[named]]
 === Named Constructors
 
 All is fine when the class only needs one constructor. But more times, than not, people would realize an object can be created by different forms. Design can argument this other forms should be handled by factory object and the class itself as only a set of parameters. While this can obviously accomplished is not practical. 
@@ -244,7 +244,7 @@ public class Color {
 
 Notice how the `new` keyword is used to call the other constructors. In fact constructors in Lense act as factory methods and can return any object that could be assigned to the class.
 
-<a name="factory"></a> 
+[[factory]]
 === Factory Constructor
 
 Constructors in Lense are real factory methods and can create and return any instance that could be assigned to the class. This means constructors can control the number of instances being created and choose to create specific sub types. For instances the `Array` constructor is :
