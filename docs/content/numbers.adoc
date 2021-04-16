@@ -8,30 +8,30 @@ status=published
 == Numbers
 
 Numbers are separated in specific algebraic structures that conform to the mathematical rules of their group of elements.
-All numbers are descendent types of the `Number` class. Operations are defined for each type independently.
+All numbers are descendant types of the `Number` type. Operations are defined for each type independently.
 Lense supports Complex and Imaginary numbers. Even thought we are aware the performance of these types may not be optimal, we understand that not supporting them would be a worst decision. 
 
 * Whole - numbers with no decimal part.
 	- Natural - Represents elements from the mathematical **&#8469;** set, i.e. positive only whole values that include zero and range from zero up to maximum value limited only by available memory
 	- Integer - Represents elements from the mathematical **&#8484;** set, i.e. negative and positive whole values.
-		*  Int16 - negative and positive whole values with range from -2<sup>15</sup> to  2<sup>15</sup>-1.
-		*  Int32 - negative and positive whole values with range from -2<sup>31</sup> to  2<sup>31</sup>-1. 
-		*  Int64 - negative and positive whole values with range from -2<sup>63</sup> to  2<sup>63</sup>-1. 
+		*  Int16 - negative and positive whole values with range from -2^15^ to  2^15^-1.
+		*  Int32 - negative and positive whole values with range from -2^31^ to  2^31^-1. 
+		*  Int64 - negative and positive whole values with range from -2^63^ to  2^63^-1. 
 		*  BigInt - negative and positive whole values with arbitrary range limited only by available memory
 * Real - Represents elements from the mathematical **&#8477;** set.
 	-  Rational - Represents elements from the mathematical **&#8474;** set, i.e. rational numbers defined by a natural numerator and a natural denominator like 2/3 or -5/8. The denominator cannot be zero. 
-	-  Decimal - Represents elements that have a fixed precision and so calculations may incur in loss of precision.
-		* FixedPrecisionDecimal - Represents Decimal elements with fixed precision:
-			- Decimal32 - negative and positive decimal values that follow 32 bits IEEE 3744 conventions
-			- Decimal64 - negative and positive decimal values that follow 64 bits IEEE 3744 conventions
-		* ArbitraryPrecisionDecimal - Represents Decimal elements with arbitrary precision:
-			- BigDecimal - Represents elements in the **&#8477;** set including truncated version of irrational numbers.Negative and positive decimal values with arbitrary precision limited only by available memory.
+		* BigRational - Represents rational numbers using an Integer as numerator and a Natural as denominator.
+	- BigDecimal - Represents elements in the **&#8477;** set including truncated version of irrational numbers. Negative and positive real values with arbitrary precision limited only by available memory.
+* Float - Represent elements in the extended real line **&#8477;** &cup; (-&infin;, +&infin;) with suport for Not a Number (NaN) 
+	- Float32 - negative and positive float values that follow 32 bits IEEE 3744 conventions
+	- Float64 - negative and positive float values that follow 64 bits IEEE 3744 conventions
+	- BigFloat - negative and positive float values implemented as a fraction of two Integers with special mechanics to represent -&infin;, +&infin; and NaN. 
 * Imaginary - Represents elements from the mathematical **&#120128;** set. Numbers with pure imaginary parts of the form `bi` where `b` is a `Field` and `i` is the square root of -1.
 	- ImaginaryOverReals&lt;T extends Real&gt;- uses a Real type to store the numeric value
-* Complex - Represents elements from the mathematical **&#8450;** set. Complex numbers are of the form `a + bi` where `i` it the square root of -1.
+* Complex - Represents elements from the mathematical **&#8450;** set. Complex numbers are of the form `a + bi` where `i` is the square root of -1.
 	- ComplexOverReals&lt;T extends Real&gt; - Use a Real to type to store a numeric value for the real part and a ImaginaryOverReals<T> for the imaginary part.
 
-Type `Natural` is used as an indexer for `Sequence`s. Size limits to collections like arrays, lists and maps are only bound by the limit of Natural which in turn is limited only by available memory.
+Type `Natural` is used as an indexer for `Sequence`. Size limits to collections like arrays, lists and maps are only bound by the limit of Natural which in turn is limited only by available memory.
 Using a Natural to index sequences removes the necessity to check for negative indexes and because `Arrays` always have a upper limit and always are constructed by link:constructors.html#factory[factory like constructors] the implementation for each platform can accommodate different implementations according to maximum length demand.
 
 For more information on how Natural relates to index of sequences, see how link:arrays.html[Arrays] work in Lense.

@@ -22,7 +22,7 @@ Lense is a strong typed, pure object oriented programming language that aims to 
 * [x] Operator Overloading with no noise - Operators are related to type interfaces and follow mathematical concepts like Magma, Monoid and Group
 * [x] Flow Sensitive Typing - casts are not necessary when the compiler  knows a variable is already of a given type.
 * [x] Math and Science friendly - support for Natural, Integer , Rational, Imaginary and Complex numbers. Support for the power operator and units like `2 kg`
-* [x] Native code inter-op - Call you favourite platform native library 
+* [x] Native code inter-op - Call you favorite platform native library 
 * [x] Reflection and Reification - make your own generics types, control variance and query then via reflection  thank to reifiation support.
 * [x] Support for Monads , Lambdas and higher order functions
 
@@ -47,17 +47,18 @@ public class Main extends ConsoleApplication {
 ----
 
 === Object Oriented
-All variables are treated as holding objects. All objects are instances of some type. All methods and properties belong to a type.  Some link:glossary.html#fundamentalType[fundamental types] receive special handling from the compiler in the form of literals or specific operators. 
 
-At compile time, the platform-specific compiler backend is free to optimize types to platform's primitives (see link:erasure.html[erasure]).
+All data and all methods exist in an Object. All variables are treated as holding objects. All objects are instances of a type. All methods and properties belong to a type.  Some link:glossary.html#fundamentalType[fundamental types] receive special handling from the compiler in the form of literals or specific operators (see link:fundamental.html[Fundamental Types]). 
 
-Instances of types are just that, no special properties like mutators are implicitly defined.
+At compile time, the platform-specific  back-end assembler is free to optimize types to platform's primitives (see link:erasure.html[erasure]).
 
 ==== No Nulls
-Because everything is an object all variables must have been initialized at some point and cannot hold *null*. The concept of "absent value" is support by introducing the link:monads.html[Maybe monad] (see link:nullability.html[nullability]).
+
+Because everything is an object, all variables must have been initialized at some point and cannot hold *null*. The concept of "absent value" is supported by introducing the link:monads.html[Maybe monad] (see link:nullability.html[nullability]).
 
 ==== No Static scope and Support for singleton objects
-All things are objects or exist within an object, including methods and properties.On the other hand, Lesne, supports singleton object definition.
+
+All things are objects or exist within an object, including methods and properties.On the other hand, Lense, supports singleton object definition.
 
 [source, lense]
 ----
@@ -77,20 +78,20 @@ ServiceRegistry.register("nameService", new NameService());
 
 === Strong Static Typing with Inference
 
-The declaration of constants is preferred and explicitly different from declaring variables.   
+You can explicitly declare the type of you variables:
 
 [source, lense]
 ----
 let n : Natural = 4; // defines a Natural constant of value 4
-var r : Rational = 5.6; // defines a Rational variable initialized to 5.6
+let r : Rational = 5.6; // defines a Rational variable initialized to 5.6
 ----
 
-Omitting the types, and letting the compiler infer them , you can simply write:
+Or you can let the compiler infer them by omitting the types. You can simply write:
 
 [source, lense]
 ----
 let n = 4; // defines a Natural constant of value 4
-var r = 5.6; // defines a Rational variable initialized to 5.6
+let r = 5.6; // defines a Rational variable initialized to 5.6
 ----
 
 Expressions can be easy inserted within a string using a simple syntax (see link:strings.html[string]).
@@ -98,7 +99,7 @@ Expressions can be easy inserted within a string using a simple syntax (see link
 [source, lense]
 ----
 let age = 34;
-var name = "John";
+let name = "John";
 
 console.print("{{ name }} is {{ age }} year old");
 ----
@@ -112,20 +113,23 @@ John is 34 years old
 
 === Single Inheritance for classes , multiple inheritance for interface
 
-This the is same inheritance model present in Java, C# or TypeScript. 
+This the is same inheritance model present in other Object Oriented languages like Java, C# or TypeScript. 
 
 [source, lense]
 ----
 
-public class SomeClass extends ParentClass implements InterfaceA, InterfaceB {
+public class SomeClass 
+	extends ParentClass 
+	implements InterfaceA, InterfaceB 
+{
 	...
 }
 
 ----
 
-=== Support for External Extension with Enhancements
+=== Support for External Extensions with Enhancements
 
-Enhancements allow for extension of types you do not control. Extending types means add methods and or calculated properties, like adding a `repeat` to `String`
+Enhancements allow for extension of types you do not control. Extending types makes it possible to add methods and/or calculated properties, like adding a `repeat` to `String`
 
 [source, lense]
 ----
@@ -154,15 +158,35 @@ This functionality is closely related to Extension Methods in C#, Gosu or Kotlin
 
 === Immutability first
 
-Lense is designed with immutability in mind allows you to declare your types `immutable` so they can be validated by the compiler:
+Lense is designed with immutability in mind so types are immutable by default. You must opt in for mutability. 
+
+==== In Variables
+
+The declaration of constants is preferred and explicitly different from declaring variables.   
+
+[source, lense]
+----
+let n  = 4; // defines a constant of value 4
+var r  = 5.6; // defines a variable initialized with value 5.6
+
+n = 3; // compilation error. constants are immutable
+r = 4.2; // ok, variables can change value.
+
+----
+
+==== In Types
+
+By default a classe is iimutable.
 
 [source, lense]
 ----
 
-public immutable class Fraction implements Serializable {
+public class Fraction {
 
-	private numerator : Integer;
-	private denominator : Integer;
+	public constructor(
+		private numerator : Integer;
+		private denominator : Integer;
+	){}
 	
 	public multiply (other : Fraction) : Fraction {
 		return new Fraction( 
@@ -181,7 +205,75 @@ public immutable class Fraction implements Serializable {
 
 ----
 
-Marking the class `immutable` instructs the compiler to stop you from changing the class fields.
+A better design is to return a new object that is the result of the operation.
+
+[source, lense]
+----
+
+public class Fraction {
+
+	public constructor(
+		private numerator : Integer;
+		private denominator : Integer;
+	){}
+	
+	public multiply (other : Fraction) : Fraction {
+		return new Fraction( 
+			this.numerator * other.denominator, 
+			other.numerator * this.denominator, 
+		);
+	}
+	
+	public invert(){
+		return new Fraction(this.denominator,this.numerator);
+	}
+}
+
+----
+
+But some time we need simple property bags 
+
+[source, lense]
+----
+
+public class Client {
+
+	public constructor(
+		public name : String;
+		public country : String;
+	){}
+	
+}
+
+let john = new Client("John", "France");
+
+// john moved to Italy
+
+john.country = "Italy"; // compilation error
+
+----
+
+Since the default is immutability it is not possible to modify the country. We need to opt in for mutability:
+
+[source, lense]
+----
+
+public class Client {
+
+	public constructor(
+		public name : String;
+		public var country : String;
+	){}
+	
+}
+
+let john = new Client("John", "France");
+
+// john moved to Italy
+
+john.country = "Italy"; // ok
+
+----
 
 
 === Support for Sealed Algebraic Type Hierarchies
@@ -237,6 +329,27 @@ public void gatherElements (node : Node, list : List<Object>){
 Due to sealed algebraic types hierarchies the compiler knows no other options exist, so it does not complains about a missing `default` clause.
 Cast is not necessary due to flow sensitive typing.
 
+=== Flow Sensitive Typing
+
+Casting is reduced with the introduction of flow sensitive typing:
+
+[source, lense]
+----
+
+public class SomeClass {
+	
+	private innerValue: Natural;
+	
+	public equalsTo(other: Any) : Boolean {
+		return other is SomeClass && other.innerValue == this.innerValue;
+	}
+	
+	// other methods omitted
+}
+----
+
+Notice how the cast when accessing `other.innerValue` is not needed. The program just checked `other` is of the correct type, so the compiler includes the cast implicitly.
+
 === Operator Overloading with no noise
 
 Operators symbols are predefined and associated with specific interfaces so classes like numbers and strings can use operators.However defining you own operator symbol is not allowed in order to maintain the code simple to read and avoid symbolic noise. The use of interfaces to define operations follows an algebraic structure paradigm so the compiler can reason about the operations (example : altering the order of operations to enhance performance if the operation is commutative)
@@ -276,45 +389,9 @@ for ( x in 3..7 ){ // iterate a range
 }
 
 if ( x in |[ 3 , 7)| ){
-	// test if x is >=3 and < 7
+	// test if x is >= 3 and < 7
 }
 ----
-
-=== Modular
-Lense is Modular. The compiler merges code and meta information into a "module bundle" (think .jar or .dll) with information about their respective dependencies. This  allows for the runtime to determine the modules that are needed for a given module to run.
-
-[source, lense]
-----
-module my.application 1.2.0 {
-
-	require other.some.library 1.0.0;
-	require other.some.other.library 1.3.5;
-	
-	export my.application.api;
-	export my.application.api.data;
-}
-----
-
-=== Flow Sensitive Typing
-
-Casting is reduced with the introduction of flow sensitive typing:
-
-[source, lense]
-----
-
-public class SomeClass {
-	
-	private innerValue: Natural;
-	
-	public equalsTo(other: Any) : Boolean {
-		return other is SomeClass && other.innerValue == this.innerValue;
-	}
-	
-	// other methods omitted
-}
-----
-
-Notice how the cast when accessing `other.innerValue` is not needed. The program just checked `other` is of the correct type, so the compiler includes the cast implicitly.
 
 === Math and Science friendly 
 
@@ -346,6 +423,22 @@ let velocity = distance / time;
 
 assert(  1 km/s  == velocity );
 assert( velocity is Measure);
+----
+
+=== Modular
+
+Lense is Modular. The compiler merges code and meta information into a "module bundle" (think .jar or .dll) with information about their respective dependencies. This  allows for the runtime to determine the modules that are needed for a given module to run.
+
+[source, lense]
+----
+module my.application 1.2.0 {
+
+	require other.some.library 1.0.0;
+	require other.some.other.library 1.3.5;
+	
+	export my.application.api;
+	export my.application.api.data;
+}
 ----
 
 === Native code inter-op
@@ -415,7 +508,6 @@ Lense supports functional programming with lambdas:
 ----
 let first100EvenNumbers = 0..100.map( i -> i*2); 
 ----
-
 
 === Innovative
 

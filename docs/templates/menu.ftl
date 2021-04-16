@@ -66,6 +66,6 @@
       </div>
     </nav>
 	
-	<div class="corner-ribbon top-right sticky shadow"><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>status.html">Exploration Stage</a></div>
+	<div class="corner-ribbon top-right sticky shadow turquoise"><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>status.html">Experimentation Stage</a></div>
     
 	<div class="container">
