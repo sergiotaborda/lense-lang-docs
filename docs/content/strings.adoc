@@ -75,8 +75,8 @@ Character corresponds to a UTF-16 code point. Literals are inclosed in a single 
 
 [source, lense]
 ----
-	var a = 'a';
+	let a = 'a';
 	
-	var b = a.successor(); //  'b' 
-	var c = a + 2; // 'c'
+	let b = a.successor(); //  'b' 
+	let c = a + 2; // 'c'
 ----

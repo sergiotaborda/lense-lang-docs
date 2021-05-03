@@ -13,7 +13,7 @@ The literal syntax is similar to `Sequence`s, but with parentesis instead of bra
 
 [source, lense]
 ----
-var tuple : (Natural , String , Boolean) = ( 1 , "a" , true );
+let tuple : (Natural , String , Boolean) = ( 1 , "a" , true );
 ----
 
 This creates a tuple of 3 elements where the first is a `Natural`, the second a `String` and the third a `Boolean`.
@@ -23,7 +23,7 @@ The tuple is a fundamental type with a lot of syntax sugar in Lense. That code m
 
 [source, lense]
 ----
-var tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
+let tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
 ----
 
 You can write it like that, if you really want to, but Lense assumes you don't wish to. Lense supports literals for tuple instances and types.
@@ -34,22 +34,22 @@ To access an element in the tuple you use it's index property:
 
 [source, lense]
 ----
-var tuple  = ( 1 , "a", true);
+let tuple  = ( 1 , "a", true);
 
-var number = tuple[0];
-var name = tuple[1];
-var predicate = tuple[2];
+let number = tuple[0];
+let name = tuple[1];
+let predicate = tuple[2];
 ----
 
 Tuples do not really have indexers like sequencs do, but the compiler can translate that code to:
 
 [source, lense]
 ----
-var tuple  = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
+let tuple  = Tuple.of( 1 , Tuple.of("a" , Tuple.of(true)));
 
-var number = tuple.head;
-var name = tuple.tail.head;
-var predicate = tuple.tail.tail.head;
+let number = tuple.head;
+let name = tuple.tail.head;
+let predicate = tuple.tail.tail.head;
 ----
 
 ==== Tuple of 1
@@ -58,8 +58,8 @@ These lines are equivalent:
 
 [source, lense]
 ----
-var tuple : (Natural)  = ( 1 );
-var value : Natural  = 1;
+let tuple : (Natural)  = ( 1 );
+let value : Natural  = 1;
 ----
 
 Lense understans that a single value and a 1-tuple, are the same thing so the compiler enables the translation dynamicaly.

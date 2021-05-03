@@ -48,64 +48,64 @@ If you need to define the type of the literal explicitly you can use specific su
 
 [source, lense]
 ----
-	var Natural n = 1; // equivalent to Natural.valueOf("1")
+	let Natural n = 1; // equivalent to Natural.valueOf("1")
 	
 	// literals are always assumed to be Natural and promoted when necessary
-	var i : Int32 = 1;  // equivalent to Int32.valueOf(Natural.valueOf("1"));
-	var s : Int16 = 1;  // equivalent to Int16.valueOf(Natural.valueOf("1"));
-	var k : Int64 = 1;  // equivalent to Int64.valueOf(Natural.valueOf("1"));
-	var g : BigInt = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	let i : Int32 = 1;  // equivalent to Int32.valueOf(Natural.valueOf("1"));
+	let s : Int16 = 1;  // equivalent to Int16.valueOf(Natural.valueOf("1"));
+	let k : Int64 = 1;  // equivalent to Int64.valueOf(Natural.valueOf("1"));
+	let g : BigInt = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
 	
 	// If the target type is Whole or Integer, the literal it's equivalent to having BigInt as target 
-	var w : Whole = 1; // equivalent to BigInt.valueOf(Natural.valueOf("1"));
-	var u : Integer = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	let w : Whole = 1; // equivalent to BigInt.valueOf(Natural.valueOf("1"));
+	let u : Integer = 1;  // equivalent to BigInt.valueOf(Natural.valueOf("1"));
 	
 	// sufixes can be used to inform the compiler the correct type of the literal
 	// for whole numbers only uppercase prefixes are allowed 
-	var ii : Int32 = 1Z;  // equivalent to Int32.valueOf("1");
-	var ss : Int16 = 1S;  // equivalent to Int16.valueOf("1");
-	var kk : Int64 = 1L;  // equivalent to Int64.valueOf("1");
-	var gg : BigInt = 1G;  // equivalent to BigInt.valueOf("1");
+	let ii : Int32 = 1Z;  // equivalent to Int32.valueOf("1");
+	let ss : Int16 = 1S;  // equivalent to Int16.valueOf("1");
+	let kk : Int64 = 1L;  // equivalent to Int64.valueOf("1");
+	let gg : BigInt = 1G;  // equivalent to BigInt.valueOf("1");
 	
 	// Rationals are defined by the division of two whole positive values. 
-	var r : Rational = 2/3; // equivalent to Natural.valueOf("2").divide(Natural.valueOf("3"))
-	var q : Rational = -5/8; // equivalent to Natural.valueOf("5").negate().divide(Natural.valueOf("8"));
-	var q : Rational = -x/y; // equivalent to Natural.valueOf(x).negate().divide(Natural.valueOf(y));
+	let r : Rational = 2/3; // equivalent to Natural.valueOf("2").divide(Natural.valueOf("3"))
+	let q : Rational = -5/8; // equivalent to Natural.valueOf("5").negate().divide(Natural.valueOf("8"));
+	let q : Rational = -x/y; // equivalent to Natural.valueOf(x).negate().divide(Natural.valueOf(y));
 	
 	// In this case the value is a Natural being promoted to a Decimal32.
-	var f : Decimal32 = 1; // equivalent to Decimal32.valueOf(Natural.valueOf("1"));
+	let f : Decimal32 = 1; // equivalent to Decimal32.valueOf(Natural.valueOf("1"));
 	
 	// decimal values are always assumed to be Rational
-	var rr : Rational = 1.4 //  equivalent to Rational.valueOf("1.4");
-	var ff : Decimal32 = 1.6; // equivalent to Decimal32.valueOf(Rational.valueOf("1.6"));
-	var d  : Decimal64 = 2.0; // equivalent to Decimal64.valueOf(Rational.valueOf("2.0"));
-	var m  : BigDecimal = 1.234567890E100; // equivalent to BigDecimal.valueOf(Rational.valueOf("2.0"));
+	let rr : Rational = 1.4 //  equivalent to Rational.valueOf("1.4");
+	let ff : Decimal32 = 1.6; // equivalent to Decimal32.valueOf(Rational.valueOf("1.6"));
+	let d  : Decimal64 = 2.0; // equivalent to Decimal64.valueOf(Rational.valueOf("2.0"));
+	let m  : BigDecimal = 1.234567890E100; // equivalent to BigDecimal.valueOf(Rational.valueOf("2.0"));
 
 	// prefixes can also be used to inform the compiler the correct type of the literal
 	// for non whole numbers only lower-case prefixes are allowed 
-	var fff : Decimal32 = 1.6f; // equivalent to Decimal32.valueOf("1.6");
-	var dd : Decimal64 = 2.0d; // equivalent to Decimal64.valueOf("2.0");
-	var mm : BigDecimal = 1m; // equivalent to BigDecimal.valueOf("1");
+	let fff : Decimal32 = 1.6f; // equivalent to Decimal32.valueOf("1.6");
+	let dd : Decimal64 = 2.0d; // equivalent to Decimal64.valueOf("2.0");
+	let mm : BigDecimal = 1m; // equivalent to BigDecimal.valueOf("1");
 	
 	
-	var a : Imaginary = 2i; // equivalent to Imaginary.valueOf(Natural.valueOf("2"));
-	var b : Imaginary = 2.5i; // equivalent to Imaginary.valueOf(Rational.valueOf("2.5"));
+	let a : Imaginary = 2i; // equivalent to Imaginary.valueOf(Natural.valueOf("2"));
+	let b : Imaginary = 2.5i; // equivalent to Imaginary.valueOf(Rational.valueOf("2.5"));
 	
-	var error : Imaginary = 2; // does not compile because a Natural can not be converted to an Imaginary number
+	let error : Imaginary = 2; // does not compile because a Natural can not be converted to an Imaginary number
 
-	var c: Complex = 5 + 2i; // equivalent to Natural.valueOf("5").plus(Imaginary.valueOf(Natural.valueOf("2")))
-	var d: Complex = 3.9 + 0.2i; // equivalent to Rational.valueOf("3.9").plus(Imaginary.valueOf(Rational.valueOf("0.2"))
+	let c: Complex = 5 + 2i; // equivalent to Natural.valueOf("5").plus(Imaginary.valueOf(Natural.valueOf("2")))
+	let d: Complex = 3.9 + 0.2i; // equivalent to Rational.valueOf("3.9").plus(Imaginary.valueOf(Rational.valueOf("0.2"))
 ----
 
 In any representation you can use underline (`_`) to logically separate digits in the value to help readability.
 
 [source, lense]
 ----
-	var x : Integer -1000000;
+	let x : Integer -1000000;
 	// or
-	var x : Integer = -1_000_000;
+	let x : Integer = -1_000_000;
 	// or simply
-	var x = -1_000_000;
+	let x = -1_000_000;
 ----
 
 ==== Other Bases for Literal Representations 
@@ -116,5 +116,5 @@ The hexadecimal form begins with a `#` symbol followed by a valid hexadecimal di
 
 [source, lense]
 ----
-	var  color : Natural = #FF_EE_00; // hexadecimal
+	let  color : Natural = #FF_EE_00; // hexadecimal
 ----

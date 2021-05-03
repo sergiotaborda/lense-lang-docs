@@ -137,7 +137,7 @@ Enhancements allow for extension of types you do not control. Extending types ma
 public enhancement StringRepetition extends String {
 	
 	public String repeat(n : Natural){
-		var repetition = this;
+		mutable let repetition = this;
 		
 		for ( i in 0..n ){
 			repetition = repetition ++ repetition;
@@ -166,8 +166,8 @@ The declaration of constants is preferred and explicitly different from declarin
 
 [source, lense]
 ----
-let n  = 4; // defines a constant of value 4
-var r  = 5.6; // defines a variable initialized with value 5.6
+mutable let n  = 4; // defines a constant of value 4
+mutable let r  = 5.6; // defines a variable initialized with value 5.6
 
 n = 3; // compilation error. constants are immutable
 r = 4.2; // ok, variables can change value.
@@ -358,10 +358,10 @@ Support to Rational, Imaginary and Complex numbers. It is important for Lense th
 
 [source, lense]
 ----
-var n : Natural = 3; // numbers are naturals by default. naturals are non negative
-var d : Integer = -2; // integer holds negative whole numbers 
+let n : Natural = 3; // numbers are naturals by default. naturals are non negative
+let d : Integer = -2; // integer holds negative whole numbers 
 
-var r : Rational = -1.5; // decimal literals are rational numbers by default.
+let r : Rational = -1.5; // decimal literals are rational numbers by default.
 
 if (r == n/d ){
 	// this will be true, because whole division always produces a Rational
@@ -452,7 +452,7 @@ import native(java) java.time.Duration;
 
 public class StopWatch {
 	
-	private mark : Int64;
+	private mutable mark : Int64 = 0;
 	
 	public start(){
 		// invoke java and automatically convert long to Int64

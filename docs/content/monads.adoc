@@ -29,8 +29,8 @@ Some times a map operation will end up in an object of type `Monad<Monad<T>>`. N
 
 [source, lense ]
 ----
-var name : String? 
+let name : String? 
 
-var length : Natural? = name.flaMap(m -> calculateNameLength(m));
+let length : Natural? = name.flaMap(m -> calculateNameLength(m));
 
 ----

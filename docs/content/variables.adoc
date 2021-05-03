@@ -11,7 +11,7 @@ Creating variables in Lense is very similar to other languages.
 
 [source, lense]
 ----
-var  name : String = "Alice";
+mutable let  name : String = "Alice";
 ----
 
 Variables always contain references to objects. The variable called *name* contains a reference to a `String` object with a value of *Alice*.
@@ -19,7 +19,7 @@ The reference contained in a variable can be changed further down in the code to
 
 [source, lense]
 ----
-var name : String = "Alice";
+mutable let name : String = "Alice";
 name = "Beth";
 ----
 
@@ -27,7 +27,7 @@ Lense as type inference, so variable declaration can be simplified to :
 
 [source, lense]
 ----
-var  name = "Alice";
+mutable let  name = "Alice";
 ----
 
 This is the main reason why type annotations are included after the name of the variable, so they can be removed when are not necessary. 
@@ -35,12 +35,12 @@ Notice that they are still relevant in the present of polymorfism like in:
 
 [source, lense]
 ----
-var  name : Sequence<Character> = "Alice";
+mutable let  name : Sequence<Character> = "Alice";
 ----
 
 == Values 
 
-The use of the `var` keyword defines a variable (mutable) reference declaration. Immutable references are defined with the `let` keyword.
+The use of the `mutable let` keywords defines a variable (mutable) reference declaration. Immutable references are defined with the `let` keyword.
 
 [source, lense]
 ----

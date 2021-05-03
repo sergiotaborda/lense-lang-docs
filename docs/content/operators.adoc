@@ -120,7 +120,7 @@ Is equivalent to
 
 [source,lense ]
 ----
-var  a : Integer = 3;
+mutable let  a : Integer = 3;
 a = a.successor();
 let b :Integer = a;
 ----
@@ -140,7 +140,7 @@ is translated internally to
 
 [source,lense ]
 ----
-var a : Integer = 3;
+mutable let a : Integer = 3;
 let b : Integer = a;
 a = a.successor();
 ----
@@ -151,7 +151,7 @@ Consider the following operator statement:
 
 [source,lense ]
 ----
-var a : Integer = 3;
+mutable let a : Integer = 3;
 
 a+=5;
 
@@ -161,7 +161,7 @@ The `+=` is a composed assignment operator. Where the `a+=5` statement is equiva
 
 [source,lense ]
 ----
-var a : Integer = 3;
+mutable let a : Integer = 3;
 
 a = a + 5;
 
@@ -180,7 +180,7 @@ Remember that assignments are statements in Lense, so the following code does no
 
 [source,lense ]
 ----
-var a : Integer = 3;
+mutable let a : Integer = 3;
 
 if (a+=5 > 7){
   // do something
@@ -192,7 +192,7 @@ This one does:
 
 [source,lense ]
 ----
-var a : Integer = 3;
+mutable let a : Integer = 3;
 
 a+=5;
 

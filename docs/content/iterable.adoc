@@ -56,7 +56,7 @@ For example, if we want to calculate the cubes of only odd numbers between 1 and
 
 [source, lense ]
 ----
-var cubes : Sequence<Natural> = 1..100.filter(n -> n.isOdd()).map( n -> n ^^ 3));
+let cubes : Sequence<Natural> = 1..100.filter(n -> n.isOdd()).map( n -> n ^^ 3));
 ----
 
 This a very simple, readable, code that means the same that: 

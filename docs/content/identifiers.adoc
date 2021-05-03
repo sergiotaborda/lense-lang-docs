@@ -21,10 +21,10 @@ Some of these reserved works are keywords, e.i. they have special meaning to the
 |  abstract | as | annotation | break | case | catch | class
 |  continue | constructor | default | do |  else | enhancement | enum
 |  export | extends | finally | for | get | if | implements 
-|  implicit | import | interface | in |  is | module | native
-|  new | none | out |  object | package | public | private
-|  protected | return | set | super |  switch | this | throw
-|  trait | try | let | var |  while | true | false
+|  in | implicit | import | interface |  is |  module | mutable
+|  native | new | none | out |  object | package | public  
+|  private | protected | return | set | super |  switch | this 
+|  throw | trait | try | let |  while | true | false
 |===
 
 

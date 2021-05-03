@@ -19,9 +19,9 @@ Indexed properties are not limited to one index. In the next example we use an a
 // define the Matrix class
 public class Matrix<T> {
 
-	private let cells : Array<T>;
-	private let rowsCount : Natural;
-	private let columnsCount: Natural;
+	private cells : Array<T>;
+	private rowsCount : Natural;
+	private columnsCount: Natural;
 	
 	contructor (private rowsCount : Natural, private columnsCount: Natural, private seed : T){
 		this.rowsCount = rowsCount;

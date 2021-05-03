@@ -15,9 +15,9 @@ A class to represent fraction objects could be implemented like so:
 
 [source, lense]
 ----
-public let class Fraction {
+public class Fraction {
     
-    private constructor ( public let numerator: Integer, public let denominator: Integer);
+    private constructor ( public numerator: Integer, public denominator: Integer);
 
     public constructor valueOf ( value: Decimal){
         return new Fraction.parse(value.toString());

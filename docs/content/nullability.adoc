@@ -37,8 +37,8 @@ Has we have no way of knowing if the methods will return null this would be mapp
 
 [source, lense]
 ----
-var names : Array<String>? = resolveNames();
-var addresses : List<Address>? = resolveAddressesFor(names);
+let names : Array<String>? = resolveNames();
+let addresses : List<Address>? = resolveAddressesFor(names);
 ----
 
 At this point we can test if the collections exists, but how about the elements ? Have we certain no nulls exist inside the array or the list ?
@@ -46,9 +46,9 @@ This problem is more general and exists everywhere the objets are boxed in other
 
 [source, lense]
 ----
-var names : Array<String?>? = resolveNames();
-var addresses : List<Address?>? = resolveAddressesFor(names);
-var box : Box<Element?>? = resolveBoxedElements();
+let names : Array<String?>? = resolveNames();
+let addresses : List<Address?>? = resolveAddressesFor(names);
+let box : Box<Element?>? = resolveBoxedElements();
 ----
 
 This may prove cumbersome in code that tries to use native APIs.
@@ -61,10 +61,10 @@ For interop code , i.e. everytime the compiler identifies a native method is bei
 
 [source, lense]
 ----
-var names  = resolveNames();  
-var names : Array<String>? = resolveNames();  // same as  names = new Maybe.of(resolveNames()).map( a -> a.compact());
-var names : Array<String> = resolveNames();  // same as names = new Maybe.of(resolveNames()).map( a -> a.compact()).or(new Array.empty<string>())
-var names : Array<String?> = resolveNames();  // same as names = new Maybe.of(resolveNames()).or(new Array.empty<string>())
+let names  = resolveNames();  
+let names : Array<String>? = resolveNames();  // same as  names = new Maybe.of(resolveNames()).map( a -> a.compact());
+let names : Array<String> = resolveNames();  // same as names = new Maybe.of(resolveNames()).map( a -> a.compact()).or(new Array.empty<string>())
+let names : Array<String?> = resolveNames();  // same as names = new Maybe.of(resolveNames()).or(new Array.empty<string>())
 ----
 
 In line **(1)** the original native return type is used. The Lense compiler will wrap the native array to a lense array. No special rules are needed.
@@ -72,21 +72,21 @@ In line **(2)** the original native type is transformed by removing all possible
 
 [source, lense]
 ----
-var names : Array<String>? = resolveNames().map( a -> a.compact());
+let names : Array<String>? = resolveNames().map( a -> a.compact());
 ----
 
 In line **(3)** the original native type is further transformed by removing all possible `none` values and using an empty array in case the original is *null*. The equivalent code would be:
 
 [source, lense]
 ----
-var names : Array<String> = resolveNames().map( a -> a.compact()).or(new Array.empty<string>());
+let names : Array<String> = resolveNames().map( a -> a.compact()).or(new Array.empty<string>());
 ----
 
 In line **(4)** the original native type is further transformed by using an empty array in case the original is *null*. The equivalent code would be:
 
 [source, lense]
 ----
-var names : Array<String> = resolveNames().or(new Array.empty<string>());
+let names : Array<String> = resolveNames().or(new Array.empty<string>());
 ----
 
 Lense interop geeration will understand native `null` as equivalent to `none` and wrap the array in a possible absent type. 
@@ -95,10 +95,10 @@ The above rules apply to all <code>Iterable</code>s, not only arrays. In the gen
 
 [source, lense]
 ----
-var box  = resolveBoxedElements();  // same as box : Box<Element?>? = resolveBoxedElements()
-var box : Box<Element>? = resolveNames();  // compilation error , cannot verify Element is not null.
-var box : Box<String> = resolveNames();  // compilation error , cannot verify Element is not null.
-var box : Box<String?> = resolveNames(); // compiles to resolveNames().get() to force get the value from the maybe. 
+let box  = resolveBoxedElements();  // same as box : Box<Element?>? = resolveBoxedElements()
+let box : Box<Element>? = resolveNames();  // compilation error , cannot verify Element is not null.
+let box : Box<String> = resolveNames();  // compilation error , cannot verify Element is not null.
+let box : Box<String?> = resolveNames(); // compiles to resolveNames().get() to force get the value from the maybe. 
 ----
 
 Using the last line, will force the compiler to get the value inside the Maybe. This will raise <code>ValueAbsentException</code> if the box is absent.
@@ -122,9 +122,9 @@ It is not relevant what the methods does do, only what the parameters are. Lense
 
 [source, lense]
 ----
-var names : Array<String> = ...
-var other String? = none;
-var factor : Integer? = none;
+let names : Array<String> = ...
+let other String? = none;
+let factor : Integer? = none;
 
 calculate(asJavaList(names), other.orNull(), asJavaPrimitiveInt(factor.get()) { ... }
 ----

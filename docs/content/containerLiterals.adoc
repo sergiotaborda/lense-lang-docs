@@ -71,8 +71,8 @@ Associations are used to maintain pairs of values related to each other. Normall
 
 [source, lense]
 ----
-let  association : Association<Natural,String> = { 1:"First", 2:"Second", 3:"Third" };
-var  map : Map<Natural, String> =  { 1:"First", 2:"Second", 3:"Third" };
+let  association : Association<Natural,String> = { 1 -> "First", 2 -> "Second", 3 -> "Third" };
+let  map : Map<Natural, String> =  { 1 -> "First", 2 -> "Second", 3 -> "Third" };
 ----
 
 Like `Sequence`, `Association` is a fundamental type in Lense, so it has its own literal type.  
@@ -87,8 +87,8 @@ The syntax is similar to Sequences.
 
 [source, lense]
 ----
-var tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = ( 1 , "2" , true );
-var association : (Natural , String , Boolean) = ( 1 : "2" : true );
+let tuple : Tuple<Natural , Tuple<String, Tuple< Boolean, Nothing >>> = ( 1 , "2" , true );
+let association : (Natural , String , Boolean) = ( 1 : "2" : true );
 ----
 
 The first line creates a tuple of elements. The second line creates the same tuple but uses the tuple short type syntax for representing tuple types. The default form used in the first line can be very long and odd to write and read eventhought is the exact correct type of that tuple. 
@@ -100,11 +100,11 @@ It could be possible to define a specific syntax for a two dimensional`Matrix`. 
 
 [source, lense]
 ----
-var matrix :  Matrix<Natural>  = [ 1 ,2 ,3 ; 4, 5, 6 ; 5 6 7];
+let matrix :  Matrix<Natural>  = [ 1 ,2 ,3 ; 4, 5, 6 ; 5 6 7];
 
 // also can be written as
 
-var  matrix : Matrix<Natural> = [ 
+let  matrix : Matrix<Natural> = [ 
 	1 ,2 ,3 ;
  	4, 5, 6 ; 
  	5, 6, 7
@@ -116,11 +116,11 @@ An alternative is to write sequence of sequences literals an use conversion cons
 
 [source, lense]
 ----
-var  matrix :  Matrix<Natural> = [ [1 ,2 ,3 ], [4, 5, 6 ], [ 5 6 7]];
+let  matrix :  Matrix<Natural> = [ [1 ,2 ,3 ], [4, 5, 6 ], [ 5 6 7]];
 
 // also can be written as
 
-var  matrix : Matrix<Natural> = [ 
+let  matrix : Matrix<Natural> = [ 
 	[1 ,2 ,3],
  	[4, 5, 6],
  	[5, 6, 7]
@@ -137,7 +137,7 @@ in a record only the right side can be a variable. The left side is interpreted 
 
 [source, lense]
 ----
-var  address : Record = {
+let  address : Record = {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "Lodon",
@@ -150,7 +150,7 @@ This syntax takes us full circle to the initializer concept discussed at the beg
 
 [source, lense]
 ----
-var  address : Address = new Address {
+let  address : Address = new Address {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "London",
@@ -164,7 +164,7 @@ This a combination of a call to the link:constructors.html[primary constructor] 
 [source, lense]
 ----
 // define a record
-var  tempRecord : Record = {
+let  tempRecord : Record = {
 	Street = "Baker Street",
 	Number = "221B",
 	City = "London",
@@ -172,7 +172,7 @@ var  tempRecord : Record = {
 }
 
 // copy properties with the same name
-var address : Address = new Address();
+let address : Address = new Address();
 
 address.Street = tempRecord.Street;
 address.Number = tempRecord.Number;
@@ -184,7 +184,7 @@ That is optimized to:
 
 [source, lense]
 ----
-var  address : Address = new Address();
+let  address : Address = new Address();
 
 address.Street = "Baker Street";
 address.Number = "221B";

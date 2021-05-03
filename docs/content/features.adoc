@@ -27,7 +27,7 @@ In addition specific sub-types of `Sequence` also receive link:containerLiterals
 |===========
 | *Lense type* | *Literal* | *Support*
 | `Sequence`| [1,2,3,4] |  Standard representation ordered sequences like lists and arrays. 
-| `Association` | { 1 : "en", 2 : "pt" , 3 : "es" } | Standard representation for key-value associations  
+| `Association` | { 1 -> "en", 2 -> "pt" , 3 -> "es" } | Standard representation for key-value associations  
 | `Tuple` | (1, "Hello", false) | Standard representation for tuples 
 |===========
 
@@ -62,7 +62,8 @@ public class Maybe<T> is Some<T>, None {
 
 public class Some<T> extends Maybe<T>{ 
 
-	public constructor (public let value : T);	
+	public constructor (public value : T);
+	
 	public isAbsent() { return false;}
 	
 	public map <R>(Function<R,T> mapping) : Maybe<R> {
