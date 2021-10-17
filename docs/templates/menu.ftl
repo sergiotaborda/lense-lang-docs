@@ -33,6 +33,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Details<b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>nullability.html">Nullability</a></li>
+					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>mutability.html">Immutability</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>numbers.html">Numbers</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>strings.html">Strings</a></li>
 					<li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>arrays.html">Arrays</a></li>
