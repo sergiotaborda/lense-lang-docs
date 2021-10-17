@@ -23,7 +23,7 @@ Lense is a strong typed, pure object oriented programming language that aims to 
 * [x] Flow Sensitive Typing - casts are not necessary when the compiler  knows a variable is already of a given type.
 * [x] Math and Science friendly - support for Natural, Integer , Rational, Imaginary and Complex numbers. Support for the power operator and units like `2 kg`
 * [x] Native code inter-op - Call you favorite platform native library 
-* [x] Reflection and Reification - make your own generics types, control variance and query then via reflection  thank to reifiation support.
+* [x] Reflection and Reification - make your own generics types, control variance and query then via reflection  thank to reification support.
 * [x] Support for Monads , Lambdas and higher order functions
 
 [[Familiar_Syntax]]
@@ -65,7 +65,7 @@ All things are objects or exist within an object, including methods and properti
 // define
 public object ServiceRegistry  { 
 	
-	private services = new Map<String, object>(); 
+	private services = new Map<String, Any>(); 
 	
 	public register ( name: String, service:  Any){
 		services.add(name, service);
@@ -160,23 +160,31 @@ This functionality is closely related to Extension Methods in C#, Gosu or Kotlin
 
 Lense is designed with immutability in mind so types are immutable by default. You must opt in for mutability. 
 
-==== In Variables
+==== In Local Variables
 
-The declaration of constants is preferred and explicitly different from declaring variables.   
+The declaration of constants is preferred and is the default
 
 [source, lense]
 ----
-mutable let n  = 4; // defines a constant of value 4
-mutable let r  = 5.6; // defines a variable initialized with value 5.6
+let n  = 4; // defines an imutable variable of value 4
 
 n = 3; // compilation error. constants are immutable
+
+----
+
+To produce a mutable variable you must declare it explicitly
+
+[source, lense]
+----
+mutable let r  = 5.6; // defines a mutable variable initialized with value 5.6
+
 r = 4.2; // ok, variables can change value.
 
 ----
 
 ==== In Types
 
-By default a classe is iimutable.
+By default a classe is immutable.
 
 [source, lense]
 ----
@@ -258,12 +266,12 @@ Since the default is immutability it is not possible to modify the country. We n
 [source, lense]
 ----
 
-public class Client {
+public mutable class Client {
 
 	public constructor(
 		public name : String;
-		public var country : String;
-	){}
+		public mutable country : String;
+	);
 	
 }
 
@@ -275,6 +283,7 @@ john.country = "Italy"; // ok
 
 ----
 
+Note that making a property mutable also required to mark the class as mutable.
 
 === Support for Sealed Algebraic Type Hierarchies
 
@@ -441,31 +450,6 @@ module my.application 1.2.0 {
 }
 ----
 
-=== Native code inter-op
-
-Lense can interact with the platform native language like Java or Javascript. 
-
-[source, lense]
-----
-import native(java) java.lang.System;
-import native(java) java.time.Duration;
-
-public class StopWatch {
-	
-	private mutable mark : Int64 = 0;
-	
-	public start(){
-		// invoke java and automatically convert long to Int64
-		mark = System.currentTimeMillis​(); 
-	}
-	
-	public stop() : Duration{
-		// invoke java 
-		return Duration.ofMillis(System.currentTimeMillis​() - mark); 
-	}
-}
-----
-
 === Reflection and Reification
 
 Generics are reified and the type information of the generic type parameters can be inspected at runtime. This is really works well with link:constructors.html[constructors] that can control the correct instance to return:
@@ -506,8 +490,34 @@ Lense supports functional programming with lambdas:
 
 [source, lense]
 ----
-let first100EvenNumbers = 0..100.map( i -> i*2); 
+let first100EvenNumbers = 0..100.map( i => i*2); 
 ----
+
+=== Native code inter-op (under consideration)
+
+Lense can interact with the platform native language like Java or Javascript. 
+
+[source, lense]
+----
+import native(java) java.lang.System;
+import native(java) java.time.Duration;
+
+public class StopWatch {
+	
+	private mutable mark : Int64 = 0;
+	
+	public start(){
+		// invoke java and automatically convert long to Int64
+		mark = System.currentTimeMillis​(); 
+	}
+	
+	public stop() : Duration{
+		// invoke java 
+		return Duration.ofMillis(System.currentTimeMillis​() - mark); 
+	}
+}
+----
+
 
 === Innovative
 

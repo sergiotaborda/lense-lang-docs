@@ -7,7 +7,7 @@ status=published
 
 == Interfaces
 
-Interfaces are constract declarations with no implementation.
+Interfaces are contracts declarations with no implementation.
  
 [source, lense]
 ----

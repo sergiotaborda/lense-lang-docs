@@ -5,17 +5,19 @@ tags=variables, values, lense
 status=published
 ~~~~~~
 
-== Variables
+== Variables - Imutable and Mutable
 
-Creating variables in Lense is very similar to other languages.
+Lense is designed with immutability in mind so variables are immutable by default. You must opt in for mutability. 
+
+Creating an imutable variables, also known as _constant_ in Lense is very similar to other languages.
 
 [source, lense]
 ----
-mutable let  name : String = "Alice";
+let  name : String = "Alice";
 ----
 
 Variables always contain references to objects. The variable called *name* contains a reference to a `String` object with a value of *Alice*.
-The reference contained in a variable can be changed further down in the code to another reference, like :
+The reference contained in a variable can be changed further down in the code to another reference. But for that we have to opt in for mutability, like :
 
 [source, lense]
 ----
@@ -30,29 +32,12 @@ Lense as type inference, so variable declaration can be simplified to :
 mutable let  name = "Alice";
 ----
 
-This is the main reason why type annotations are included after the name of the variable, so they can be removed when are not necessary. 
+This is the main reason why type annotations are included after the name of the variable, so they can be removed when they are not necessary. 
 Notice that they are still relevant in the present of polymorfism like in:
 
 [source, lense]
 ----
-mutable let  name : Sequence<Character> = "Alice";
-----
-
-== Values 
-
-The use of the `mutable let` keywords defines a variable (mutable) reference declaration. Immutable references are defined with the `let` keyword.
-
-[source, lense]
-----
-let name : String = "Alice";
-----
-
-Immutable values cannot be changed, so trying to do so is a compilation error.
-
-[source, lense]
-----
-let name : String = "Alice";
-name = "Beth"; // Compilation Error 
+let  name : Sequence<Character> = "Alice";
 ----
 
 == Definition and Initialization
@@ -66,7 +51,7 @@ let name : String;
 name = "Alice";
 ----
 
-But, because in Lense link:nullability.html[there are no nulls], the compiler will track that the variable has been initialized to a proper non null value before it is used. So the following will produce an error:
+But, because in Lense link:nullability.html[there are no nulls], the compiler will track that the variable has been initialized to a proper value before it is used. So the following will produce an error:
 
 [source, lense]
 ----

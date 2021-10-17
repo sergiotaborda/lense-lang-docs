@@ -41,7 +41,7 @@ Lense uses common brackets to represent `Sequence` literals. Keep in mind arrays
 [source, lense]
 ----
 let sequence : Sequence<Natural>   = [1, 2, 3];
-var array : Array<Natural>  = [1, 2, 3];
+let array : Array<Natural>  = [1, 2, 3];
 ----
 
 The first line creates a sequence of elements 1, 2 and 3. The second line creates an array of the elements 1, 2 and 3 by first creating a sequence and them promoting it to an Array by calling its link:constructors.html#conversion[conversion constructor]. In practice the compiler is free to optimize these literal constructions and not really call the conversion constructor on `Array<T>`.

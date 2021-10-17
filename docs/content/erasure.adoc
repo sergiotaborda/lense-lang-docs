@@ -25,7 +25,7 @@ Where is the list of erased types so far.
 |=======
 | *Lense type* 				| *Erased to* 								|     
 | `lense.core.lang.Void` 	| plataform's primitive *void* 				| 
-| `lense.core.lang.Boolean` | plataform's primitive *boolean* 			|  Boolean constants (Boolean.False, Boolean.True) are also erased to their primitive conterparts (false, true).  
+| `lense.core.lang.Boolean` | plataform's primitive *boolean* 			|  Boolean constants (Boolean.False, Boolean.True) are also erased to their primitive counterparts (false, true).  
 | `lense.core.math.Int32` 	| plataform's primitive *32 bits integer* 	|   
 | `lense.core.math.Int64` 	| plataform's primitive *64 bits integer* 	|  
 |=======

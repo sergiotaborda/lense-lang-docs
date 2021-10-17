@@ -33,7 +33,12 @@ The above code is equivalent to:
 ----
 	let  byte : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false);
 	let  short : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, true,true,true,true, false,false,false,false);
-	let  flags : Binary = BitArray.valueOf(true,true,true,true, false,false,false,false, false,true,false,true, false,true,true,false, false,false,true,false, false,false,false,true, false,true,false,true, true, false,false,true);
+	let  flags : Binary = BitArray.valueOf(
+					true,true,true,true, false,false,false,false,
+					false,true,false,true, false,true, true,false,
+					false,false,true,false, false,false,false,true,
+					false,true,false,true, true, false,false,true
+				);
 ----
 
 NOTE: This equivalency is conceptual, in practice, the compiler can optimize the construction of literals.

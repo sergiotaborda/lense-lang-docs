@@ -1,0 +1,73 @@
+title=Mutability
+date=2016-10-17
+type=post
+tags=arrays, lense
+status=published
+~~~~~~
+
+== Mutability
+
+Lense supports the concept of instances being immutable by default. You must opt in for mutability using the `mutable` modifier.
+This applies to classes, properties, fields and variables. 
+
+Lets take an example. Consider the class `Person`:
+
+[source, lense]
+----
+public class Person {
+
+	constructor(
+		public name : String,
+		public address : String,
+	);
+
+}
+----
+
+You can then use it like :
+
+[source, lense]
+----
+	let person = new Person("John", "Abbey Road");
+----
+
+Simple and straightforward. Now we need to change the address. In other languages you would write:
+
+[source, lense]
+----
+	 person.address = "New Address";
+----
+
+But Lense, will not allow it since the property is immutable by default. To allow mutability we must write:
+
+[source, lense]
+----
+public mutable class Person {
+
+	constructor(
+		public name : String,
+		public mutable address : String,
+	);
+
+}
+----
+
+Notice the use of the `mutable` keyword in the property and in the class. Only mutable classes can have mutable properties.
+
+But what about variables ? This code will fail:
+
+[source, lense]
+----
+	let person = new Person("John", "Abbey Road");
+	person = new Person("Clarice", "Wall Street"); // error
+----
+ 
+Variables are also immutable by default. If you really need to mutate it you need to mark it mutable
+ 
+[source, lense]
+----
+	mutable let person = new Person("John", "Abbey Road");
+	person = new Person("Clarice", "Wall Street"); // ok
+----
+
+The same principle does not apply to parameters. Parameters are always immutable since is not a good practice to mutable parameters.

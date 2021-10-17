@@ -31,7 +31,7 @@ The next example crates array with 5 elements all equal to zero.
     // with type annotation
     let numbers : Array<Natural>  = new Array.filled(5, 0);
 	// with no type annotation, using type inference
-	let numbers = new Array.filled(5, 0);
+	let inferedTypeNumbers = new Array.filled(5, 0);
 ----
 
 If a constant is not a good option in your case, you can, alternatively, use the overloaded version that receives a initialization function.
@@ -53,7 +53,7 @@ Alternatively you can create an array with an optional type. This means each pos
     // with type annotation
     let numbers : Array<Natural?> = new Array.filled(5, none);
 	// with no type annotation, using type inference
-	let numbers = new Array.filled(5, none);
+	let inferedTypeNumbers = new Array.filled(5, none);
 ----
 
 Remember `none` is the single value of type `None` that is equivalent to `Maybe<Nothing>`. You can also use the shorter constructor:
@@ -73,7 +73,7 @@ In practice is useful to be able to create an empty array. The empty constructor
     let numbers :  Array<Natural> = new Array.empty<Natural>(); 
 
     // creates an array of optional elements with no elements in it
-    let numbers : Array<Natural?> = new Array.empty<Natural?>(); 
+    let optionalNumbers : Array<Natural?> = new Array.empty<Natural?>(); 
 ----
 
 In this case there is no difference if you use optional types because the arrays have no elements (its size is zero) so not elements can be retrieved any way
@@ -115,7 +115,7 @@ Additionally, indexes for all `Sequences` are `Natural`s. Natural ranges from ze
 
 === Interoperability
 
-`Array`s and other `Sequence`s have some link:nullability.html[issues in interop] mode because they counterparts in other languages can be `null` and contain `null`s. 
+`Array` s and other `Sequence` s have some link:nullability.html[issues in interop] mode because they counterparts in other languages can be `null` and contain `null`s. 
 
 On the other hand, when creating instances of arrays, Lense will leverage native arrays to minimize space consumption and optimize speed. This is done by leveraging Lense's link:constructors.html#factory[factory like constructors] and reified generics to provide the more specific/efficient implementation possible. Obviously this is only possible in some platforms.
 
