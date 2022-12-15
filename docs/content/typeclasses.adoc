@@ -1,0 +1,113 @@
+title=Type Classes
+date=2017-07-04
+type=post
+tags=type class
+status=published
+~~~~~~
+
+== Type Classes
+
+Lense does not allow static methods but supports type classes.
+
+Type classes enable you to define methods that implemented in the type class level. 
+For example, we can define a type class for all classes that support addition.
+
+[source, lense]
+----
+public type class AdditiveMonoid<T> {
+
+	public zero() : T;
+	
+	public add(a : T, b : T): T;
+
+}
+----
+
+This is similar to an interface but can only be implemented in the class level, not on the instances:
+
+[source, lense]
+----
+public class Number satisfies AdditiveMonoid<T> {
+
+	public satisfy zero() => new Number(0);
+	
+	public satisfy add(a : T, b : T) => new Number(a.value + b.value);
+
+	constructor(value : Integer);
+	
+}
+----
+
+The `satisfy` modifier marks the implementation of the methods in the type class. When executing these methods will not be available in the instances of number
+but on the type itself
+
+[source, lense]
+----
+let x = new Number(9);
+
+x.add(x,x); // error, add is not available in x
+
+x.type().add(x,x); // ok, the method is available in the type.
+----
+
+You can think of type classes as collections of static methods, but that are treated like non static methods, because they are really instance methods of the class.
+
+You an access the methods in the type in 3 ways. From the instance of the class, from the name of the class and from a generic type of the class 
+
+== From the instance of the class 
+
+As we have already seen, you can access the type of the class using the `type()` method: 
+
+[source, lense]
+----
+let x = new Number(9);
+
+let doublex = x.type().add(x,x); // ok, the method is available in the type.
+----
+
+== From the name of the class 
+
+We can use the name of class, if it is know at compile time:
+
+
+[source, lense]
+----
+let x = new Number(9);
+
+let doublex = typeOf(Number).add(x,x); // ok, the method is available in the type.
+----
+
+This is ruffly the same as using static methods in other languages. for example, in java
+
+[source, lense]
+----
+Number x = new Number(9);
+
+Number doublex = Number.add(x,x); // add would be a static method
+----
+
+The difference is that `typeOf(Number)` really returns an instance of the type of number and the methods are not static, meaning they are truly polymorphic.
+ 
+
+== From a generic type constrained to a type class
+
+This is a powerful concept when using generics. You can restrict the type of the class using `given` in conjunction with `typeOf` and due to reification, it will work.
+Imagine an enhancement to sum all possible `AdditiveMonoid`s without knowing their classes:
+
+[source, lense]
+----
+public enhancement SumAll extends Sequence<T> given T extends AdditiveMonoid<T>{
+
+	public sum() : T {
+		mutable let total = typeOf(T).zero(); // the type of T is an instance of AdditiveMonoid<T>
+		for (let item in this){
+			total+= item;
+		}
+		return total;
+	}
+	
+}
+----
+
+Lense knows at runtime the true class of T and that allows the runtime to access its methods. 
+
