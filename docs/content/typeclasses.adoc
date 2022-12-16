@@ -9,21 +9,21 @@ status=published
 
 Lense does not allow static methods but supports type classes.
 
-Type classes enable you to define methods that implemented in the type class level. 
+Type classes enable you to define methods that are implemented at the type class level. 
 For example, we can define a type class for all classes that support addition.
 
 [source, lense]
 ----
 public type class AdditiveMonoid<T> {
 
-	public zero() : T;
+	public zero() : T; // the addition identity
 	
 	public add(a : T, b : T): T;
 
 }
 ----
 
-This is similar to an interface but can only be implemented in the class level, not on the instances:
+This is similar to an interface but can only be implemented at the class level, not at instance level:
 
 [source, lense]
 ----
@@ -38,8 +38,7 @@ public class Number satisfies AdditiveMonoid<T> {
 }
 ----
 
-The `satisfy` modifier marks the implementation of the methods in the type class. When executing these methods will not be available in the instances of number
-but on the type itself
+The `satisfies` keyword indicates that the class must comply with the type class methods. This is done by marking the methods with the `satisfy` modifier.  These methods will not be available in the instances of `Number` but on the type itself.
 
 [source, lense]
 ----
@@ -50,9 +49,9 @@ x.add(x,x); // error, add is not available in x
 x.type().add(x,x); // ok, the method is available in the type.
 ----
 
-You can think of type classes as collections of static methods, but that are treated like non static methods, because they are really instance methods of the class.
+You can think of type classes as a contract of static methods, but that are handled like non static methods in the instance of the type.
 
-You an access the methods in the type in 3 ways. From the instance of the class, from the name of the class and from a generic type of the class 
+You can access the methods in the type in 3 ways: from the instance of the class, from the name of the class and from a generic type of the class 
 
 == From the instance of the class 
 
@@ -62,22 +61,21 @@ As we have already seen, you can access the type of the class using the `type()`
 ----
 let x = new Number(9);
 
-let doublex = x.type().add(x,x); // ok, the method is available in the type.
+let doublex = x.type().add(x,x); // ok, the method is available in the instance of the type.
 ----
 
 == From the name of the class 
 
 We can use the name of class, if it is know at compile time:
 
-
 [source, lense]
 ----
 let x = new Number(9);
 
-let doublex = typeOf(Number).add(x,x); // ok, the method is available in the type.
+let doublex = typeOf(Number).add(x,x); // ok, the method is available in the instance of the type, returned by typeOf
 ----
 
-This is ruffly the same as using static methods in other languages. for example, in java
+This is ruffly the same as using static methods in other languages. For example, in java
 
 [source, lense]
 ----
@@ -86,7 +84,7 @@ Number x = new Number(9);
 Number doublex = Number.add(x,x); // add would be a static method
 ----
 
-The difference is that `typeOf(Number)` really returns an instance of the type of number and the methods are not static, meaning they are truly polymorphic.
+The difference is that `typeOf(Number)` really returns an instance of the type of number and the methods are truly polymorphic and non static.
  
 
 == From a generic type constrained to a type class

@@ -68,7 +68,7 @@ Discover new opportunities for better integration with platforms, better platafo
 
 
 |===
-| Feature          						| Description																				|  Status 		
+| *Feature*          					| *Description*																				|  *Status* 		
 |   Strong Static Typing with Inference	| all objects have a type at compile time, and the compiler can infer most types			|  Embrace
 |   Flow Sensitive Typing    			| casts are not necessary when the compiler knows a variable is already of a given type		|  Embrace	
 |   Numeric Tower 			   			| support for Natural, Integer , Rational, Imaginary and Complex numbers					|  Embrace	
@@ -80,19 +80,25 @@ Discover new opportunities for better integration with platforms, better platafo
 |	Modules								| the compiler produces modules with dependency and version information on other modules.	|  Experimentation ( resolve multiples modules )
 |   Single Inheritance 					| Single Inheritance for classes , multiple inheritance for interface						|  Experimentation	(need traits)
 |   Sealed Type Hierarchies    			| you can limit the instances of a type and/or the types that inherit from it				|  Experimentation	(needed to define enums)
-|   Immutability first     				| You have to opt out of immutability explicitly											|  Exploration	(needs new design using muttable keyword)
+|   Immutability first     				| You have to opt out of immutability explicitly using `mutable`							|  Embrace
 |   Juxtaposition 			   			| support for simple juxtaposition that enables units like `2 kg`							|  Experimentation	(explore other uses besides units) 
 |   Native code and Peers 				| support implementation delegation to the native platform									|  Experimentation	(not clear interaction with native modules)
-|   Operator Overloading     			| Operators are related to type interfaces and follow mathematical concepts					|  Exploration	(needed the concept of meta type)
 |   Reification							| support availability of generic type parameter information at runtime						|  Experimentation	(not clear interaction with 'is' operator) 
 |   Reflection 							| allow code to inspect modules,classes and members											|  Exploration	(not clear from where/how to load information) 
-|   Monads								| support for monads and monadic operations.												|  Exploration (needed the concept of meta type)
 |   Native inter-op 					| call native code directly from lense code without delegation								|  Envision	(not clear interaction with native modules) 
-|   Meta type							| meta types are for classes what classes are for instances. Also known as shapes			|  Envision (not clear to define a syntax)
+|   Type classes						| Types classes are for classes what classes are for instances. Also known as shapes		|  Experimentation (base for operators, new use cases)
+|   Operator Overloading     			| Operators are related to type classes and follow mathematical concepts					|  Exploration	(needed to apply type class concept)
+|   Monads								| support for monads and monadic operations.												|  Exploration (needed to apply type class concept)
 |   Lambdas								| function objects made easy																|  Envision (not clear is should use lambda or closure)
 |===
 
    
-  
+== Platform Status 
 
-
+|===
+| *Platform*          					| *Status* 	
+| Java (JVM)							| Compiles and runs
+| JavaScript/TypeScript					| Under development
+| Dart									| Under consideration
+| .NET (CLR)							| Under consideration
+|===

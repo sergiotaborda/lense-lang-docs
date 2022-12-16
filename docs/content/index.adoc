@@ -18,13 +18,14 @@ Lense is a strong typed, pure object oriented programming language that aims to 
 * [x] Single Inheritance for classes , multiple inheritance for interface
 * [x] Support for External Extension - you can use Enhancements to add methods to types you don't control.
 * [x] Immutability first - you have to opt out of immutability explicitly 
+* [x] Type Classes - you can define constracts for types, not only for instances
 * [x] Support for Sealed Type Hierarchies - you can limit the instances of a type and/or the types that inherit from it.
 * [x] Operator Overloading with no noise - Operators are related to type interfaces and follow mathematical concepts like Magma, Monoid and Group
 * [x] Flow Sensitive Typing - casts are not necessary when the compiler  knows a variable is already of a given type.
-* [x] Math and Science friendly - support for Natural, Integer , Rational, Imaginary and Complex numbers. Support for the power operator and units like `2 kg`
-* [x] Native code inter-op - Call you favorite platform native library 
+* [x] Math and Science friendly - support for Natural, Integer , Rational, Imaginary and Complex numbers. Support for the power operator (`^^`) and units (`2 kg`) 
 * [x] Reflection and Reification - make your own generics types, control variance and query then via reflection  thank to reification support.
 * [x] Support for Monads , Lambdas and higher order functions
+* [ ] Native code inter-op - Call you favorite platform native library (under consideration)
 
 [[Familiar_Syntax]]
 === Familiar Syntax 

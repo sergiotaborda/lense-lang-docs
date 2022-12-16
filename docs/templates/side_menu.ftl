@@ -59,6 +59,7 @@
 					<li><a href="interfaces.html">Interfaces</a></li>
 					<li>Enums</li>
 					<li><a href="enhancements.html">Enhancements</a></li>
+					<li><a href="typeclasses.html">Type Classes</a></li>
 				</ul>
 			</li>
 			<li class="has-children"> 

@@ -18,13 +18,12 @@ Lense, like all languages, reserves some words that cannot be used as identifier
 Some of these reserved works are keywords, e.i. they have special meaning to the compiler. Some other are reserved to prevent use or for use in future versions.
 
 |===
-|  abstract | as | annotation | break | case | catch | class
-|  continue | constructor | default | do |  else | enhancement | enum
-|  export | extends | finally | for | get | if | implements 
-|  in | implicit | import | interface |  is |  module | mutable
-|  native | new | none | out |  object | package | public  
-|  private | protected | return | set | super |  switch | this 
-|  throw | trait | try | let |  while | true | false
+|  abstract | as 			| annotation 	| break 	| case 		| catch 	| class 	| continue	| constructor
+|  default  | do			| else 			|enhancement| enum 		| export 	| extends	| finally	| for
+|  get 		| given			| if			| implements| in 		| implicit 	| import 	| interface | is			
+|  module 	| native		| new 			| mutable	| none 		| out 	 	| object	| package 	| public 
+|  private  | protected		| return		| satisfies | satisfy 	| super 	| switch	| this   	| throw	
+|  trait 	| try			| type 			| typeOf 	| let 		| while 	| true 		| false		| 		
 |===
 
 
