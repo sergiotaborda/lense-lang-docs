@@ -46,6 +46,10 @@
 			float:left;
 			margin-left:7px;
 		}
+		
+		code {
+			color: #444;
+		}
 	</style>
 	
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

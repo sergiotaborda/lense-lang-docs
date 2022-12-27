@@ -1,0 +1,81 @@
+title=Erasure
+date=2022-12-21
+type=post
+tags= lense, enums, sum types
+status=published
+~~~~~~
+
+== Sealed Types and Objects
+
+Lense supports limiting the sub types a type can have. Algo the objetcs a type can have. The first raises the possibility of sealed types, 
+the second is a mecanhism similar to enums in other languages.
+
+Sealed Types in Lense, form a tree of types with objects as leafs. We can define a sealed types combining the `abstract` modifier with the `ìs` clause  , so:
+
+[source, lense]
+----
+public abstract class ExpressionNode is OperationNode , ValueNode {  //(1)
+
+}
+
+public class OperationNode extends ExpressionNode is sum , multiplication  { //(2)
+
+}
+
+public object sum extends OperationNode  { //(3)
+
+}
+
+public object multiplication extends OperationNode  { //(3)
+
+}
+
+public class ValueNode extends ExpressionNode { //(4)
+
+	constructor (public value: Integer);  //(5)
+}
+----
+
+We define an `ExpressionNode` (*1*) class that can only have two sub classes: `OperationNode` and `ValueNode`.
+`OperationNode` can then only have two instances (*2*) called `sum` and `multiplication`. These are instances because they are defined as objects (*3*).
+`ValueNode` is also a `ExpressionNode` (*4*) but can have multiple instances, one for each `Integer`
+
+NOTE: In Lense, object names are writen in camel case, while types names are writen in Pascal Case.
+
+The explicit definition of `sum` and `multiplication` is optional if no constructors or methods need to be defined.
+
+This mechanism allows the compiler to test for exaustivness when necessary.  For example, we define `Boolean` as:
+
+
+[source, lense]
+----
+
+public abstract class Boolean is true , false  {
+ ...
+} 
+----
+
+The compiler then knows that the only possible values of a `Boolean` are `true` and `false`. Likewise, we define Maybe as :
+
+[source, lense]
+----
+public abstract class Maybe<out T> is Some<T> ,  none {
+}
+
+public class Some<T> extends Maybe<T> {
+	public constructor (value : T);
+} 
+----
+
+The compiler then knows that the only possible instances of Maybe are `none` and all instances of `Some`.
+
+== Enums
+
+If we only desire to enumerate the possible instances of a type we can write: 
+
+[source, lense]
+----
+public abstract class Comparison is equal, greater, smaller {
+
+}
+----

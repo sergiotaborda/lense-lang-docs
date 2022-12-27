@@ -7,12 +7,14 @@ status=published
 
 == Container Literals
 
-Lense recognizes literals for `Sequence`s, `Association`s and `Tuple`s. As a rule, because Lense has type inference it must be possible to infer the type of literal from the syntax, so we need a diferent sintax for each container type. 
+Lense recognizes literals for `Sequence`s, `Association`s and `Tuple`s. As a rule, because it must be possible to infer the type of literal from the syntax,
+ we need a diferent sintax for each container type. 
 
 [[sequence-literal]]
 === Sequences
 
-In C-familly languages an array is a fundamental type and can be created literally using curly brackets *{* and *}*, but in more mathematical oriented languages such as Fortran an Julia common brackets are used. 
+In C-familly languages an array is a fundamental type and can be created literally using curly brackets *{* and *}*, but in more mathematical oriented languages such as 
+Fortran an Julia common brackets are used. 
 
 [source, java ]
 ----
@@ -33,7 +35,8 @@ int[] array = new int[]{1, 2, 3};
 List<int> list = new List(){1, 2, 3};
 ----
 
-In Lense the type of the container is fixed by the syntax and a link:constructors.html#conversion[conversion constructor] is used to copy the values to another type if need be. So no constructor is called. A runtime object is created that depends on the underlying platform. The type inside the container is inferred from the declared value types.
+In Lense the type of the container is fixed by the syntax and a link:constructors.html#conversion[conversion constructor] is used to copy the values to another type if need be.
+So no constructor is called. A runtime object is created that depends on the underlying platform. The type inside the container is inferred from the declared value types.
 
 Lense uses common brackets to represent `Sequence` literals. Keep in mind arrays are not fundamental types in Lense, sequences are.An array is a special (mutable) sub type of sequence.
 (as always types are shown for clarity, they are optional)
@@ -44,7 +47,9 @@ let sequence : Sequence<Natural>   = [1, 2, 3];
 let array : Array<Natural>  = [1, 2, 3];
 ----
 
-The first line creates a sequence of elements 1, 2 and 3. The second line creates an array of the elements 1, 2 and 3 by first creating a sequence and them promoting it to an Array by calling its link:constructors.html#conversion[conversion constructor]. In practice the compiler is free to optimize these literal constructions and not really call the conversion constructor on `Array<T>`.
+The first line creates a sequence of elements 1, 2 and 3. The second line creates an array of the elements 1, 2 and 3 by first creating a sequence and them promoting 
+it to an `Array` by calling its link:constructors.html#conversion[conversion constructor]. In practice the compiler is free to optimize these literal constructions 
+and not really call the conversion constructor on `Array<T>`.
 
 === Sets 
 
@@ -59,7 +64,7 @@ Or, you can use the `toSet` method in `Sequence`:
 
 [source, lense]
 ----
-let sequence : Set<Natural> = link:toSet([1, 2, 2, 3, 4, 3];
+let sequence : Set<Natural> = [1, 2, 2, 3, 4, 3].toSet();
 ----
 
 The set will only contain the elements 1, 2, 3 and 4 once.

@@ -57,7 +57,7 @@
 					<li><a href="classes.html">Classes</a></li>
 					<li><a href="objects.html">Objects</a></li>
 					<li><a href="interfaces.html">Interfaces</a></li>
-					<li>Enums</li>
+					<li><a href="enums.html">Enums and Sealed Types</a></li>
 					<li><a href="enhancements.html">Enhancements</a></li>
 					<li><a href="typeclasses.html">Type Classes</a></li>
 				</ul>
