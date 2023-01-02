@@ -16,7 +16,7 @@ Lense itself has reified generics, but at compile time some tricks happen so no 
 
 === Primitive Erasure
 
-The underlying Virtual Machine handles some types more deficiently such as booleans , numbers and strings. 
+The underlying Virtual Machine handles some types such as booleans and numbers more efficiently that a pure Object Oriented Lense Language can. 
 Primitive erasure tries to gain this optimization by automatically change type signature from the Lense types to the primitive ones. This is only possible when values are not being used inside other values, so automatic boxing and unboxing are performed when necessary. 
 Erasure allows for the compiled code to be more compatible with the platforms native code and thus more efficient, similar to the code you would write yourself by hand.
 
@@ -30,7 +30,6 @@ Where is the list of erased types so far.
 | `lense.core.math.Int64` 	| plataform's primitive *64 bits integer* 	|  
 |=======
 
-Other candidates to consider are `lense.core.lang.String` , `lense.core.lang.Maybe` and the bounded numeric types.
 
 
 

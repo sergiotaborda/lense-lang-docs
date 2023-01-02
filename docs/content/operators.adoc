@@ -9,81 +9,64 @@ status=published
 
 Lense supports operators with a special kind of operator overloading. There are two types of operators : intrinsic and definable.
 
-Intrinsic operators are native to the language and their behaviour cannot be redefined. On the other hand, the set of available operators 
-for redefinition is limited ( we do not what symbolic noise ) but extended enought to be usefull in a mathematical or engineering context.
+Intrinsic operators are native to the language and their behavior cannot be redefined. On the other hand, the set of available operators 
+for redefinition is limited ( we do not what symbolic noise ) but extended enough to be useful in a mathematical or engineering context.
 Definable operators are translated to method calls. Intrinsic operators are not translated to method calls.
+
+Operands are never changed during these operations.
 
 === Symbols and Double Symbols
 
-Symbols are gathered from different sources and most are familliar and available in other programming languages. However, Lense introduces a rule for when to double the symbol.
+Symbols are gathered from different sources and most are familiar and available in other programming languages. 
+For arithmetic operations we need unique symbols. Not always there are enough symbols available. For example, we can use the `^` symbol do exponentiation, 
+but then we do not have a good symbol for the XOR operation, traditionally also denoted `^`. So, in this cases where the same symbol 
+may be used, we prefer the single symbol for the commutative operation and the double symbol for the non commutative operation.
+So we use `^` for XOR and `^^` for exponentiation. 
 
-Single symbols denote possible coummutative operations while doubled symbols denote never coummutative operations.
-For example,`+` is used for comutative sum and `++` for non cumutative concatenation. On the same token `^^` is used for exponentiation that we now is always non-comutative 
-and `^` for the XOR operator that is always comutative.
+NOTE: Other languages use `**` for exponentiation. This makes parsing more difficult, and produces a rather confusing code when using multiplications
+ together with exponentiation, so `^^` symbol was selected instead;   
 
-NOTE: Is debatable if the doubling rule for non comutative operators applies to `==`. By definition is does not, since `=` is not a valid operation symbol. 
-Also then understand  `==`, `!=` , `===` and `!==` as variations of earch other and not "doubles" of base operators.
+Lense, distinguishes "sum" - a commutative operation - and "concatenation" - a non commutative operation. So `+` denotes "sum" and `++` denotes "concatenation".
+Strings, and other objects are concatenated as 
+
+[source, lense]
+----
+let greetings = "Hello, " ++ "world" 
+----
+
+NOTE: Not all double symbols imply non-commutativity. For example, `==` is commutative. The double symbol rule applies to arithmetic operators that have the two forms. 
+For example, `&` denotes commutative AND operation while , `&&` denotes non commutative, short-circuit AND operation.
 
 === Intrinsic Operators
 
 Intrinsic operators cannot be redefined and are specially handled by the compiler.
 
-Operands are never changed in any os these operations.
-
 .Intrinsic Operators
 [cols="1,1,4"]
 |=======
-| *Operator* 				| *Example* 								|     
-| `===` 					| `a === b`									| Determines if two objects have the same identity. Only objects of type `Identifiable` can use this operator
-| `!==` 					| `a !== b`									| Determines if two objects have *not* the same identity. Only objects of type `Identifiable` can use this operator 
-| `+` (infix) 				| `+a`										| Does nothing. An infix `+` signed is ignored after parsing. It does not turn a negative value into a positive value.
-| `&&` 						| `a && b`									| *a* and *b* must be `Boolean`. Performs an *AND* logic operation on the operands but only if *a* is `true`. Otherwise simply return `false`. Because of the short-circuit behaviour this is not a commutative operator.
-| `\|\|` 					| `a \|\| b`								| *a* and *b* must be `Boolean`. Performs an *OR* logic operation on the operands but only if *a* is `false`. Otherwise simply return `true`.Because of the short-circuit behaviour this is not a commutative operator.
-| `!` (infix)				| `!a`										| *a* must be `Boolean`. Returns the logic complement of *a*. 
+| *Operator* 				| *Example* 	|     
+| `===` 					| `a === b`		| Determines if two objects have the same identity. Only objects of type `Identifiable` can use this operator
+| `!==` 					| `a !== b`		| Determines if two objects have *not* the same identity. Only objects of type `Identifiable` can use this operator 
+| `+` (infix) 				| `+a`			| Does nothing. An infix `+` signed is ignored after parsing. It does not turn a negative value into a positive value.
+| `&&` 						| `a && b`		| *a* and *b* must be `Boolean`. Performs an *AND* logic operation on the operands but only if *a* is `true`. Otherwise simply return `false`. Because of the short-circuit behaviour this is not a commutative operator.
+| `\|\|` 					| `a \|\| b`	| *a* and *b* must be `Boolean`. Performs an *OR* logic operation on the operands but only if *a* is `false`. Otherwise simply return `true`.Because of the short-circuit behaviour this is not a commutative operator.
+| `!` (infix)				| `!a`			| *a* must be `Boolean`. Returns the logic complement of *a*. 
+| _interval operators_		| `\|[2, 5)\|`	| Interval between 2 and 5, including 2 and excluding 5.
 |=======
 
-=== Definable Operators
+Interval operators allow to include of exclude the start and ending values 
 
-Lense supports operator defenition by leaveraging type interfaces. Each operator is bound to a type interface. 
-If a class satisfies the type interface, the operator can be used between instances of that class. Most implementations delegate to instance methods.
-
-Operands are never changed in any os these operations.
-
-.Definable Operators
-[cols="1,1,1,1,3"]
+[cols="1,4"]
 |=======
-| *Operator* 	| *Example* | *Equivalnet method*	| *Operator Type Interface*			|      
-| `==` 			| `a == b`	| `equals(a, b)`		| `Equatable<T>`					| Determines if two objects are equal. 
-| `!=` 			| `a != b`	| `!equals(a, b)`		| `Equatable<T>`					| Determines if two objects are *not* equal.
-| `+` 			| `a + b`	| `sum(a, b)`			| `Summable<A,D,S>`					| Sums two values and returns a third value. Prefer the + operator for *commutative* monoid operations with zero as identity element.
-| `++` 			| `a ++ b`	| `concat(a, b)`		| `Concatenatable<A,D,S>`			| Concatenates two values and returns a third value. Prefer the ++ operator for *non commutative* monoid operations with empty as identity element 
-| `-` 			| `a - b`	| `subtract(a, b)`		| `Subtractable<A,D,S>` 			| Substracts two values and returns a third value. This operator represents a *non commutative* operation
-| `*` 			| `a * b`	| `multiply(a, b)`		| `Multiplyable<P,A,B>` 			| Multiplies the two values and returns in a third value. Prefer the * operator for *commutative* monoid operations with one as identity.
-| `^^` 			| `a ^^ b`	| `raiseTo(a, b)`		| `Raisable<B,E,P>` 				| Raises the base - the first operand - to the power of the exponent - the second operand. The ^^ operator is doubled, since this is a *non commutative* operation.
-| `/` 			| `a / b`	| `divide(a, b)`		| `Dividable<Q,N,D>` 				| Divides the two values and returns a third value. The operand values are not changed in any way. This operator represents a *non commutative* operation.
-| `\` 			| `a \ b`	| `wholeDivide(a, b)`	| `WholeDividable<W>` 				| Performs whole division the two values and returns a third value. The operand values are not changed in any way. This operator represents a *non commutative* operation.
-| `%` 			| `a % b`	| `remainder(a, b)`		| `WholeDividable<W>` 				| Divides the two values and returns the remainder of integer division. This operator represents a *non commutative* operation.  Note that it always should be true that `a == a \ b + a % b`
-| `-` (infix) 	| `-a`		| `symmetric(a)`		| `Symmetrical<T,R>` 				| Returns the symmetric value. Keep in mind the type needs not be closed for subtraction. For `Natural`s, for example the symmetric value is an `Integer`.
-| `~` (infix) 	| `~a`		| `complement(a)`		| `Complementable<T,R>` 			| Returns the complement of the value. For `Binary` values it is equivalent to flipping all bits. For complex numbers is represents the conjugate so that  `~(a + ib) == a - ib`
-| `&`  			| `a & b`	| `and(a,b)`			| `Injunctable<R,A,B>` 				| Injucts the two values and returns a third value. For binary forms, this implements a bitwise AND. For sets this implements intersection
-| `\|`  		| `a \| b`	| `or(a, b)`			| `Dijunctable<R,A,B>` 				| Dijuncts the two values and returns a third value. For binary forms, this implements a bitwise OR . For sets this implements union
-| `^`  			| `a ^ b`	| `xor(a, b)`			| `ExclusivelyDijunctable<R,A,B>` 	| Exclusively dijunsts the two values and returns a third value. For binary forms, this implements a bitwise XOR
-| `<=>`  		| `a <=> b`	| `compare(a, b)`		| `Comparable<T>` 					| Compared the order of the values of *a* and *b*. Returns `Comparison.equal`, `Comparison.greater` or `Comparison.smaller` if , respectively, a = b, a > b and a < b.  The operand values are not changed in any way.
-| `>`  			| `a > b`	| `compare(a, b).isGreater()`	| `Comparable<T>` 	| Returns `true` if *a* is great than *b*, `false` otherwise. 
-| `>=`  		| `a >= b`	| `!compare(a, b).isSmaller()`	| `Comparable<T>` 	| Returns `true` if *a* is great or equals to *b*, `false` otherwise. 
-| `<`  			| `a < b`	| `compare(a, b).isSmaller()`	| `Comparable<T>` 	| Returns `true` if *a* is less than *b*, `false` otherwise. 
-| `<=`  		| `a <= b`	| `!compare(a, b).isGreater()`| `Comparable<T>` 	| Returns `true` if *a* is less or equal to *b*, `false` otherwise.
-| `..`  		| `a .. b`	| `upTo(a, b)`			| `Progressable<T>` 				| Returns a Progression that starts at *a* and ends at *b*, and contains *b*.
-| `..<`  		| `a ..< b`	| `upToExclude(a, b)`	| `Progressable<T>` 				| Returns a Progression that starts at *a* and ends at *b*, but not contains *b*. 
-| `>>`  		| `a >> n`	| `rightShiftBy(a, n)`	| `Binary<T>` 						| The arithmetic right shift operator returns a value equivalent to the original with bits moved to the right *n* times. This is equivalent to division by 2 *n* times for positive numeric values.
-| `<<`  		| `a << n`	| `leftShiftBy(a, n)`	| `Binary<T>` 						| The arithmetic left shift operator returns a value equivalent to the original with bits moved to the left *n* times. This is equivalent to multiplication by 2 *n* times for positive numeric values. 
-| _empty space_ | `a b`		| `juxtapose(a, b)`		| `Juxtaposable<A,B,R>` 			| This is an operator with no symbol that means the two operands are simply "put together". This may mean a kind of multiplication like in `2 Kg` , or in matrix multiplication like `A B`. The juxtapose operator is *non commutative*.
+| `\|[` 					| Interval start, including the value
+| `\|(`  					| Interval start, not including the value
+| `]\|` 					| Interval end, including the value
+| `)\|`						| Interval end, not including the value
 |=======
 
+==== Ternary operators 
 
-=== Ternary operators 
-
-==== Ternary Select operator 
+===== Ternary Select operator 
 This operator test for the first term to be true. In the positive case returns the second term. Otherwise returns the third.
 
 [source,lense ]
@@ -91,8 +74,7 @@ This operator test for the first term to be true. In the positive case returns t
 let c = (a == b) ? 1 : 4;
 ----
 
-
-==== Ternary Comparison operator 
+===== Ternary Comparison operator 
 This operator compares the second term with the other ones according to the comparison operators use in between them an returns true if both sides are true
 
 [source,lense ]
@@ -115,7 +97,101 @@ Also this operator is equivalent to
 let isTeenager = x in |[ 13 , 19 ]|;
 ----
 
-but we do not need to create and interval object to text x agains it.
+but we do not need to create and interval object to test `x` against it.
+
+=== Definable Operators
+
+Lense supports operator overloading by means of assigning an operator to a method.
+For example,
+
+[source, lense]
+----
+  let a = 2 + 3;
+----
+
+transforms to the `plus` method
+
+
+[source, lense]
+----
+  let a = 2.plus(3);
+----
+
+
+*****
+NOTE: You can use the plus method directly if you which, operators only provide a more fluent form 
+ 
+[source, lense]
+----
+  // with operators 
+  x =  (-b + (b^^2 - 4 * a * c ) ^^ 0.5) / (2 * a);
+
+  // without operators   
+  
+  x =  (b.symmetric().plus(
+			b.raiseTo(2).minus(4.multiply(a).multiply(c))
+		)).raiseTo(0.5)
+		.over(2.multiply(a));
+  
+----
+*****
+
+Since operators are methods, this means operators are polymorphic and that the resulting type depends on the original types.
+For example, summing a Natural with a Natural results in a Natural, but summing a Natural with an Integer results in an Integer, since the argument can be negative.
+So Natural, for example, defines two methods called `plus` that correspond with the '+' operator;
+
+[source, lense]
+----
+   public plus(other : Natural): Natural;
+   public plus(other : Integer): Integer;
+----
+
+The compiler will use the most specific one given the type of the argument.
+
+There are interfaces that explicitly establish a contract using operator equivalent methods, but these interfaces must choose one set of types for the argument and 
+the result, and commonly they choose the type itself.
+
+[source, lense]
+----
+public interface AddictionMagma<T>  given T is AddictionMagma<T> {
+   public plus(other : T): T;
+----
+  
+Here is a list of all supported operators and their equivalent methods
+
+.Definable Operators
+[cols="1,1,1,1,3"]
+|=======
+| *Operator* 	| *Example* | *Equivalent method call*		| *Defining Interface*				|  
+| `==` 			| `a == b`	| `a.equals(b)`					| `Equatable<T>`					| Determines if two instances are equal. 
+| `!=` 			| `a != b`	| `!a.equals(b)`				| `Equatable<T>`					| Determines if two instances are *not* equal.
+| `+` 			| `a + b`	| `a.plus(b)`					| 									| Sums two values and returns a third value. If the result overloads the current representation, the result is a promoted representation
+| `&+` 			| `a &+ b`	| `a.wrapPlus(b)`				| 									| Sums two values and returns a third value. If the result overloads the current representation, the value wrap around to a negative number 
+| `++` 			| `a ++ b`	| `concat(a, b)`				| `Concatenatable<A,D,S>`			| Concatenates two values and returns a third value. Prefer the ++ operator for *non commutative* monoid operations with empty as identity element 
+| `-` 			| `a - b`	| `a.minus(b)`					| `Subtractable<A,D,S>` 			| Subtracts two values and returns a third value.  If the result overloads the current representation, the result is a promoted representation
+| `&-` 			| `a &- b`	| `a.wrapMinus(b)`				|  									| Subtracts two values and returns a third value. If the result overloads the current representation, the value wrap around to a negative number 
+| `*` 			| `a * b`	| `multiply(a, b)`				| `Multiplyable<P,A,B>` 			| Multiplies the two values and returns in a third value. If the result overloads the current representation, the result is a promoted representation
+| `&*` 			| `a &* b`	| `a.wrapMulitply(b)`			|  									| Multiplies the two values and returns in a third value.If the result overloads the current representation, the value wrap around to a negative number 
+| `^^` 			| `a ^^ b`	| `raiseTo(a, b)`				| `Raisable<B,E,P>` 				| Raises the base - the first operand - to the power of the exponent - the second operand. The ^^ operator is doubled, since this is a *non commutative* operation.
+| `/` 			| `a / b`	| `divide(a, b)`				| `Dividable<Q,N,D>` 				| Divides the two values and returns a third value. This operator represents a *non commutative* operation.
+| `\` 			| `a \ b`	| `wholeDivide(a, b)`			| `WholeDividable<W>` 				| Performs whole division the two values and returns a third value. The operand values are not changed in any way. This operator represents a *non commutative* operation.
+| `%` 			| `a % b`	| `remainder(a, b)`				| `WholeDividable<W>` 				| Divides the two values and returns the remainder of integer division. This operator represents a *non commutative* operation.  Note that it always should be true that `a == a \ b + a % b`
+| `-` (infix) 	| `-a`		| `symmetric(a)`				| `Symmetrical<T,R>` 				| Returns the symmetric value. Keep in mind the type needs not be closed for subtraction. For `Natural`s, for example the symmetric value is an `Integer`.
+| `~` (infix) 	| `~a`		| `complement(a)`				| `Complementable<T,R>` 			| Returns the complement of the value. For `Binary` values it is equivalent to flipping all bits. For Complex numbers is represents the conjugate so that  `~(a + ib) == a - ib`
+| `&`  			| `a & b`	| `and(a,b)`					| `Injunctable<R,A,B>` 				| Injucts the two values and returns a third value. For binary forms, this implements a bitwise AND. For sets this implements intersection
+| `\|`  		| `a \| b`	| `or(a, b)`					| `Dijunctable<R,A,B>` 				| Dijuncts the two values and returns a third value. For binary forms, this implements a bitwise OR . For sets this implements union
+| `^`  			| `a ^ b`	| `xor(a, b)`					| `ExclusivelyDijunctable<R,A,B>` 	| Exclusively Dijuncts the two values and returns a third value. For binary forms, this implements a bitwise XOR
+| `<=>`  		| `a <=> b`	| `compare(a, b)`				| `Comparable<T>` 					| Compared the order of the values of *a* and *b*. Returns `Comparison.equal`, `Comparison.greater` or `Comparison.smaller` if , respectively, a = b, a > b and a < b.  The operand values are not changed in any way.
+| `>`  			| `a > b`	| `compare(a, b).isGreater()`	| `Comparable<T>` 					| Returns `true` if *a* is great than *b*, `false` otherwise. 
+| `>=`  		| `a >= b`	| `!compare(a, b).isSmaller()`	| `Comparable<T>` 					| Returns `true` if *a* is great or equals to *b*, `false` otherwise. 
+| `<`  			| `a < b`	| `compare(a, b).isSmaller()`	| `Comparable<T>` 					| Returns `true` if *a* is less than *b*, `false` otherwise. 
+| `<=`  		| `a <= b`	| `!compare(a, b).isGreater()`	| `Comparable<T>` 					| Returns `true` if *a* is less or equal to *b*, `false` otherwise.
+| `..`  		| `a .. b`	| `upTo(a, b)`					| `Progressable<T>` 				| Returns a Progression that starts at *a* and ends at *b*, and contains *b*.
+| `..<`  		| `a ..< b`	| `upToExclude(a, b)`			| `Progressable<T>` 				| Returns a Progression that starts at *a* and ends at *b*, but not contains *b*. 
+| `>>`  		| `a >> n`	| `rightShiftBy(a, n)`			| `Binary<T>` 						| The arithmetic right shift operator returns a value equivalent to the original with bits moved to the right *n* times. This is equivalent to division by 2 *n* times for positive numeric values.
+| `<<`  		| `a << n`	| `leftShiftBy(a, n)`			| `Binary<T>` 						| The arithmetic left shift operator returns a value equivalent to the original with bits moved to the left *n* times. This is equivalent to multiplication by 2 *n* times for positive numeric values. 
+| _empty space_ | `a b`		| `juxtapose(a, b)`				| `Juxtaposable<A,B,R>` 			| This is an operator with no symbol that means the two operands are simply "put together". This may mean a kind of multiplication like in `2 Kg` , or in matrix multiplication like `A B`. The juxtapose operator is *non commutative*.
+|=======
 
 
 === Composed assignment operators
@@ -124,7 +200,7 @@ Consider the following operator statement:
 
 [source,lense ]
 ----
-mutable let a : Integer = 3;
+mutable let a = 3;
 
 a+=5;
 
@@ -155,7 +231,7 @@ Remember that assignments are statements in Lense, so the following code does no
 ----
 mutable let a : Integer = 3;
 
-if (a+=5 > 7){
+if (a+=5 > 7){ // does not compile
   // do something
 }
 
@@ -177,11 +253,11 @@ if (a > 7){
 
 === A note on Increment and Decrement operators 
 
-Lense does not support increment and decrement operators. Instead Lense provides other options for the most common uses
+Lense does not support increment and decrement operators, but options for the most common uses.
 
-==== for loops
+==== `for` loops
 
-Is common in other languages to use the increment operator in loop like this:
+Is common in other languages to use the increment operator in for loop like this:
 
 [source, java]
 ----
@@ -201,8 +277,7 @@ for (let i in 0 ..< someLength){
 
 ==== Arithmetic Increment
 
-Another common use, is to increment a variable when some considition is true 
-
+Another common use, is to increment a variable when some condition is true, for example, when counting. 
 
 [source, java]
 ----
@@ -212,7 +287,7 @@ if (someCondition){
 }
 ----
 
-This can eb writen in Lense using the `+=` assignment as:
+This can be written using the `+=` composed assignment operator as:
 
 [source, lense]
 ----

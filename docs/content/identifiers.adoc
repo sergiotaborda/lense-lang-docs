@@ -15,15 +15,78 @@ Identifiers are all names you use in the programs to name variables, methods, pr
 == Reserved words and keywords
 
 Lense, like all languages, reserves some words that cannot be used as identifiers. 
-Some of these reserved works are keywords, e.i. they have special meaning to the compiler. Some other are reserved to prevent use or for use in future versions.
+Some of these reserved works are keywords, e.i. they have special meaning to the compiler. 
+Some other are reserved to prevent use or for use in future versions.
 
+.Table of all keywords
+|====
+| abstract 	| as 		| assert 	| break 		| case 		| catch			| class 		| constructor  
+| continue 	| default 	| else		| enhancement 	| export 	| extends 		| false 		| final 	
+| finally 	| for 		| get 		| given 		| if 		| implements 	| implicit 		| import 
+| in 		| interface | inv 		| is 			| let 		| module 		| mutable 		| native 
+| new 		| none 		| object 	| out 			| override 	| package 		| private 		| protected 
+| public 	| return 	| satisfies | satisfy 		| sealed 	| set 			| super 		| switch 
+| this 		| throw 	| true 		| try 			| type 		| typeOf 		| value 		| while 
+|====
+
+Follows a short description of each keywords uses.
+
+.Uses of each keyword
+|=== 		
+| abstract  	| Indicates a type cannot be instantiated 
+| as 			| Used to define an alias type name for an imported type.
+| assert		| Verifies a condition, and is not satisfied, throws an exception
+| break 		| Instructs loops  to terminate immediately
+| case 			| Indicates a possible value in a `switch` selection
+| catch 		| Part of the exception capturing clause known as try-catch-finally 
+| class 		| Indicates a type that participates in single inheritance
+| constructor 	| Set of instructions that produce an instance of a class 
+| continue 		| Instructs loops  to jump to the next iteration
+| default 		| Indicates "all others not specified" in a switch selection. Also indicates the method implementation can be overwritten
+| else 			| Indicates an alternative for an `if` decision
+| enhancement 	| Indicates a type that provides methods as extension for an existing type 
+| export 		| Indicates a class is visible outside the module 
+| extends 		| Uses to indicate inheritance 
+| false			| The constant false value, of the instances of Boolean.
+| final 		| Indicates a class cannot be inherited
+| finally 		| Part of the exception capturing clause known as try-catch-finally 
+| for 			| Indicates a for-each loop. 
+| get 			| Indicates the instructions for an acessor
+| given 		| Indicates a constraint in a generic type variable
+| if 			| Indicates a decision based on a truth value of a condition
+| implements 	| Indicates the type obeys to the contract of a given set of interfaces 
+| implicit 		| Indicates a constructor that the compiler will use implicitly to transform between types
+| import 		| Indicates a type that is used in the code
+| in 			| Indicates contra-variant type variable
+| interface 	| Indicates a type that participates in multiple inheritance
+| inv 			| Indicates an invariant type variable
+| is 			| Used in a generic constraint to indicate the type (ex.: `given T is Comparable<T>`). Used as an operator to determine if an instance is of the given type (ex.: `a is Integer`).Also used to indicate possible derived types
+| let 			| Indicated the definition of a immutable variable
+| module 		| Begins the declaration of a module
+| mutable 		| Indicates a property or variable can be reassigned
+| native 		| Indicates a type or method in implemented in the platform language and not in Lense.
+| new 		 	| Invokes a constructor
+| none 			| The single object that is a possible instance of Maybe that carries no information
+| object 		| Indicates a class with a single instance
+| out 			| Indicates a co-variant type variable
+| override 		| Indicates the method overrides a default, or abstract, method defined in the parent type
+| package 		| Indicates the package  in which the type belongs
+| private 		| Indicates the type member is not visible to any type members of other types. Is visible only to members of the same type
+| protected 	| Indicates the type member is visible only the type it self and to types that inherit from the declaring type
+| public 		| Indicates the type member is visible to type members of other types 
+| return 		| Interrupt a method, possibly with a given result
+| satisfies 	| Indicates the type obeys to the contract of a given set of type classes 
+| satisfy 		| Indicates the method implementation is consistent with a method in a type class
+| sealed 		| _(not currently used)_
+| set 			| Indicated the implementation of a modifier
+| super			| Used to refer to the parent type instance 
+| switch		| Indicates a decision between different possibilities
+| this			| Used to refer to the current instance, itself 
+| throw			| Used to raise an exception
+| true			| The constant true value, of the instances of Boolean.
+| try 			| Part of the exception capturing clause known as try-catch-finally 
+| type 			| Modifier that indicates the definition of a type class 
+| typeOf 		| Operator to determine the type of an instance of type literal
+| value			| Modifier that indicates the definition of a value class 
+| while			| Indicates a while loop or terminates a do-loop
 |===
-|  abstract | as 			| annotation 	| break 	| case 		| catch 	| class 	| continue	| constructor
-|  default  | do			| else 			|enhancement| enum 		| export 	| extends	| finally	| for
-|  get 		| given			| if			| implements| in 		| implicit 	| import 	| interface | is			
-|  module 	| native		| new 			| mutable	| none 		| out 	 	| object	| package 	| public 
-|  private  | protected		| return		| satisfies | satisfy 	| super 	| switch	| this   	| throw	
-|  trait 	| try			| type 			| typeOf 	| let 		| while 	| true 		| false		| 		
-|===
-
-
